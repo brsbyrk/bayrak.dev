@@ -1,0 +1,27 @@
+---
+import { AppConfig } from '@/utils/AppConfig';
+import Base from '@/layouts/Base.astro';
+import Section from '@/components/Section.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import Heading from '@/components/Heading.astro';
+import { sortPostsByDate } from '@/utils/data.util';
+
+const { title } = AppConfig;
+const { description } = AppConfig;
+
+const allProjects = await Astro.glob('./*.md');
+allProjects.sort(sortPostsByDate);
+---
+
+<Base head={{ title, description }}>
+	<Section><Heading title="Projects" /></Section>
+	<Section>
+		{
+			allProjects.map((project: any) => (
+				<div class="mb-4 basis-1 last:mb-0">
+					<ProjectCard project={project} />
+				</div>
+			))
+		}
+	</Section>
+</Base>
