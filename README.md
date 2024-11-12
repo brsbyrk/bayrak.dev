@@ -1,6 +1,6 @@
 # bayrak.dev Blog
 
-Welcome to the source code for my personal blog, [bayrak.dev](https://bayrak.dev). Built with [Astro](https://astro.build) and using [Theme](https://github.com/nicdun/astro-tech-blog), this site is where I share insights, projects, and tutorials on tech topics and my personal journey.
+Welcome to the source code for my personal blog, [bayrak.dev](https://bayrak.dev). Built with [Astro](https://astro.build) and using this [theme](https://github.com/nicdun/astro-tech-blog), this site is where I share insights, projects, and tutorials on tech topics and my personal journey.
 
 ## Features
 
