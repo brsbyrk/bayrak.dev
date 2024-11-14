@@ -47,5 +47,3 @@ This project is still evolving, and I’m constantly brainstorming ways to make 
 ## Reflecting on the Journey
 
 Creating Remage has been both a challenge and a joy. It’s a project that truly reflects my approach to app development: keeping things simple, effective, and accessible. I’m looking forward to seeing how users react and gathering feedback to keep improving the app.
-
-Thank you for reading, and I hope you’ll follow along as Remage continues to grow!

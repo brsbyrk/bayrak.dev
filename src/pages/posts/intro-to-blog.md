@@ -29,5 +29,3 @@ Writing is a skill like any other, and the more you practice, the better you get
 ## What to Expect
 
 I'll be covering a variety of topics here — tech projects, experiments, reflections, and maybe even some tutorials. My goal is to keep things interesting, helpful, and, most importantly, real.
-
-Thanks for reading, and I hope you’ll stick around for what’s to come!
