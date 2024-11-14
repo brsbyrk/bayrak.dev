@@ -1,8 +1,8 @@
 export const AppConfig = {
 	site_name: 'bayrak.dev',
-	title: 'Baris Bayrak',
-	description: 'Baris Bayrak | Thoughts, stories and ideas.',
+	title: 'Baris Bayrak | Exploring Tech, Ideas, and Innovation',
+	description: 'Thoughts, ideas and innovation on technology and life by Baris Bayrak',
 	author: 'Baris Bayrak',
-	locale_region: 'en-tr',
+	locale_region: 'en-TR',
 	locale: 'en'
 };
