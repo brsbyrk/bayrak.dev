@@ -63,21 +63,22 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
 
   const date = myDatetime.toLocaleDateString(LOCALE.langTag, {
     year: "numeric",
-    month: "short",
+    month: "numeric",
     day: "numeric",
   });
 
-  const time = myDatetime.toLocaleTimeString(LOCALE.langTag, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // const time = myDatetime.toLocaleTimeString(LOCALE.langTag, {
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   hour12: false, // 24-hour format
+  // });
 
   return (
     <>
       <time dateTime={myDatetime.toISOString()}>{date}</time>
-      <span aria-hidden="true"> | </span>
-      <span className="sr-only">&nbsp;at&nbsp;</span>
-      <span className="text-nowrap">{time}</span>
+      {/* <span aria-hidden="true"> | </span> */}
+      {/* <span className="sr-only">&nbsp;at&nbsp;</span> */}
+      {/* <span className="text-nowrap">{time}</span> */}
     </>
   );
 };
