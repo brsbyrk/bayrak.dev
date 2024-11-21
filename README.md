@@ -1,4 +1,4 @@
-# bayrak.dev Blog
+# bayrak.dev
 
 Welcome to the source code for my personal blog, [bayrak.dev](https://bayrak.dev).
 
