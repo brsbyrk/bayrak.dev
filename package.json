@@ -1,5 +1,5 @@
 {
-  "name": "bayrak-dev-new",
+  "name": "bayrak-dev",
   "version": "4.7.0",
   "scripts": {
     "dev": "astro dev",
