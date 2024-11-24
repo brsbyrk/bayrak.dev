@@ -58,8 +58,10 @@ const structuredData = {
 >
   <head>
     <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-TGGZ85QCTC"
-    ></script>
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TGGZ85QCTC"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -114,7 +116,8 @@ const structuredData = {
     <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google JSON-LD Structured data -->
-    <script is:inline
+    <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(structuredData)}
     />
