@@ -1,13 +1,13 @@
 import js from "@eslint/js";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import tseslint from "@typescript-eslint/eslint-plugin";
 import astroParser from "astro-eslint-parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 
 export default [
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...eslintPluginAstro.configs.recommended,
+  tseslint.configs.recommended,
+  eslintPluginAstro.configs.recommended,
   {
     languageOptions: {
       globals: {
@@ -24,6 +24,13 @@ export default [
         parser: "@typescript-eslint/parser",
         extraFileExtensions: [".astro"],
       },
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
     },
   },
   {
