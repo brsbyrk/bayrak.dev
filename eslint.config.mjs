@@ -31,12 +31,12 @@ export default [
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/triple-slash-reference": "off",
-      "@typescript-eslint/no-unused-vars": "off",
     },
   },
   {
     rules: {
       "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-vars": "off",
     },
   },
   {
