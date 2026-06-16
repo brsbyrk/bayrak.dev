@@ -1,42 +1,35 @@
 // @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
-
 import {themes as prismThemes} from 'prism-react-renderer';
-
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Baris Bayrak',
-  tagline: 'Thoughts and ideas by Baris Bayrak',
+  tagline: 'software engineer',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
   url: 'https://bayrak.dev',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  organizationName: 'brsbyrk', // GitHub org/user name.
-  projectName: 'bayrak.dev', // Repo name.
+  organizationName: 'brsbyrk',
+  projectName: 'bayrak.dev',
 
   onBrokenLinks: 'throw',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang.
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+      type: 'text/css',
+    },
+  ],
 
   presets: [
     [
@@ -50,9 +43,7 @@ const config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          editUrl:
-            'https://github.com/brsbyrk/bayrak.dev/tree/main/',
-          // Useful options to enforce blogging best practices
+          editUrl: 'https://github.com/brsbyrk/bayrak.dev/tree/main/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -67,10 +58,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
       image: 'img/baris-scan-512x512.png',
       colorMode: {
-        defaultMode: 'dark',
+        defaultMode: 'light',
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
@@ -109,35 +99,20 @@ const config = {
           {
             title: 'Connect',
             items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/brsbyrk',
-              },
-              {
-                label: 'LinkedIn',
-                href: 'https://www.linkedin.com/in/barisbayrak/',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/bbarisbayrak',
-              },
+              {label: 'GitHub', href: 'https://github.com/brsbyrk'},
+              {label: 'LinkedIn', href: 'https://www.linkedin.com/in/barisbayrak/'},
+              {label: 'X', href: 'https://x.com/bbarisbayrak'},
             ],
           },
           {
-            title: 'More',
+            title: 'Content',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'About',
-                to: '/about',
-              },
+              {label: 'Blog', to: '/blog'},
+              {label: 'About', to: '/about'},
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Baris Bayrak. Built with Docusaurus.`,
+        copyright: `© ${new Date().getFullYear()} Baris Bayrak`,
       },
       prism: {
         theme: prismThemes.github,

@@ -1,42 +1,27 @@
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
-
-import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
 import styles from './index.module.css';
-
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/blog">
-            Read the Blog →
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`${siteConfig.title}`}
+      title={siteConfig.title}
       description="Thoughts and ideas by Baris Bayrak">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
+      <main className={styles.main}>
+        <div className={styles.hero}>
+          <h1 className={styles.name}>{siteConfig.title}</h1>
+          <p className={styles.tagline}>{siteConfig.tagline}</p>
+          <p className={styles.bio}>
+            Building systems with Rust, designing tools, exploring ideas.
+            I write about projects, engineering, and things I'm learning.
+          </p>
+          <div className={styles.links}>
+            <Link to="/blog" className={styles.link}>Blog →</Link>
+            <Link to="/about" className={styles.link}>About →</Link>
+          </div>
+        </div>
       </main>
     </Layout>
   );
