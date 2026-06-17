@@ -1,53 +1,196 @@
-.main {
+/* ── Homepage ── */
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Hero ── */
+
+.hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - var(--ifm-navbar-height) - 300px);
+  min-height: calc(100vh - var(--ifm-navbar-height) - 100px);
+  padding: 4rem 0 2rem;
 }
 
-.hero {
+.heroContent {
   text-align: center;
-  max-width: 600px;
-  padding: 2rem;
+  width: 100%;
 }
 
 .name {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  letter-spacing: -0.03em;
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .tagline {
-  font-size: 1.25rem;
-  color: var(--ifm-color-emphasis-600);
-  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
 }
 
 .bio {
-  font-size: 1.05rem;
-  color: var(--ifm-color-emphasis-700);
-  line-height: 1.6;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 2rem;
 }
 
-.links {
+/* ── Social icons ── */
+
+.socials {
   display: flex;
-  gap: 1.5rem;
   justify-content: center;
+  gap: 0.75rem;
 }
 
-.link {
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+  text-decoration: none !important;
+}
+
+.socialIcon:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.socialIcon svg {
+  display: block;
+}
+
+/* ── Latest writing ── */
+
+.posts {
+  padding-bottom: 5rem;
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.postCard {
+  display: block;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.25s ease;
+  text-decoration: none !important;
+  box-shadow: var(--shadow-card);
+}
+
+.postCard:hover {
+  background: var(--bg-glass);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-elevated), 0 0 30px var(--accent-glow);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.postDate {
+  color: var(--text-muted);
+}
+
+.postTags {
+  color: var(--accent);
   font-weight: 500;
-  font-size: 1.05rem;
 }
 
-.link:hover {
-  text-decoration: underline;
+.postTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+  color: var(--text-primary);
+  transition: color 0.2s;
 }
+
+.postCard:hover .postTitle {
+  color: var(--accent);
+}
+
+.postDesc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.allPosts {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent);
+  transition: opacity 0.2s;
+}
+
+.allPosts:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* ── Responsive ── */
 
 @media screen and (max-width: 996px) {
   .name {
-    font-size: 2.25rem;
+    font-size: 2.75rem;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 3rem 0 1.5rem;
+  }
+
+  .bio {
+    font-size: 1rem;
   }
 }
