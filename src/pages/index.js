@@ -1,57 +1,39 @@
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useGlobalData from '@docusaurus/useGlobalData';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import styles from './index.module.css';
 
-function Hero() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <section className={styles.hero}>
-      <h1 className={styles.name}>{siteConfig.title}</h1>
-      <p className={styles.tagline}>
-        software engineer &bull; systems &bull; tools
-      </p>
-      <p className={styles.bio}>
-        I build systems with Rust, design tools, explore ideas, and
-        write about what I learn along the way.
-      </p>
-    </section>
-  );
-}
-
-function BlogPosts({posts}) {
-  if (!posts || posts.length === 0) return null;
+function Posts({posts}) {
+  if (!posts || posts.length === 0) {
+    return <p className={styles.empty}>No posts yet.</p>;
+  }
 
   return (
-    <section className={styles.posts}>
-      <h2 className={styles.sectionTitle}>Latest Writing</h2>
-      <div className={styles.postList}>
-        {posts.slice(0, 3).map((post) => {
-          const {metadata} = post;
-          const date = new Date(metadata.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          });
-          return (
-            <Link to={metadata.permalink} key={metadata.permalink} className={styles.postCard}>
-              <div className={styles.postMeta}>
-                <time className={styles.postDate}>{date}</time>
-                {metadata.tags?.length > 0 && (
-                  <span className={styles.postTags}>
-                    {metadata.tags.map(t => t.label).join(', ')}
-                  </span>
-                )}
-              </div>
-              <h3 className={styles.postTitle}>{metadata.title}</h3>
-              <p className={styles.postDesc}>{metadata.description}</p>
-            </Link>
-          );
-        })}
-      </div>
-      <Link to="/blog" className={styles.allPosts}>All posts →</Link>
-    </section>
+    <ol className={styles.list}>
+      {posts.map((post) => {
+        const {metadata} = post;
+        const date = new Date(metadata.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+        return (
+          <li key={metadata.permalink} className={styles.item}>
+            <time className={styles.date}>{date}</time>
+            <div className={styles.body}>
+              <Link to={metadata.permalink} className={styles.title}>
+                {metadata.title}
+              </Link>
+              {metadata.tags?.length > 0 && (
+                <span className={styles.tags}>
+                  {metadata.tags.map(t => t.label).join(', ')}
+                </span>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -65,8 +47,14 @@ export default function Home() {
       title="Baris Bayrak"
       description="Thoughts and ideas by Baris Bayrak">
       <main className={styles.page}>
-        <Hero />
-        <BlogPosts posts={posts} />
+        <header className={styles.header}>
+          <h1 className={styles.name}>Baris Bayrak</h1>
+          <p className={styles.bio}>
+            Software engineer. I build systems, explore ideas, and
+            write about what I learn.
+          </p>
+        </header>
+        <Posts posts={posts} />
       </main>
     </Layout>
   );

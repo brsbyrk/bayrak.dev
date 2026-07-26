@@ -59,31 +59,21 @@ const config = {
       },
       navbar: {
         title: 'Baris Bayrak',
-        logo: {
-          alt: 'Baris Bayrak',
-          src: 'img/logo.png',
-        },
+        hideOnScroll: true,
         items: [
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {to: '/about', label: 'About', position: 'left'},
+          {to: '/blog', label: 'Posts', position: 'right'},
+          {to: '/about', label: 'About', position: 'right'},
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
-            title: 'Connect',
             items: [
               {label: 'GitHub', href: 'https://github.com/brsbyrk'},
               {label: 'LinkedIn', href: 'https://www.linkedin.com/in/barisbayrak/'},
               {label: 'X', href: 'https://x.com/bbarisbayrak'},
-            ],
-          },
-          {
-            title: 'Content',
-            items: [
-              {label: 'Blog', to: '/blog'},
-              {label: 'About', to: '/about'},
+              {label: 'Email', href: 'mailto:baris@bayrak.dev'},
             ],
           },
         ],
