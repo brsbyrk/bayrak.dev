@@ -5,7 +5,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'Baris Bayrak',
   tagline: 'software engineer',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/baris-scan-192x192.png',
 
   future: {
     v4: true,
