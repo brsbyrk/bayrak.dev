@@ -1,0 +1,124 @@
+---
+title: "Carnot — Building a Compression Research Lab"
+description: "A deep dive into Carnot, an experimental compression project named after Sadi Carnot. 21 experiments, one pipeline that beats every standard compressor, and a philosophy of mapping what's been tried."
+date: 2026-06-23
+tags: [rust, compression, research, algorithms, entropy]
+authors: [baris]
+---
+
+[Claude Shannon](https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication) proved in 1948 that every data source has a theoretical minimum — you can't compress below Shannon entropy. But here's the thing: that limit applies to the *true* data source, not your file.
+
+{/* truncate */}
+
+Real-world data is far more structured than a byte-frequency count suggests, and standard compressors leave a lot on the table.
+
+**Carnot** is my attempt to find some of it. Named after [Sadi Carnot](https://en.wikipedia.org/wiki/Nicolas_L%C3%A9onard_Sadi_Carnot) — who defined the theoretical maximum efficiency of heat engines — the project asks the same question in a different domain: *how close can we get to the true compression limit if we stop caring about throughput?*
+
+## The Core Hypothesis
+
+Standard compressors — gzip, zstd, lzma, brotli — are general-purpose tools optimized for speed. Their design trades ratio for throughput, and that trade-off leaves structural redundancy unexploited. Carnot's hypothesis is simple:
+
+> By relaxing the time constraint — potentially by orders of magnitude — we can discover algorithms that push significantly closer to the compressibility floor.
+
+CPU-hours are cheap. The goal is compression ratio, not bytes per second.
+
+## What Works: The BWT Pipeline
+
+After 21 experiments spanning byte embeddings, grammar induction, mixture of experts, neural mixing, and more, the best result is a **multi-stage Burrows-Wheeler pipeline** in Rust:
+
+```
+Raw data → BWT → Move-to-Front → Zero-run → RePair → Order-1 Arithmetic Coding
+```
+
+Each stage targets a different type of redundancy:
+
+| Stage | What it exploits | Gain |
+|-------|-----------------|:----:|
+| BWT (SA-IS) | Long-range character grouping | ~25% |
+| MTF | Local frequency skew after BWT | ~10% |
+| Zero-run | Long runs of MTF-0 values | ~5% |
+| RePair (incremental) | Repeated digrams | ~15% |
+| Order-1 AC | Byte-level conditional probability | ~6.5% |
+
+On the [enwik8](https://mattmahoney.net/dc/textdata.html) 100MB benchmark, it beats every standard compressor:
+
+| Compressor | Ratio |
+|------------|:-----:|
+| **Carnot BWT** | **0.2352** |
+| PPMd | 0.225 |
+| lzma -9 | 0.2721 |
+| zstd -22 | 0.2795 |
+| bzip2 -9 | 0.2901 |
+| gzip -9 | 0.3648 |
+
+It takes 2 minutes and ~2GB of RAM — orders of magnitude slower than gzip — but ratio is the only KPI that matters here.
+
+## Also Working: ContextMixer and Bit Planes
+
+Two other pipelines round out the system:
+
+- **ContextMixer** — 13 PAQ-style bit-level models (order-0 through order-6, match models, word models, run-length) blended via logistic mixing. Gets 0.1786 on English text at ~0.2 MB/s.
+
+- **Bit Planes** — A lightweight Python compressor encoding bytes as 8 conditional bit planes (MSB→LSB). Reaches **99.7% of its theoretical bound** at 44.61% on English text. Good as a teaching tool or baseline.
+
+## An Adaptive Pipeline Selector
+
+The system includes a heuristic classifier that inspects input data and routes it to the right pipeline:
+
+| Data type | Pipeline |
+|-----------|----------|
+| Text/XML (high printable ratio) | BWT pipeline |
+| Sparse data (many zeros) | Sparse encoder |
+| Periodic signals | General compressor |
+| Truly random (H₀ ≈ 8, no structure) | Pass-through |
+
+This is still rough — sorted integers inflate (1.12x) because the delta encoder works at byte level rather than word level, and Markov-chain data sometimes routes to the wrong pipeline. But the architecture is there.
+
+## What Didn't Work: The Dead End Map
+
+Failures are as valuable as successes. Every dead end maps terrain for future explorers:
+
+| Experiment | Why it failed |
+|------------|---------------|
+| Renormalization group compression | Data Processing Inequality: provably bounded by H₁ |
+| Byte embeddings (bilinear) | Factorization loses transitions; simple counters win |
+| Grammar induction (Sequitur) | Rule explosion on real data |
+| Mixture of Experts (MoE) | Gradient bug; hard assignment fragments data |
+| Chain transform (Follow) | 99.98% collision rate on text |
+| CF compression | Does not actually compress — confirmed negative result |
+
+## The Structural Gap
+
+The project's central metric is the **structural gap**:
+
+```
+H₀ - compression_ceiling = structural_gap
+```
+
+H₀ is byte-frequency entropy (Shannon). The compression ceiling is the best ratio standard tools achieve. The gap measures **how much latent structure exists that current compressors miss**. It's the hunting ground.
+
+Some findings from the test corpus:
+
+| Data | H₀ | Ceiling | Gap |
+|------|:--:|:-------:|:---:|
+| Uniform random | 8.00 | 8.00 | **0.00** — truly incompressible |
+| 90% biased | 1.26 | 1.43 | **0.00** — simple stats solve it |
+| Markov order-3 | 8.00 | 5.72 | **2.28** — hidden structure |
+| Periodic 256 | 7.82 | 0.66 | **7.16** — massive gap |
+| Repeated blocks | 8.00 | 1.01 | **6.98** — dictionary obvious |
+
+Periodic signals and repeated blocks have H₀ ≈ 8.0 — they look like random noise to a byte-frequency counter. But standard compressors (especially lzma) exploit their structure easily. The gap quantifies what's possible.
+
+## Philosophy
+
+Three principles drive the project:
+
+1. **Measure first.** Every claim backed by the standard test corpus.
+2. **Preserve the journey.** Failed approaches stay in the repo. They're the map of what's been tried.
+3. **Trade time for compression.** CPU-hours are abundant; novel algorithms aren't.
+
+The remaining gap to PAQ/CMIX (~0.18 on enwik8) won't close with one clever trick. It needs better inter-byte models — longer-range contexts, match models, word-level prediction. That's the next frontier.
+
+---
+
+Carnot is open-source under MIT. [github.com/brsbyrk/carnot](https://github.com/brsbyrk/carnot)
