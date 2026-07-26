@@ -1,26 +1,28 @@
 ---
 title: "Carnot — Compression, GPUs, and Cryptographic Accumulators"
-description: "A deep dive into Carnot: pattern-scale decomposition compression, GPU-accelerated BWT, and a bilinear accumulator on BLS12-381 — all in one Rust workspace."
+description: "A deep dive into Carnot: pattern-scale decomposition that beats zstd by 9×, a BWT pipeline that outruns lzma on enwik8, GPU-accelerated transforms, and a bilinear accumulator on BLS12-381."
 date: 2026-06-30
 tags: [rust, compression, gpu, cryptography, research]
 authors: [baris]
 ---
 
-[Claude Shannon](https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication) proved in 1948 that every data source has a theoretical minimum. But real-world data is far more structured than byte frequencies suggest — and standard compressors leave a lot on the table.
+[Claude Shannon](https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication) proved in 1948 that every data source has a theoretical minimum — you can't compress below Shannon entropy. But that limit applies to the *true* data source, not your file. Real-world data is far more structured than byte frequencies suggest, and standard compressors leave a lot on the table.
 
 {/* truncate */}
 
-**Carnot** is an open research project exploring compression from multiple angles: pattern-scale decomposition theory, a 17-opcode bytecode VM, GPU-accelerated transforms, and — unexpectedly — a cryptographic accumulator on BLS12-381. It's a lab notebook, not a product.
+**Carnot** is an open research project named after [Sadi Carnot](https://en.wikipedia.org/wiki/Nicolas_L%C3%A9onard_Sadi_Carnot) — who defined the theoretical maximum efficiency of heat engines. The project asks the same question in a different domain: *how close can we get to the true compression limit if we stop caring about throughput?*
+
+It has grown into three tracks across a Rust workspace: pattern-scale decomposition compression, GPU-accelerated transforms, and a cryptographic accumulator on BLS12-381. It's a lab notebook, not a product — 21 experiments so far, with failures documented as carefully as successes.
 
 ## Pattern-Scale Decomposition
 
-The key insight: every structured byte sequence has two orthogonal components — the *pattern* (generating rule: constant, alternating, counting, repeating) and the *scale* (length, repeats, frequency). Standard compressors conflate both. Carnot separates them.
+The key insight, formalized in [`docs/cf-unification.md`](https://github.com/brsbyrk/carnot/blob/main/docs/cf-unification.md): every structured byte sequence decomposes into two orthogonal components — the *pattern* (generating rule: constant, alternating, counting, repeating) and the *scale* (length, repeats, frequency). Standard compressors conflate both channels; Carnot separates them.
 
-The math is in [`docs/cf-unification.md`](https://github.com/brsbyrk/carnot/blob/main/docs/cf-unification.md): continued fraction rational approximations prove that patterns encode in small convergent terms while scale explodes the final term. The bytecode VM is the practical embodiment.
+The math uses continued fraction rational approximations of byte sequences. CF convergents find the infinite-limit structure in small terms, but encode length implicitly through a huge final term costing O(n). The bytecode VM is the practical fix — same pattern detection, but with an explicit O(log n) scale channel.
 
 ## The Bytecode VM
 
-A 17-opcode stack VM with loop stack encodes structural patterns as tiny programs:
+A 17-opcode stack VM with loop stack encodes structural patterns as tiny programs approaching the Kolmogorov complexity floor — the shortest possible description of the data:
 
 | Op | Pattern | Program size | 100KB compressed | vs zstd |
 |---|---|---|---|---|
@@ -29,23 +31,52 @@ A 17-opcode stack VM with loop stack encodes structural patterns as tiny program
 | Nested loop + math | Counting 0..255 | 15 B | **74 B** | **3.8×** |
 | REPEAT_BLOCK | Repeating block | 5+len | 445 B | — |
 
-These programs approach the Kolmogorov complexity floor — the shortest possible description of the data.
+Programs are discovered via beam search (width 50, sampling 4KB windows) rather than exhaustive enumeration. The adaptive pipeline selector auto-routes between 7 strategies: random pass-through, delta encoding for sorted integers, BWT+MTF+RLE for text, sparse encoding for low-entropy data, dedup for repeated blocks, RePair grammar compression, and the VM bytecode path for periodic/structured input. Candidate pruning gives a 1070× speedup on uniform data.
 
-The adaptive pipeline selector chooses between 7 strategies based on input characteristics: random pass-through, delta encoding for sorted integers, BWT+MFT+RLE for text, sparse encoding for low-entropy data, dedup for repeated blocks, RePair grammar compression, and the VM bytecode path for periodic/structured input.
+## The BWT Pipeline
+
+The best general-purpose result comes from a **five-stage Burrows-Wheeler pipeline**:
+
+```
+Raw data → BWT (SA-IS) → Move-to-Front → Zero-run → RePair → Order-1 Arithmetic Coding
+```
+
+Each stage targets a different redundancy type:
+
+| Stage | What it exploits | Gain |
+|-------|-----------------|:----:|
+| BWT (sentinel SA-IS) | Long-range character grouping | ~25% |
+| MTF | Local frequency skew after BWT | ~10% |
+| Zero-run | Long runs of MTF-0 values | ~5% |
+| RePair (incremental) | Repeated digrams | ~15% |
+| Order-1 AC | Byte-level conditional probability | ~6.5% |
+
+The evolution is visible in the experiment log — five attempts to get from a Python prototype at 0.2971 ratio to the Rust champion. The breakthrough was sentinel-based SA-IS BWT + incremental RePair, refined from 0.2512 ratio and 29 minutes down to 0.2352 at 2 minutes via flat-array order-1 modeling.
+
+On [enwik8](https://mattmahoney.net/dc/textdata.html) 100MB:
+
+| Compressor | Ratio | Time |
+|------------|:-----:|------|
+| **Carnot BWT** | **0.2352** | 2m 07s |
+| PPMd | 0.225 | — |
+| xz -9e | 0.2483 | 82s |
+| zstd -22 | 0.2795 | 65s |
+| bzip2 -9 | 0.2901 | ~1s |
+| gzip -9 | 0.3648 | ~1s |
+
+At 1GB (10× concatenated enwik8), xz pulls ahead — 0.1737 vs Carnot's 0.2403 — because LZMA2's 64MB sliding window exploits cross-copy repetition that BWT, confined to each 64MB block, misses. Carnot wins on single files by 5.3%; xz wins on concatenated copies. Both approaches have their regime.
+
+## Multi-threading and Speed Improvements
+
+Multi-threaded BWT gives 2.6× speedup at a 3.8% ratio cost on 100MB enwik8. Multi-block parallel compression scales near-linearly at 4×. The whole pipeline processes 64MB blocks sequentially to stay within RAM limits — SA-IS suffix array on 1GB needs ~5GB for the SA alone. A production run would need either 32GB+ RAM, out-of-core BWT, or pre-deduplication.
 
 ## GPU BWT Acceleration
 
-The BWT stage is the pipeline's most expensive operation. `carnot-gpu-core` offloads suffix array construction to the GPU via [libcubwt](https://github.com/IlyaGrebnov/libcubwt), targeting a GTX 1060 6GB (Pascal, CUDA 12.2).
-
-```
-GPU SA-IS → BWT → MTF → Zero-run → RePair → Order-1 AC
-```
-
-The FFI is scaffolded with CUDA device management via `cudarc`, VRAM budgeting (20.5n bytes for n-byte input, ~300MB max on the 6GB card), and a CPU fallback path. The `carnot-gpu-cli` provides `info` and `bench-bwt` subcommands for device discovery and CPU vs GPU benchmarking.
+BWT suffix array construction is the pipeline's bottleneck. `carnot-gpu-core` offloads it to the GPU via [libcubwt](https://github.com/IlyaGrebnov/libcubwt), targeting a GTX 1060 6GB (Pascal, CC 6.1, CUDA 12.2). The FFI is scaffolded with `cudarc` device management and VRAM budgeting — libcubwt needs 20.5n bytes for n-byte input, capping at ~300MB on the 6GB card. A CPU fallback runs suffix sorting directly for testing. The `carnot-gpu-cli` provides `info` and `bench-bwt` subcommands.
 
 ## Bilinear Accumulator on BLS12-381
 
-A separate crate, `carnot-accumulator`, implements a bilinear accumulator for constant-size set membership proofs:
+The `carnot-accumulator` crate implements a bilinear accumulator for constant-size set membership proofs — 48 bytes for the accumulator and each witness, regardless of how many elements are in the set:
 
 ```
 Setup:  s = random secret
@@ -56,24 +87,59 @@ Witness:     w   = g₁^{∏_{i≠j}(s + hash(x_j))}
 Verify:      e(w, g₂^{hash(x_j)} · pk) == e(acc, g₂)
 ```
 
-Key properties:
-- **48-byte accumulator** regardless of set size
-- **48-byte witness** per element
-- **Aggregatable** — multiple witnesses merge into one
-- **Secure** — without the secret, forging a witness is infeasible
-
-Implementation highlights:
+Key implementation details:
 - Pairings via `blst` on the BLS12-381 curve
-- **NTT-based polynomial multiplication** (`src/ntt.rs`) — tree-based product expansion in O(n log n) instead of O(n²)
+- **NTT-based polynomial multiplication** — tree-based product expansion in O(n log n) over a field with 2^32 roots of unity
 - **Batch witness generation** via prefix-suffix products in O(N)
-- **Merkle tree** integration for byte-level data recovery
-- Powers-of-tau trusted setup with chunked verification
+- **Merkle tree** integration for byte-level membership — each leaf is SHA-256(index || byte), so a verifier can brute-force all 256 byte values against a single Merkle proof
+- Powers-of-tau trusted setup with chunked verification and parallel brute-force checking
 
-This isn't directly about compression — it's infrastructure for verifiable computation. But it lives in the same workspace because the underlying math (polynomials over finite fields) connects both domains.
+This isn't directly about compression — it's infrastructure for verifiable computation. The polynomial math (NTT, pairings, finite fields) connects both domains.
 
-## What's Next
+## What Didn't Work
 
-The GPU BWT FFI needs libcubwt linking. The accumulator needs Groth16 or similar for full zero-knowledge proofs. And the VM needs better pattern detection heuristics to route more data through the bytecode path.
+Failures are preserved as terrain maps for future explorers:
+
+| Experiment | Why it failed |
+|------------|---------------|
+| Renormalization group compression | Data Processing Inequality: provably bounded by H₁ |
+| Byte embeddings (bilinear) | Factorization loses specific transitions; simple counters win |
+| Grammar induction (Sequitur) | Rule explosion on real data |
+| Mixture of Experts | Gradient bug; hard assignment fragments data |
+| Chain transform (Follow) | 99.98% collision rate on text |
+| CF compression | Confirmed negative — does not actually compress |
+| Sorted u32 delta | Byte-level delta inflates; needs word-level encoding |
+
+## The Structural Gap
+
+The project's central metric:
+
+```
+H₀ - compression_ceiling = structural_gap
+```
+
+H₀ is byte-frequency entropy (Shannon). The compression ceiling is the best ratio standard tools achieve on a given file. The gap measures **latent structure that current compressors miss** — the hunting ground:
+
+| Data | H₀ | Ceiling | Gap |
+|------|:--:|:-------:|:---:|
+| Uniform random | 8.00 | 8.00 | **0.00** — truly incompressible |
+| Markov order-3 | 8.00 | 5.72 | **2.28** — hidden transition structure |
+| Periodic 256 | 7.82 | 0.66 | **7.16** — massive latent pattern |
+| Repeated blocks | 8.00 | 1.01 | **6.98** — dictionary obvious but H₀ blind |
+
+Periodic signals and repeated blocks have H₀ ≈ 8.0 — byte-frequency counters see noise. But standard compressors exploit their structure easily. The gap quantifies what's left on the table.
+
+The bit-plane experiment reached 99.7% of its theoretical bound, confirming intra-byte structure is well-understood. The remaining ~38% gap to PAQ/CMIX on enwik8 requires inter-byte context — longer-range models, match models, word-level prediction. Not one missing trick, but an architecture difference.
+
+## Philosophy
+
+Three principles drive the project:
+
+1. **Measure first.** Every claim backed by the standard test corpus (10 synthetic types × 4 sizes).
+2. **Preserve the journey.** Failed approaches stay in the repo — they're the map of what's been tried.
+3. **Trade time for compression.** CPU-hours are abundant; novel algorithms aren't.
+
+The project achieved its goal: designing and benchmarking a novel compression pipeline that beats standard tools on structured data. The GPU and accumulator work extend the same mathematical foundation into new domains. Carnot remains open for exploration — the remaining gaps are documented, the architecture is modular, and the dead ends are mapped.
 
 ---
 
