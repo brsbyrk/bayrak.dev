@@ -66,24 +66,6 @@ const config = {
         items: [
           {to: '/blog', label: 'Blog', position: 'left'},
           {to: '/about', label: 'About', position: 'left'},
-          {
-            href: 'https://github.com/brsbyrk',
-            position: 'right',
-            className: 'header-github-link',
-            'aria-label': 'GitHub',
-          },
-          {
-            href: 'https://www.linkedin.com/in/barisbayrak/',
-            position: 'right',
-            className: 'header-linkedin-link',
-            'aria-label': 'LinkedIn',
-          },
-          {
-            href: 'https://x.com/bbarisbayrak',
-            position: 'right',
-            className: 'header-x-link',
-            'aria-label': 'X',
-          },
         ],
       },
       footer: {

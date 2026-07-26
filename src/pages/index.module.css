@@ -9,28 +9,16 @@
 /* ── Hero ── */
 
 .hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - var(--ifm-navbar-height) - 100px);
-  padding: 4rem 0 2rem;
-}
-
-.heroContent {
   text-align: center;
-  width: 100%;
+  padding: 2rem 0 1.5rem;
 }
 
 .name {
-  font-size: 4rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .tagline {
@@ -48,44 +36,8 @@
   margin: 0 auto 2rem;
 }
 
-/* ── Social icons ── */
-
-.socials {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.socialIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-  transition: all 0.25s ease;
-  text-decoration: none !important;
-}
-
-.socialIcon:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  box-shadow: 0 0 20px var(--accent-glow);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
-
-.socialIcon svg {
-  display: block;
-}
-
-/* ── Latest writing ── */
-
 .posts {
+  padding-top: 1rem;
   padding-bottom: 5rem;
 }
 
@@ -182,12 +134,7 @@
 
 @media screen and (max-width: 996px) {
   .name {
-    font-size: 2.75rem;
-  }
-
-  .hero {
-    min-height: auto;
-    padding: 3rem 0 1.5rem;
+    font-size: 2.25rem;
   }
 
   .bio {
