@@ -174,23 +174,27 @@ body {
 }
 
 /* ── Blog list page ── */
-.blog-list-page main,
-.blog-post-page main .container {
+.blog-list-page main {
   max-width: 860px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   padding: 3rem 1.5rem;
 }
 
-.blog-post-page main .row {
-  margin: 0;
+/* ── Blog post page: constrain width, remove grid offset ── */
+.blog-post-page .container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
 }
 
-.blog-post-page main .col {
-  padding: 0;
-  max-width: 100%;
-  flex: 0 0 100%;
-  margin-left: 0;
+.blog-post-page .col--offset-1 {
+  margin-left: 0 !important;
+}
+
+.blog-post-page .col--9 {
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  padding: 0 !important;
 }
 
 .blog-list-page article {
