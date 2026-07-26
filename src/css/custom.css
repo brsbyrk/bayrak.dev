@@ -79,7 +79,7 @@ body {
 }
 
 .navbar__inner {
-  max-width: 960px;
+  max-width: none;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -116,7 +116,7 @@ body {
 }
 
 .footer .container {
-  max-width: 960px;
+  max-width: none;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -175,14 +175,14 @@ body {
 
 /* ── Blog list page ── */
 .blog-list-page main {
-  max-width: 960px;
+  max-width: none;
   margin: 0 auto;
   padding: 3rem 1.5rem;
 }
 
 /* ── Blog post page: constrain width, remove grid offset ── */
 .blog-post-page .container {
-  max-width: 960px;
+  max-width: none;
   margin: 0 auto;
   padding: 3rem 1.5rem;
 }
