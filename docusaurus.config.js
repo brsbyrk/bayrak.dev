@@ -31,6 +31,7 @@ const config = {
       ({
         docs: false,
         blog: {
+          routeBasePath: '/',
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
@@ -61,7 +62,6 @@ const config = {
         title: 'Baris Bayrak',
         hideOnScroll: true,
         items: [
-          {to: '/blog', label: 'Posts', position: 'right'},
           {to: '/about', label: 'About', position: 'right'},
         ],
       },

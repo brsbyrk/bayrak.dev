@@ -1,0 +1,80 @@
+---
+title: "Carnot — Compression, GPUs, and Cryptographic Accumulators"
+description: "A deep dive into Carnot: pattern-scale decomposition compression, GPU-accelerated BWT, and a bilinear accumulator on BLS12-381 — all in one Rust workspace."
+date: 2026-06-30
+tags: [rust, compression, gpu, cryptography, research]
+authors: [baris]
+---
+
+[Claude Shannon](https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication) proved in 1948 that every data source has a theoretical minimum. But real-world data is far more structured than byte frequencies suggest — and standard compressors leave a lot on the table.
+
+{/* truncate */}
+
+**Carnot** is an open research project exploring compression from multiple angles: pattern-scale decomposition theory, a 17-opcode bytecode VM, GPU-accelerated transforms, and — unexpectedly — a cryptographic accumulator on BLS12-381. It's a lab notebook, not a product.
+
+## Pattern-Scale Decomposition
+
+The key insight: every structured byte sequence has two orthogonal components — the *pattern* (generating rule: constant, alternating, counting, repeating) and the *scale* (length, repeats, frequency). Standard compressors conflate both. Carnot separates them.
+
+The math is in [`docs/cf-unification.md`](https://github.com/brsbyrk/carnot/blob/main/docs/cf-unification.md): continued fraction rational approximations prove that patterns encode in small convergent terms while scale explodes the final term. The bytecode VM is the practical embodiment.
+
+## The Bytecode VM
+
+A 17-opcode stack VM with loop stack encodes structural patterns as tiny programs:
+
+| Op | Pattern | Program size | 100KB compressed | vs zstd |
+|---|---|---|---|---|
+| LOOP/OUTPUT | Constant byte | 7 B | ~17 B | **~6×** |
+| LOOP/PUSH/OUTPUT | Alternating AB | 10 B | ~30 B | **~9×** |
+| Nested loop + math | Counting 0..255 | 15 B | **74 B** | **3.8×** |
+| REPEAT_BLOCK | Repeating block | 5+len | 445 B | — |
+
+These programs approach the Kolmogorov complexity floor — the shortest possible description of the data.
+
+The adaptive pipeline selector chooses between 7 strategies based on input characteristics: random pass-through, delta encoding for sorted integers, BWT+MFT+RLE for text, sparse encoding for low-entropy data, dedup for repeated blocks, RePair grammar compression, and the VM bytecode path for periodic/structured input.
+
+## GPU BWT Acceleration
+
+The BWT stage is the pipeline's most expensive operation. `carnot-gpu-core` offloads suffix array construction to the GPU via [libcubwt](https://github.com/IlyaGrebnov/libcubwt), targeting a GTX 1060 6GB (Pascal, CUDA 12.2).
+
+```
+GPU SA-IS → BWT → MTF → Zero-run → RePair → Order-1 AC
+```
+
+The FFI is scaffolded with CUDA device management via `cudarc`, VRAM budgeting (20.5n bytes for n-byte input, ~300MB max on the 6GB card), and a CPU fallback path. The `carnot-gpu-cli` provides `info` and `bench-bwt` subcommands for device discovery and CPU vs GPU benchmarking.
+
+## Bilinear Accumulator on BLS12-381
+
+A separate crate, `carnot-accumulator`, implements a bilinear accumulator for constant-size set membership proofs:
+
+```
+Setup:  s = random secret
+        pk = g₂^s
+
+Accumulate:  acc = g₁^{∏(s + hash(x_i))}
+Witness:     w   = g₁^{∏_{i≠j}(s + hash(x_j))}
+Verify:      e(w, g₂^{hash(x_j)} · pk) == e(acc, g₂)
+```
+
+Key properties:
+- **48-byte accumulator** regardless of set size
+- **48-byte witness** per element
+- **Aggregatable** — multiple witnesses merge into one
+- **Secure** — without the secret, forging a witness is infeasible
+
+Implementation highlights:
+- Pairings via `blst` on the BLS12-381 curve
+- **NTT-based polynomial multiplication** (`src/ntt.rs`) — tree-based product expansion in O(n log n) instead of O(n²)
+- **Batch witness generation** via prefix-suffix products in O(N)
+- **Merkle tree** integration for byte-level data recovery
+- Powers-of-tau trusted setup with chunked verification
+
+This isn't directly about compression — it's infrastructure for verifiable computation. But it lives in the same workspace because the underlying math (polynomials over finite fields) connects both domains.
+
+## What's Next
+
+The GPU BWT FFI needs libcubwt linking. The accumulator needs Groth16 or similar for full zero-knowledge proofs. And the VM needs better pattern detection heuristics to route more data through the bytecode path.
+
+---
+
+Carnot is open-source under MIT. [github.com/brsbyrk/carnot](https://github.com/brsbyrk/carnot)
