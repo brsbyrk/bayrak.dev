@@ -175,10 +175,22 @@ body {
 
 /* ── Blog list page ── */
 .blog-list-page main,
-.blog-post-page main {
-  max-width: 720px;
-  margin: 0 auto;
+.blog-post-page main .container {
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding: 3rem 1.5rem;
+}
+
+.blog-post-page main .row {
+  margin: 0;
+}
+
+.blog-post-page main .col {
+  padding: 0;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  margin-left: 0 !important;
 }
 
 .blog-list-page article {
