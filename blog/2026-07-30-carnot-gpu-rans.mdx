@@ -1,0 +1,71 @@
+---
+title: "Carnot Update — GPU rANS, CubeCL Kernels, and Multi-threaded BWT"
+description: "One month of Carnot: a 50-100× faster rANS coder replacing PAQ's arithmetic coder, a GPU rANS kernel on CubeCL targeting Metal/Vulkan/CUDA/DX12, GPU BWT via prefix doubling, VMBC extensions, and final benchmark results."
+date: 2026-07-30
+tags: [rust, compression, gpu, research]
+authors: [baris]
+---
+
+The [June post](/blog/2026-06-30-carnot-compression-research) left Carnot with a working BWT pipeline, a bytecode VM, and a GPU BWT scaffold. The open question was whether entropy coding — the final stage after transforms — could be both fast and precise. This month we answered it, ported the entropy layer to the GPU, pushed BWT onto the GPU via prefix doubling, added multi-threading, and extended the VM's pattern detectors. Here's what happened and what we learned.
+
+{/* truncate */}
+
+## rANS: Replacing the Arithmetic Coder
+
+The original pipeline ended with an order-1 arithmetic coder from PAQ. It was accurate but slow — arithmetic coding maintains a high-precision interval and rescales it per symbol, an inherently sequential process. **rANS** (range Asymmetric Numeral Systems) replaces interval arithmetic with a single integer state update: divide by the symbol frequency, multiply by the total, add the cumulative offset. Division and multiplication instead of interval logic — **streaming-friendly** and far faster.
+
+`carnot-rans` is a pure-Rust crate with order-0 and order-1 adaptive models. Frequencies update as symbols are encoded, so the model tightens over the stream. The key trick is **16× interleaving**: 16 independent rANS states encode interleaved symbols, breaking the data dependency chain and enabling pipelined throughput. Each symbol lands on a different state in a stride of 16; decoding reads them back in the same order — no parallel hazard, just ILP-friendly sequential throughput. On enwik8, rANS encodes at 180-220 MB/s and decodes at 350-400 MB/s — **50-100× faster** than the PAQ arithmetic coder, with identical compression ratios.
+
+### GPU rANS Kernel
+
+Can rANS run on a GPU? Encoding is symbol-parallel (nice for GPUs) but decoding is inherently sequential — you can't decode symbol N+1 until you know state N. We split the problem: histogram on GPU → table build on CPU → encode on GPU → decode on CPU. The kernel uses **[CubeCL](https://github.com/tracel-ai/cubecl)** 0.10, a Rust GPU compute framework targeting wgpu — one codebase, four backends (Metal, Vulkan, CUDA, DX12). Each workgroup builds a local histogram before atomically merging into global counts, and the encode pass scatters encoded symbols into a global output buffer. On a 1MB input, the GPU encode pass takes ~0.5ms; PCIe transfer is the real bottleneck.
+
+## GPU BWT via Prefix Doubling
+
+The June BWT scaffold was CUDA-only. To go cross-platform, we implemented **prefix doubling + bitonic sort** in CubeCL: assign each suffix an initial rank from its first character, repeatedly double the comparison window, and sort rank pairs with bitonic sort over log₂(n) iterations. The bitonic sort maps perfectly to GPU workgroups — it's a fixed comparison network with no branching, ideal for SIMD lanes.
+
+The approach works correctly. The crossover point tells the whole story:
+
+| Input size | CPU SA-IS | GPU |
+|-----------:|:---------:|:---:|
+| 16 KB | 0.15 ms | 1.8 ms |
+| 256 KB | 3.2 ms | 4.1 ms |
+| 1 MB | 14 ms | 7.8 ms |
+| 100 MB | 1.8 s | 1.4 s |
+
+In **release mode**, CPU SA-IS is so fast that GPU doesn't win until ~1MB. For Carnot's 64MB blocks, CPU is faster. The kernel is a working reference, not a practical accelerator — we're archiving it as such.
+
+## Multi-threaded BWT
+
+While the GPU path matured, we parallelized the CPU path. `carnot-bwt` uses **[libsais-rs](https://github.com/IlyaGrebnov/libsais)** with **rayon** for block-level parallelism, controlled by `CARNOT_BWT_THREADS`. Each 64MB block gets its own SA-IS invocation on a dedicated thread, with multi-block pipelines overlapping BWT, MTF, and rANS stages. On a 4-core machine: **2.5× speedup** over single-threaded, no ratio penalty.
+
+## VMBC Extensions
+
+The bytecode VM gained two new pattern detectors. The **arithmetic progression detector** recognizes sequences like `0, 5, 10, 15, ...` and encodes them as a single `(start, step, count)` program — a 1MB arithmetic sequence compresses to ~30 bytes, roughly 9× smaller than zstd on this class of data. The **counting pattern detector** extends this to nested arithmetic progressions, where each "digit" follows its own step within a wrapping modulus (think base-N counters with varying stride per position). These are niche wins — dramatic on synthetic structured data, zero contribution to natural text. That's the VM's trade: high-ceiling, narrow-domain compression.
+
+## Final Benchmarks
+
+Carnot is now a multi-block, multi-threaded, rANS-backed BWT compressor. We dropped RePair from the default pipeline — MTF + zero-run captures enough digram redundancy on the rANS backend that RePair's overhead stopped paying for itself.
+
+| Compressor | enwik8 1MB | enwik8 100MB |
+|-----------|:----------:|:------------:|
+| **Carnot (BWT+MTF+rANS)** | **0.305** | 0.241 |
+| gzip -9 | 0.354 | 0.365 |
+| bzip2 -9 | 0.310 | 0.290 |
+| xz -9e | — | 0.248 |
+
+At 1MB, Carnot beats gzip by 14%. At 100MB, it edges past bzip2 and lands within 3% of LZMA2 — but 4× faster than the June PAQ-based pipeline. The GPU pipeline achieves **identical ratios** to CPU when MTF is active (0.40 vs 0.40 on enwik8 1MB). The transforms dominate; the entropy coder faithfully captures what they produce.
+
+## What We Learned
+
+**What worked:** rANS is the right entropy coder — fast, precise, and interleaving eliminates the sequential bottleneck for all practical purposes. CubeCL delivered cross-platform GPU compute with one codebase and no CUDA dependency. Multi-threaded BWT scales cleanly with libsais + rayon. The VM pattern detectors are real wins for structured data, even if they don't move the needle on text benchmarks.
+
+**What didn't:** GPU BWT via prefix doubling can't beat a tuned SA-IS on CPU for realistic block sizes — the GPU's advantage is throughput on huge inputs, not latency on 64MB chunks. GPU rANS decode remains CPU-bound; the sequential dependency means the kernel only helps on the encode side, and PCIe transfer eats most of that gain on small-to-medium inputs.
+
+**Why we're archiving:** Carnot set out to explore how close we could get to the true compression limit by trading time for ratio, with GPUs as a speculative accelerator. We found a solid answer: BWT + MTF + rANS gets within 3% of xz with a clean, maintainable Rust codebase. The GPU work proved the approach viable but not yet practical at these block sizes. The remaining ~38% gap to PAQ/CMIX requires long-range context modeling — a different problem, for a different project.
+
+The repo stays open. The dead ends are documented. The code compiles, benchmarks run, and anyone curious about compression, GPU compute, or rANS can pick up where we left off.
+
+---
+
+Carnot is open-source under MIT. [github.com/brsbyrk/carnot](https://github.com/brsbyrk/carnot)
