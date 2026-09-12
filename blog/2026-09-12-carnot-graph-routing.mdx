@@ -1,0 +1,124 @@
+---
+title: "Carnot Update — Graph Routing, a Fixed Schedule, and a Negative Result"
+description: "Chapter II of Carnot: does a sparse graph-routing kernel beat a dense model at matched budget? It lost at every context length — and building the follow-up uncovered a structural defect that explained why the routing rule contributed nothing: it never observed the data."
+date: 2026-09-12
+tags: [compression, research, machine-learning]
+authors: [baris]
+---
+
+The [July post](/2026/07/30/carnot-gpu-rans) archived Carnot's compressor and closed with a wall: beating gzip by 14% is nice, but the remaining ~38% gap to PAQ and CMIX needs **long-range context modeling** — a learned representation, not a better entropy coder. Chapter II went after that. It ended in a negative result, twice over, and the way it failed turned out to be more interesting than the hypothesis.
+
+{/* truncate */}
+
+## The Hypothesis
+
+One sentence, one metric, falsifiable:
+
+> At matched parameter count and matched compute, a sparse graph-routing model predicts byte streams at lower bits/byte than a dense model of the same budget.
+
+The appeal of routing is that it *should* be cheap. A dense transformer spends a fixed amount of compute per byte forever. A router picks a path through a neighbourhood and does small local work, so most of the model is dormant most of the time.
+
+The mechanism: 32 stations arranged in a graph, and a puck that visits them. Each station carries an anchor (where it sits), a force vector (which way it pushes), a 16×16 context matrix, and a fixed byte-level instruction. The puck has position and velocity, and momentum — `v = 0.5·v + 0.5·F`. At each step it scores its four neighbours by **alignment times reachability**:
+
+```
+G(m) = cos(F_m, v) · exp(−‖a_m − p‖² / 2σ²)
+```
+
+and takes the `argmax`. Hard selection, geometric scoring — deliberately *not* a softmax, because the point of the experiment was to test whether discrete routing pays for itself. A shared head then reads the puck's context state and emits the next-byte distribution. Arm A: 34,624 parameters. Arm B: a parameter-matched dense transformer, 33,184 parameters, 4% smaller.
+
+## It Lost
+
+Routing was beaten at every context length, and the margin **grew** with context:
+
+| Context | Routing | Dense | Δ |
+|--------:|--------:|------:|--:|
+| 256 | 3.8564 | 3.5397 | +0.3168 |
+| 512 | 3.8776 | 3.4808 | +0.3968 |
+| 1024 | 3.9135 | 3.4464 | **+0.4671** |
+
+Dense also won on **equal wall-clock** — and that is the harder test, because at 1024 context the transformer costs **8.4× the FLOPs per byte**. It won anyway, while paying for its own compute.
+
+Worth saying plainly: both arms are worse than gzip (**2.846** bits/byte). At ~35,000 parameters these models are far too small to be competitive compressors. This was never a product; it was a question about representation.
+
+## We Removed the Special Parts
+
+The decisive evidence wasn't the loss — it was the ablations. If routing's distinctive machinery is load-bearing, removing it should hurt. We replaced each defining feature and measured at 10 MB, three seeds:
+
+| Ablation | Δ bpb | Noise threshold | |
+|---|--:|--:|---|
+| Momentum removed (β = 1) | +0.0120 | 0.0754 | NOISE |
+| Hardness removed (soft routing) | +0.0349 | 0.0754 | NOISE |
+| Per-node operators → predictors | −0.0513 | 0.0754 | NOISE |
+
+**Nothing moved.** Removing the momentum, the hard selection, and the per-node instructions changed nothing measurable. If you can unscrew the engine and the car drives identically, the engine wasn't connected. The kernel was decoration; a shared emission head was doing all the work.
+
+## Then We Found the Bug
+
+Chapter II's follow-up asked whether that result was really about per-node **capacity** rather than routing at all — by varying the one thing the first experiment never varied: how much per-node compute exists. That experiment added a *manipulation check*, which is a fancy name for a simple idea: **before you interpret an ablation's null result, prove the ablated thing actually ran.** A null from a mechanism that never fired means "it never ran", not "it didn't help".
+
+The check failed immediately, for a reason nobody expected:
+
+```
+'the cat sat on the mat'   -> node path 0, 2, 10, 11, 19, 12, 10, 11, 19, ...
+'ZZZZZZZZZZZZZZZZZZZZZZ'   -> IDENTICAL
+22 random bytes            -> IDENTICAL
+
+8 walkers reading 8 DIFFERENT byte streams -> distinct paths: 1
+```
+
+**The routing rule never observed the data.** Its score consumed only the graph, the anchors, the forces, the position and the velocity — none of which depend on the input. Every byte the model read went into the *context state*, which reached the emission head and nothing else. The puck's path through the graph was a pure function of its parameters: a **fixed schedule**, pre-computed, the same for a love letter and random noise.
+
+That reframes the whole first experiment. Routing wasn't weak — it was a fixed wiring wearing routing's clothes. The momentum and hardness ablations were noise because there was nothing for them to contribute: the path carried **zero information about the input**. The verdict was right, but my explanation of it was wrong, and the correction is now in the repo.
+
+It also explains the coverage numbers. A fixed schedule visits 12 of 32 stations, so only 10 of 16 instructions ever executed, and the counting instruction — the one the whole follow-up rested on — lived on two stations the walk never reached.
+
+## Making It Real
+
+The fix was small. Make the puck's heading depend on what it has read:
+
+```
+u = v + W·c          W is 16×16, +256 parameters
+```
+
+`c` is the context state — the only thing on the walk that carries history, and by the time routing happens it already contains the current byte. Momentum is kept, the geometric scoring is kept, the hard `argmax` is kept. Only the *direction* the alignment is measured against changes.
+
+The result was unambiguous. Same model, same everything else:
+
+| | Fixed schedule | Data-dependent |
+|---|--:|--:|
+| Stations reached | 12 / 32 | **26 – 32 / 32** |
+| Instructions executed | 10 / 16 | **all 14 real ones** |
+| Counting table | identically zero | **85 – 225** |
+| Paths differ by input | no | **yes, from the first step** |
+
+Those are ranges across six seeds, not single readings: with a fixed schedule the walk deterministically reaches 12 stations, and once routing depends on the data it reaches 26–32 depending on how the route trains. The 15th and 16th instructions are no-ops, so "all real ones" is the honest bar — the no-op occasionally goes unreached, which cannot matter by definition.
+
+For the first time, the channel was genuinely alive.
+
+## It Still Lost
+
+The follow-up was a 2×2 factorial: a rich 16-instruction set versus the **same model with every instruction replaced by a no-op**, crossed with two ways of reading the instructions' output. 1 MB of enwik8, three seeds. If instructions matter, the rich arm should beat the do-nothing arm.
+
+| Contrast | Δ bpb | Noise threshold | |
+|---|--:|--:|---|
+| **16 live instructions vs all no-ops** | **+0.0014** | 0.1009 | **NOISE** |
+| Wide read-out vs averaged | +0.0242 | 0.0974 | NOISE |
+| Interaction (the pre-registered prediction) | −0.0154 | 0.1085 | NOISE |
+
+**+0.0014 bits/byte against a 0.10 threshold.** Sixteen working instructions, including a counting table that demonstrably filled, are indistinguishable from instructions that do nothing. The pre-registered prediction — that richer instructions would only help with a wider read-out — failed too.
+
+## What We Learned
+
+**What worked:** the experimental method, eventually. Pre-registering the kill criterion meant the answer was decided before the data arrived. The manipulation check — added specifically because the first experiment's nulls were uninterpretable — found a structural defect on its first use, before 12 runs were spent on a dead channel. And each stage removed an alternative explanation: it wasn't the routing rule, wasn't the instruction set, wasn't the read-out width, and wasn't the context window.
+
+**What didn't:** the idea. At ~35,000 parameters, the shared emission head reading a 16-dimensional recurrent state accounts for essentially all of the model's behaviour. The graph structure, the geometric routing, the per-node instructions — none of it contributes anything measurable on top.
+
+**The uncomfortable part:** the sequence was *null → find a defect → fix the defect → still null*. That is a much stronger negative than the first one, because the mechanism was verified working when it produced the null. It's also a reminder that a negative result is only as good as your ability to show the mechanism ran.
+
+**The one lever never touched:** scale. Everything here ran at tens of thousands of parameters on 1–10 MB. That constraint is capacity, not architecture, and it is the honest reason both arms sit above gzip. Testing it needs real compute and a different budget — so this is where Chapter II stops.
+
+Chapter II is closed as a negative result, and the negative is documented to the same standard as a win would have been: the design, the defect, the fix, the numbers, and every ablation that failed to matter. Three experiments, two code revisions, all on CPU.
+
+---
+
+Carnot is open-source under MIT. [github.com/brsbyrk/carnot](https://github.com/brsbyrk/carnot)
