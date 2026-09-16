@@ -108,13 +108,31 @@ So the mechanism is not *"has a cycle"*. It is **"maintains coherence on its cyc
 
 One more thing worth knowing: the code is **distributed, not a labelled line**. Five neurons decode at 52.5%, twenty-five at 57.5%, a hundred at 80%, and five hundred saturate at 82.5%. The neurons doing the work sit about one hop from the stimulus — the direct targets — rather than spread across the network.
 
+### Which half of that is the wiring, and which is the weights?
+
+"Maintains coherence" is a description, not yet an explanation. Two things could be responsible: the **wiring** (which neuron talks to which) or the **weights** (how many synapses on each connection). Every randomised control we'd built so far moved both together, so none of them could tell them apart.
+
+So we built one that moves only the weights — **permuting the synapse counts while leaving the wiring byte-for-byte identical** — and, separately, rewired edges gradually in a ladder.
+
+The result splits the mechanism cleanly in two.
+
+**The wiring makes the cycle, and it is surprisingly hard to break.** Rewiring 4% of edges costs essentially nothing. Rewiring **18%** — moving 4.5 million connection endpoints — still costs essentially nothing (decoding 85%, coherence unchanged). Then between 18% and 63% it falls off a cliff: decoding 25%, coherence gone. The substrate that carries the cycle doesn't degrade gracefully, it **fragments**.
+
+**The weights decide how much information rides on it.** With the wiring held byte-identical and 78% of the synapse counts reassigned, the cycle **survives completely intact** — same 160 ms period, same coherence — and yet retention **halves, 87.5% down to 40%**.
+
+That is the part that corrected our own story. A perfectly coherent limit cycle can carry less than half the information. So coherence is **necessary but not sufficient**, and "the mechanism is keeping the cycle coherent" was the wrong way to put it. The honest version is two factors, both required:
+
+> **the wiring provides the coherent cycle · the weights load it with information**
+
+Randomised rewrites fail the first. A weight permutation fails the second.
+
 ## What We Learned
 
 **What worked:** the method. Pre-registering the decision rule meant the answer was decided before the data arrived. The control ladder localised each effect to a specific kind of structure instead of producing one uninterpretable null. Every permutation null sat at chance (11–15% against a 12.5% floor) throughout, which is what makes the low control numbers trustworthy rather than suspect. And running each claim through a *deliberate attempt to break it* is what separated four retractions from a confident wrong post.
 
 **What didn't:** most of our first explanations. Four of five claims had to be narrowed, and the surviving one is narrower than we originally stated: not "biology encodes and others don't", but "everyone encodes, only the biology retains" — and that retention is not a decaying trace but **coherent phase-locking onto a limit cycle**, which the controls show is the difference between remembering and not, since they are just as active.
 
-**The one thing we still can't explain:** why the biological graph holds coherence and its randomised rewrites don't. We've localised the mechanism to *coherence maintenance* rather than *persistence*, and ruled out the spectral explanation — but what about this specific wiring sustains the phase is open. That is the honest edge of the result.
+**The one thing we still can't explain:** *which* structural feature of the wiring provides the cycle. We know it survives randomising 82% of the connections and dies somewhere past that — a fragmentation threshold, not a gradient. But what specifically holds it together is open, and so is why reassigning synapse counts halves the information when the wiring is untouched. That is the honest edge of the result.
 
 **The uncomfortable part:** our errors were almost all in one direction. Better instrumentation never strengthened a claim; it only ever weakened one. That is a useful prior to carry: if a result about biological specialness feels satisfying, that is a reason to attack it harder, not to write it up.
 

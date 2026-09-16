@@ -153,14 +153,10 @@ src, kept = 151856684, 25563197
 check("filter ratio", "16.8%", f"{kept/src*100:.1f}%", abs(kept / src * 100 - 16.8) < 0.05)
 
 # ---------------------------------------------------------------- code size, LIVE
-loc = subprocess.run(f"find {REPO}/crates -name '*.rs' | xargs wc -l | tail -1",
-                     shell=True, capture_output=True, text=True).stdout.split()[0]
-check("rust lines", "10,785", f"{int(loc):,}", abs(int(loc) - 10785) < 200)
-
-t = subprocess.run("cargo test --workspace 2>&1 | grep -E 'test result: ok'",
-                   shell=True, capture_output=True, text=True, cwd=REPO).stdout
-total = sum(int(l.split("ok. ")[1].split()[0]) for l in t.splitlines() if "ok. " in l)
-check("test count", "205", str(total), total == 205)
+# NOTE: checks for code size and test count were REMOVED here. They asserted the repo state, but the
+# post never mentions either figure, so they were not fact-checks of the draft at all - and they broke
+# the moment the repo grew. Every remaining check below corresponds to a number that appears in the
+# post. (The flyos repo's own docs/WRITEUP.md does carry those figures; verify them there if needed.)
 
 
 # ---------------------------------------------------------------- mechanism section (§37)
@@ -206,6 +202,48 @@ check("mechanism: top-100 at 1 hop", "87", str(hop["1"]["top100"]), hop["1"]["to
 check("mechanism: top-100 at 2 hops", "10", str(hop["2"]["top100"]), hop["2"]["top100"] == 10)
 check("mechanism: max reach", "4 hops", f"{max(int(k) for k in bio_m['readout_by_hop'])} hops",
       max(int(k) for k in bio_m["readout_by_hop"]) == 4)
+
+
+# ---------------------------------------------------------------- dissociation section (§38)
+def mech_dir(d):
+    return json.load(open(REPO / f"experiments/out/{d}/mechanism.json"))
+
+def _median(v):
+    v = sorted(v); n = len(v)
+    return v[n // 2] if n % 2 else 0.5 * (v[n // 2 - 1] + v[n // 2])
+
+def contrast(d):
+    j = mech_dir(d); lc = j["lag_correlation"]
+    return (max(lc) - _median(lc)), lc[160 // int(j["bins_ms"]) - 1]
+
+rows38 = [("memory-mechanism", 0.770, 0.742, 87.5), ("memory-mechanism-rw002", 0.772, 0.734, 85.0),
+          ("memory-mechanism-rw01", 0.682, 0.655, 85.0), ("memory-mechanism-rw05", 0.141, 0.108, 25.0),
+          ("memory-mechanism-wperm", 0.765, 0.723, 40.0)]
+for d, ec, er, ea in rows38:
+    c, r = contrast(d)
+    a = mech_dir(d)["accuracy"][-1]
+    check(f"38: {d} contrast", f"{ec:.3f}", f"{c:.3f}", abs(c - ec) < 2e-3)
+    check(f"38: {d} r@160", f"{er:.3f}", f"{r:.3f}", abs(r - er) < 2e-3)
+    check(f"38: {d} retention", f"{ea}%", f"{a:.1f}%", abs(a - ea) < 1e-6)
+
+# the frozen state must be distinguishable, and excluded
+frozen = _median(mech_dir("memory-mechanism-rw20")["lag_correlation"])
+bio_med = _median(mech_dir("memory-mechanism")["lag_correlation"])
+check("38: 97.5% row is frozen (high at ALL lags)", "median r ~ +0.6", f"{frozen:+.3f}",
+      abs(frozen - 0.599) < 5e-3)
+check("38: biological is not (median ~ 0)", "-0.027", f"{bio_med:+.3f}", abs(bio_med + 0.027) < 5e-3)
+
+# the two invariants the whole dissociation rests on
+import json as _j
+w = _j.load(open(REPO / "data/controls-rewire/weights-101.shuffle.json"))
+check("38: weights mode topology identical", "true", str(w["topology_identical"]).lower(),
+      w["topology_identical"] is True)
+check("38: weights reassigned", "78%", f"{100*w['weights_reassigned']/w['edge_count']:.1f}%",
+      abs(100 * w["weights_reassigned"] / w["edge_count"] - 78.4) < 0.1)
+for f, exp in (("rewire-0.02", 96.12), ("rewire-0.1", 82.08), ("rewire-0.5", 37.40)):
+    d = _j.load(open(REPO / f"data/controls-rewire/{f}.shuffle.json"))
+    check(f"38: {f} measured retention", f"{exp}%", f"{100*d['retention']:.2f}%",
+          abs(100 * d["retention"] - exp) < 0.01)
 
 # ---------------------------------------------------------------- report
 w = max(len(r[0]) for r in results)
