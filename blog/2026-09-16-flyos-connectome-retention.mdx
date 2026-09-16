@@ -1,0 +1,107 @@
+---
+title: "FlyOS — a Fly Connectome, Four Retractions, and the One Claim That Survived"
+description: "We built a deterministic simulator over the Drosophila male CNS connectome — 165,122 neurons and 25.6 million connections — to ask whether its specific wiring does computational work, using randomised rewrites of the real brain as controls. Four of our five claims had to be narrowed. The fifth survived parameter jitter and a 30× conduction-delay sweep."
+date: 2026-09-16
+tags: [neuroscience, rust, simulation, research]
+authors: [baris]
+---
+
+A fruit fly's central nervous system has been mapped completely: **165,122 neurons and 25,563,197 connections**, every synapse counted. Nobody designed that diagram — evolution did — and the obvious question is whether the specific way those connections are arranged is doing computational work, or whether any network of the same size and density would behave the same. That second half is the hard part. "The wiring matters" is the kind of claim that sounds self-evidently true and is very easy to get wrong, so the project was built around being able to answer it honestly rather than impressively.
+
+{/* truncate */}
+
+## Why Bother Asking
+
+The dataset is real, published, and awkwardly large in a specific way: the weights table has **151,856,684 rows**, and only **25,563,197** of them survive filtering to neurons whose reconstruction has actually been proofread — **16.8%**. The rest is segmentation debris. FlyOS converts the survivors into a compact binary format (198 MB) with byte-identical reproducibility: two independent implementations, in different languages, agree on every neuron, edge, and synapse count.
+
+On top of that sits a simulator where the same input produces the same output every time, down to a state hash. That is not a nice-to-have. Without it, every comparison below is meaningless, because you cannot tell a structural difference from a random one.
+
+## How to Ask It Without Fooling Yourself
+
+The honest comparison is not "real brain versus random noise" — that is a strawman that will always be won. It is **random rewrites of the real brain that preserve different amounts of its structure**:
+
+| Control | What it preserves |
+|---|---|
+| Uniform random | only the neuron and connection counts |
+| Degree-matched | + every neuron's exact in/out degree and every connection's weight |
+| Sign-preserving | + how much excitation vs inhibition flows between cell classes (9 numbers) |
+| Class-preserving | + the full cell-type-to-cell-type connection matrix (330 numbers) |
+| **The real brain** | all of the above, plus everything else |
+
+Each rung keeps a bit more of the truth, so instead of one dubious comparison you get a **ladder** — and you can attribute a behaviour to the *kind* of structure responsible. Five replicates per family, all byte-reproducible from seeds.
+
+## What the Ladder Found
+
+Ignition threshold rises monotonically as structure is destroyed:
+
+| Graph | Threshold |
+|---|---|
+| Real brain | **0.0064** |
+| Degree-matched | 0.0110 |
+| Structure-free | 0.0173 |
+
+And the response *sharpens* at the same time. The real brain behaves like a **dimmer** — raise the input and activity climbs gradually. Every randomised rewrite behaves like a **switch**: dead, then abruptly 97% active. The ordering matters more than any single comparison, and it only exists because there are five rungs rather than one.
+
+Testing whether this was all just excitatory/inhibitory balance **eliminated** that explanation — the sign-preserving control has the same threshold as the degree-matched one. What it revealed instead is that the mechanism splits into independent axes: threshold is set by the coarse cell-type layout, the runaway ceiling by E/I balance, and oscillation strength by fine wiring.
+
+## The Result That Stood Out
+
+Feed the network a 20-millisecond pattern of activity, then let it run free. **400 ms later you can still tell which of eight patterns it was — 80 to 95% accurate.** Random rewrites of the same brain, at matched activity: **7.5 to 25%**.
+
+The confound we had to rule out first was mundane: with only 200 stimulated neurons against a 5,000-neuron readout, chance overlap is 6 neurons — 0.121% of dimensions. That cannot produce 80% against a 12.5% ceiling. The decoded state is propagation, not the stimulus.
+
+## Four Times We Were Wrong
+
+This is the part worth reading carefully, because it is the difference between this and a demo that always works.
+
+**One.** We reported that the network's ~108 ms rhythm "requires biological wiring". Then we noticed every comparison had used the *same absolute* input level, while the graphs ignite at different levels — so the controls were below their own threshold, silent by construction. Compared fairly, the rhythm is near-threshold behaviour **every** graph shows. *Retracted.*
+
+**Two.** We reported the real brain's threshold as 2.0× lower than a degree-matched rewrite. A finer measurement grid gave **1.71×**. *Corrected.*
+
+**Three.** We reported that only the biological network could *encode* a stimulus at all. That was our **decoder being too weak** — with common-mode removal and a ridge classifier, the controls reach 100% immediate accuracy. What survives is narrower and more interesting: everyone encodes; **only the real brain still has it 400 ms later.** *Retracted.*
+
+**Four.** We hypothesised the memory came from a property of the connection matrix, the standard result in recurrent network theory. **It doesn't.** The prediction missed by 25×, and the ordering inverted: graphs with virtually identical spectral fingerprints — the four degree-preserving families sit within **0.7%** of each other — differ 5× in how well they remember. *Hypothesis dead.*
+
+The pattern is consistent and worth naming: **we kept over-claiming in the direction of "the biology is special", and only better instrumentation caught it.** Not once did a result get stronger under scrutiny.
+
+## The Test the Survivor Passed
+
+The memory result had an obvious vulnerability. Every neuron had been given *identical* parameters, and identical units synchronise artificially — so the memory could have been an artefact of that uniformity rather than of the wiring.
+
+So we jittered every neuron's decay and threshold by ±10%, ±20%, ±30%, across three independent random draws — 15 runs. If it was an artefact, it should collapse.
+
+| Condition | ~1.0% activity | ~1.7% activity | ~2.3% activity |
+|---|---|---|---|
+| No jitter (original) | — | 80.0% | 95.0% |
+| ±10%, seed 42 | 87.5% | 92.5% | 92.5% |
+| ±20%, seed 42 | 80.0% | 90.0% | 90.0% |
+| ±20%, seed 7 | 82.5% | 90.0% | 100.0% |
+| ±20%, seed 13 | 75.0% | 87.5% | 85.0% |
+| ±30%, seed 42 | 67.5% | 95.0% | 95.0% |
+
+It survived everything. Then we attacked the other idealisation the project's own assumptions flagged as most distorting: **conduction delay**. Real neurons take time to signal; in this model, signals arrived instantly, which the assumptions recorded as overestimating synchrony.
+
+| Delay | Low activity | Mid activity | High activity |
+|---|---|---|---|
+| 1 ms (original) | 95.0% | 80.0% | 95.0% |
+| 3 ms | 35.0% | 62.5% | 70.0% |
+| 10 ms | 60.0% | 67.5% | 77.5% |
+| 30 ms | 100.0% | 100.0% | 100.0% |
+
+Retention survives a 30× range of the assumption most likely to destroy it, and the contrast holds: at 10 ms, the real brain retains 60–77.5% where sign-preserving, class-preserving and degree-matched rewrites reach 7.5%, 10–15% and 12.5–15%.
+
+The most interesting thing in that table is a dissociation. **Delay makes encoding trivial for every graph — all of them hit 100% at immediate readout — while conferring none of the persistence.** What biological wiring does is demonstrably not what delay does.
+
+## What We Learned
+
+**What worked:** the method. Pre-registering the decision rule meant the answer was decided before the data arrived. The control ladder localised each effect to a specific kind of structure instead of producing one uninterpretable null. Every permutation null sat at chance (11–15% against a 12.5% floor) throughout, which is what makes the low control numbers trustworthy rather than suspect. And running each claim through a *deliberate attempt to break it* is what separated four retractions from a confident wrong post.
+
+**What didn't:** most of our first explanations. Four of five claims had to be narrowed, and the surviving one is narrower than we originally stated: not "biology encodes and others don't", but "everyone encodes, only the biology retains". The mechanism for that retention is still **unknown** — we ruled out the spectral explanation and have no replacement.
+
+**The uncomfortable part:** our errors were almost all in one direction. Better instrumentation never strengthened a claim; it only ever weakened one. That is a useful prior to carry: if a result about biological specialness feels satisfying, that is a reason to attack it harder, not to write it up.
+
+**What we would not claim:** that this is a fly brain. It is an anatomical connectome plus an assumed dynamical model — no plasticity, no per-edge delays, no gap junctions, no neuromodulation. The retention result is a statement about what this model does with this wiring. Whether it survives morphology-derived delays is the open question, and uniform delays are not a substitute for them.
+
+---
+
+FlyOS is at [github.com/brsbyrk/flyos](https://github.com/brsbyrk/flyos) — code, data, and the full experimental record, including every retraction in the commit that made it.
