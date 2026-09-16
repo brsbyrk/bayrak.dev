@@ -98,13 +98,42 @@ Knowing *that* the wiring remembers is not knowing *how*, and a property you can
 
 Four candidates, each with a distinct signature, fixed before looking: a self-sustaining attractor, a circulating loop, a wave still travelling outward, or a passive decaying echo.
 
-The answer is a **limit cycle with a 160 ms period**. The pattern-specific state recurs at exact multiples of 160 ms — 160, 320, 480, 640 — at correlation **r = 0.742**, while every intermediate lag sits at roughly zero. The input selects *which phase* the network occupies; because an attracting cycle holds that phase, the selection persists instead of fading. That eliminates the other three: nothing decays (decoding is still 87.5% at 800 ms and activity is flat), the state is not fixed (it rotates), and nothing propagates away (it returns to itself, on a graph whose maximum reach is four hops).
+The first answer was a **limit cycle with a 160 ms period**. The pattern-specific state appeared to recur at exact multiples of 160 ms — 160, 320, 480, 640 — at correlation **r = 0.742**, while intermediate lags sat near zero. The story was that the input selects *which phase* the network occupies, and an attracting cycle holds that phase, so the selection persists instead of fading.
 
-The part that turns this from a description into a mechanism is the controls. **Both control graphs are persistently active too** — block-301's activity ratio is 1.00× and sign-401's is 1.05×, so "being in a sustained state" is not what separates them. The 160 ms timescale is even *present* in the controls as a weak bump (r = 0.250 and 0.249, both at exactly 160 ms), so the timescale is generic to the dynamics.
+That was a satisfying answer. It was also wrong, and the way it was wrong is the most useful thing in this post.
 
-What only the biological graph does is **hold phase coherence**. Its recurrence is sharp and sustained — four peaks above r = 0.3 where the controls have none. Meanwhile block-301 decays to 15% and sign-401 to **10%, below chance**, while remaining just as active the whole time.
+### The retraction
 
-So the mechanism is not *"has a cycle"*. It is **"maintains coherence on its cycle."** Persistence alone buys nothing; the controls prove that.
+We only found it because we varied the **measurement** instead of the network. Every test up to that point changed the graph and left the analysis fixed at one configuration: 20 ms bins, an 800 ms window. The recurrence analysis reported its peak lag in *bins*, and 8 bins × 20 ms happens to be exactly 160 ms.
+
+So we changed the bin width and nothing else — same graph, same operating point:
+
+| bin width | peak lag | in milliseconds |
+|---|---|---|
+| 5 ms | 24 bins | **120 ms** |
+| 10 ms | 24 bins | **240 ms** |
+| 20 ms | 8 bins | 160 ms |
+| 40 ms | 8 bins | **320 ms** |
+
+**A real period is fixed in milliseconds no matter how you bin it. This one isn't.** At 5 ms bins the correlation at 160 ms is +0.272; at 40 ms bins it is −0.039, which is nothing at all. The "comb at exactly 160/320/480/640 ms" was a comb of multiples of the peak lag *in bins*, which at 20 ms binning lands on multiples of 160 ms. The limit cycle was an artifact of the analysis grid.
+
+The tell was there and we talked ourselves out of it twice. The "period" had already survived a 10× change in the membrane time constant, a 4× change in conduction delay, an 8× change in the refractory period, and an 8× change in network size — without moving. **Nothing physical is invariant to four independent parameters.** A null against a well-established law (delay sets oscillation frequency) is a reason to suspect your instrument, not the law.
+
+### What the correction leaves
+
+The *contrast* was never the artifact — only the period was. Measured at three bin widths with activity matched (biological 2.06%, block-301 2.70%, sign-401 2.44%):
+
+| bin width | biological | block-301 | sign-401 |
+|---|---|---|---|
+| 5 ms | **+0.564** | +0.025 | +0.097 |
+| 20 ms | **+0.746** | +0.011 | +0.136 |
+| 40 ms | **+0.796** | +0.005 | +0.140 |
+
+Only the *location* of the peak follows the bin grid. The gap over the matched controls — 5× to 159× — holds at every bin width.
+
+So the honest statement is weaker than a limit cycle and better supported: the biological graph's pattern-specific state stays **correlated with itself over hundreds of milliseconds**, and the randomisations decorrelate. That is persistence with structure, not a clock.
+
+It is also a better explanation, for a specific reason. "The input selects which phase of a cycle" was a *separate* claim from the retention measurement, so it could be wrong on its own. "The state retains its pattern-specific structure" is the same fact the decoder is measuring directly. The mechanism no longer sits on top of the result — it *is* the result.
 
 One more thing worth knowing: the code is **distributed, not a labelled line**. Five neurons decode at 52.5%, twenty-five at 57.5%, a hundred at 80%, and five hundred saturate at 82.5%. The neurons doing the work sit about one hop from the stimulus — the direct targets — rather than spread across the network.
 
@@ -116,23 +145,23 @@ So we built one that moves only the weights — **permuting the synapse counts w
 
 The result splits the mechanism cleanly in two.
 
-**The wiring makes the cycle, and it is surprisingly hard to break.** Rewiring 4% of edges costs essentially nothing. Rewiring **18%** — moving 4.5 million connection endpoints — still costs essentially nothing (decoding 85%, coherence unchanged). Then between 18% and 63% it falls off a cliff: decoding 25%, coherence gone. The substrate that carries the cycle doesn't degrade gracefully, it **fragments**.
+**The wiring is surprisingly hard to break.** Rewiring 4% of edges costs essentially nothing. Rewiring **18%** — moving 4.5 million connection endpoints — still costs essentially nothing: decoding 85%. Then between 18% and 63% it falls off a cliff to 25%. The substrate that carries the memory doesn't degrade gracefully, it **fragments**.
 
-**The weights decide how much information rides on it.** With the wiring held byte-identical and 78% of the synapse counts reassigned, the cycle **survives completely intact** — same 160 ms period, same coherence — and yet retention **halves, 87.5% down to 40%**.
+**The weights decide how much information rides on it.** With the wiring held byte-identical and 78% of the synapse counts reassigned, decoding **halves, 87.5% down to 40%**.
 
-That is the part that corrected our own story. A perfectly coherent limit cycle can carry less than half the information. So coherence is **necessary but not sufficient**, and "the mechanism is keeping the cycle coherent" was the wrong way to put it. The honest version is two factors, both required:
+That is the part that corrected our own story: the same wiring, carrying less than half the information. Whatever the retained state is made of, its *content* depends on how the synapse counts are arranged, not only on which neurons are connected.
 
-> **the wiring provides the coherent cycle · the weights load it with information**
+> **the wiring sets how much can be retained · the weights set how much actually is**
 
-Randomised rewrites fail the first. A weight permutation fails the second.
+**Caveat, stated plainly:** our original version of this section claimed the recurrence signature "survives completely intact, same 160 ms period" under the weight permutation. That half is void now — it was measured with the affected metric, at one bin width. The *information* half (87.5% → 40%) is a decoding measurement and stands. Re-running the weight-permuted graph at several bin widths is the outstanding test.
 
 ## What We Learned
 
 **What worked:** the method. Pre-registering the decision rule meant the answer was decided before the data arrived. The control ladder localised each effect to a specific kind of structure instead of producing one uninterpretable null. Every permutation null sat at chance (11–15% against a 12.5% floor) throughout, which is what makes the low control numbers trustworthy rather than suspect. And running each claim through a *deliberate attempt to break it* is what separated four retractions from a confident wrong post.
 
-**What didn't:** most of our first explanations. Four of five claims had to be narrowed, and the surviving one is narrower than we originally stated: not "biology encodes and others don't", but "everyone encodes, only the biology retains" — and that retention is not a decaying trace but **coherent phase-locking onto a limit cycle**, which the controls show is the difference between remembering and not, since they are just as active.
+**What didn't:** most of our first explanations. Four of five claims had to be narrowed, and the surviving one is narrower than we originally stated: not "biology encodes and others don't", but "everyone encodes, only the biology retains" — and that retention is not a decaying trace but **persistent, structured evolution of the pattern-specific state**, which the controls show is the difference between remembering and not, since they are just as active. Our first explanation of that persistence — a 160 ms limit cycle — did not survive being measured two different ways.
 
-**The one thing we still can't explain:** *which* structural feature of the wiring provides the cycle. We know it survives randomising 82% of the connections and dies somewhere past that — a fragmentation threshold, not a gradient. But what specifically holds it together is open, and so is why reassigning synapse counts halves the information when the wiring is untouched. That is the honest edge of the result.
+**The one thing we still can't explain:** *which* structural feature of the wiring sustains the persistence. We know it survives randomising 82% of the connections and dies somewhere past that — a fragmentation threshold, not a gradient. But what specifically holds it together is open, and so is why reassigning synapse counts halves the information when the wiring is untouched. That is the honest edge of the result — and it is now five retractions rather than four.
 
 **The uncomfortable part:** our errors were almost all in one direction. Better instrumentation never strengthened a claim; it only ever weakened one. That is a useful prior to carry: if a result about biological specialness feels satisfying, that is a reason to attack it harder, not to write it up.
 

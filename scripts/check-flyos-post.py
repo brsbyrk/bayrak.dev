@@ -245,6 +245,72 @@ for f, exp in (("rewire-0.02", 96.12), ("rewire-0.1", 82.08), ("rewire-0.5", 37.
     check(f"38: {f} measured retention", f"{exp}%", f"{100*d['retention']:.2f}%",
           abs(100 * d["retention"] - exp) < 0.01)
 
+# ------------------------------------------------- §44 RETRACTION EVIDENCE
+# The checker above verifies NUMBERS against artifacts. It could not tell whether a correctly-quoted
+# number was being used to support a retracted claim - which is exactly what happened for eight sections.
+# So the retraction's own evidence is checked too, from the raw run logs.
+
+import re as _re
+
+
+def _peak(logfile):
+    """(peak lag in ms, r) from a mechanism run log, or None. Log naming is not uniform (bin tests are
+    `mech_binN.log`, matched controls are `cx_<tag>_N.log`), so callers pass the path."""
+    f = REPO / "logs" / logfile
+    if not f.exists():
+        return None
+    m = _re.search(r"strongest at lag \d+ bins \(([\d.]+) ms\), r=([+-][\d.]+)", f.read_text())
+    return (float(m.group(1)), float(m.group(2))) if m else None
+
+
+def _activity(logfile):
+    f = REPO / "logs" / logfile
+    if not f.exists():
+        return None
+    m = _re.search(r"calibrated: scale [\d.]+ -> mean firing [\d,]+ \(([\d.]+)%\)", f.read_text())
+    return float(m.group(1)) if m else None
+
+
+# 1. the period is NOT stable across bin widths - this is the retraction's whole basis
+_expected_peaks = {"bin5": 120.0, "bin10": 240.0, "bin20": 160.0, "bin40": 320.0}
+for lbl, want in _expected_peaks.items():
+    got = _peak(f"mech_{lbl}.log")
+    check(f"44: bin-width peak ({lbl.replace('bin','')} ms bins)",
+          f"{want:.0f} ms",
+          f"{got[0]:.0f} ms" if got else "missing",
+          got is not None and abs(got[0] - want) < 0.51)
+_distinct = {v for v in _expected_peaks.values()}
+check("44: the period MOVES with the bin width", "yes", f"{len(_distinct)} distinct values",
+      len(_distinct) == 4)
+
+# 2. the matched contrast survives every bin width
+_contrast = {  # (biological, block-301, sign-401) at each bin width, from the logs
+    5:  (0.564, 0.025, 0.097),
+    20: (0.746, 0.011, 0.136),
+    40: (0.796, 0.005, 0.140),
+}
+for b, (bio, blk, sgn) in _contrast.items():
+    gb = _peak(f"mech_bin{b}.log")
+    gk = _peak(f"cx_block_{b}.log")
+    gs = _peak(f"cx_sign_{b}.log")
+    check(f"44: contrast @{b}ms biological", f"{bio:+.3f}",
+          f"{gb[1]:+.3f}" if gb else "missing", gb is not None and abs(gb[1] - bio) < 5e-4)
+    check(f"44: contrast @{b}ms block-301", f"{blk:+.3f}",
+          f"{gk[1]:+.3f}" if gk else "missing", gk is not None and abs(gk[1] - blk) < 5e-4)
+    check(f"44: contrast @{b}ms sign-401", f"{sgn:+.3f}",
+          f"{gs[1]:+.3f}" if gs else "missing", gs is not None and abs(gs[1] - sgn) < 5e-4)
+
+# 3. the controls really were at a matched operating point (or the contrast is meaningless)
+for lbl, want in (("cx_block_20", 2.70), ("cx_sign_20", 2.44)):
+    got = _activity(f"{lbl}.log")
+    check(f"44: {lbl} activity matched", f"{want:.2f}%",
+          f"{got:.2f}%" if got is not None else "missing", got is not None and abs(got - want) < 0.05)
+
+# 4. the control that CANNOT be matched - recorded so it is never used as a comparison again
+_got = _activity("cal_ctrlbin20.log")
+check("44: ctrl-101 cannot be matched", "0.01%", f"{_got:.2f}%" if _got is not None else "missing",
+      _got is not None and _got < 0.05)
+
 # ---------------------------------------------------------------- report
 w = max(len(r[0]) for r in results)
 print(f"{'claim'.ljust(w)}  {'in post':<22} {'from artifacts':<22} result")
