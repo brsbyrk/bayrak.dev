@@ -5,7 +5,7 @@ Rule: numbers are RE-READ from artifacts, never transcribed from prose or conver
 can be re-derived from raw run output it is re-derived rather than looked up, so the check is
 independent of any document - including the ones written during the project.
 """
-import csv, pathlib, subprocess, sys
+import csv, json, pathlib, subprocess, sys
 
 REPO = pathlib.Path("/Users/baris/Workspace/flyos")
 results = []
@@ -161,6 +161,51 @@ t = subprocess.run("cargo test --workspace 2>&1 | grep -E 'test result: ok'",
                    shell=True, capture_output=True, text=True, cwd=REPO).stdout
 total = sum(int(l.split("ok. ")[1].split()[0]) for l in t.splitlines() if "ok. " in l)
 check("test count", "205", str(total), total == 205)
+
+
+# ---------------------------------------------------------------- mechanism section (§37)
+def mech(dirname):
+    """dirname: 'memory-mechanism' for biological, 'memory-mechanism-<label>' for a control."""
+    return json.load(open(REPO / f"experiments/out/{dirname}/mechanism.json"))
+
+bio_m = mech("memory-mechanism")
+
+def lag_peaks(d, thr=0.3):
+    lc = d["lag_correlation"]; ms = d["bins_ms"]
+    return [(k + 1) * int(ms) for k, c in enumerate(lc) if c > thr]
+
+def lag_at(d, ms):
+    k = ms // int(d["bins_ms"])
+    return d["lag_correlation"][k - 1]
+
+check("mechanism: cycle peaks", "160, 320, 480, 640", str(lag_peaks(bio_m)),
+      lag_peaks(bio_m) == [160, 320, 480, 640])
+check("mechanism: r at 160ms", "0.742", f"{lag_at(bio_m, 160):.3f}", abs(lag_at(bio_m, 160) - 0.742) < 5e-3)
+check("mechanism: decoding at 800ms", "87.5%", f"{bio_m['accuracy'][-1]:.1f}%",
+      abs(bio_m["accuracy"][-1] - 87.5) < 1e-6)
+act = bio_m["activity_per_step"]
+check("mechanism: activity flat", "1.02x", f"{sum(act[-5:])/sum(act[:5]):.2f}x",
+      abs(sum(act[-5:]) / sum(act[:5]) - 1.02) < 0.01)
+
+for lbl, exp_final, exp_r, exp_ratio in (("block301", 15.0, 0.250, 1.00), ("sign401", 10.0, 0.249, 1.05)):
+    d = mech(f"memory-mechanism-{lbl}"); a = d["activity_per_step"]
+    check(f"mechanism {lbl}: decays to", f"{exp_final}%", f"{d['accuracy'][-1]:.1f}%",
+          abs(d["accuracy"][-1] - exp_final) < 1e-6)
+    check(f"mechanism {lbl}: r at 160ms", f"{exp_r:.3f}", f"{lag_at(d,160):.3f}",
+          abs(lag_at(d, 160) - exp_r) < 5e-3)
+    check(f"mechanism {lbl}: persistent activity", f"{exp_ratio:.2f}x",
+          f"{sum(a[-5:])/sum(a[:5]):.2f}x", abs(sum(a[-5:]) / sum(a[:5]) - exp_ratio) < 0.01)
+    check(f"mechanism {lbl}: no sustained peaks", "none", str(lag_peaks(d, 0.3)), lag_peaks(d, 0.3) == [])
+
+wc = bio_m["decoder_weight_curve"]
+for n, exp in (("5", 52.5), ("25", 57.5), ("100", 80.0), ("500", 82.5)):
+    check(f"mechanism: {n} neurons decode at", f"{exp}%", f"{wc[n]:.1f}%", abs(wc[n] - exp) < 1e-6)
+
+hop = bio_m["hop_distribution_of_top_neurons"]
+check("mechanism: top-100 at 1 hop", "87", str(hop["1"]["top100"]), hop["1"]["top100"] == 87)
+check("mechanism: top-100 at 2 hops", "10", str(hop["2"]["top100"]), hop["2"]["top100"] == 10)
+check("mechanism: max reach", "4 hops", f"{max(int(k) for k in bio_m['readout_by_hop'])} hops",
+      max(int(k) for k in bio_m["readout_by_hop"]) == 4)
 
 # ---------------------------------------------------------------- report
 w = max(len(r[0]) for r in results)
