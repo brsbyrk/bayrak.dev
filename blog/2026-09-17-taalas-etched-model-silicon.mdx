@@ -1,0 +1,109 @@
+---
+title: "Taalas — a Model Etched Into Silicon, and the Ceiling It Actually Breaks"
+description: "AMD agreed to acquire Taalas, whose HC1 chip hard-wires Llama 3.1 8B into mask ROM and serves 17,000 tokens/sec to a single user. We re-derive the physics from first principles: the 299 tok/s bandwidth ceiling it breaks is real, the ~85× latency win is real, and the attached '1000× efficiency' is the reciprocal of GPU utilisation at batch size 1 rather than a result in physics."
+date: 2026-09-17
+tags: [hardware, silicon, inference, research]
+authors: [baris]
+---
+
+A Toronto startup with 24 employees has built a chip whose 53 billion transistors **are** the weights of a language model rather than a place to put them. It serves Llama 3.1 8B at **17,000 tokens per second to a single user** — roughly 48× a Blackwell B200 and 85× an H200 on the same model. AMD announced on 6 August 2026 that it has agreed to acquire the company. The claim attached to the announcement is that Hardcore Models are "1000× more efficient than their software counterparts," which is the kind of number that usually means nothing. Here it means something specific and much narrower than it sounds — and the physics underneath it is not only real, it names a ceiling that no amount of GPU engineering gets past.
+
+{/* truncate */}
+
+## First, What Is Actually Established
+
+Everything below distinguishes three tiers of evidence, because the interesting part of this story is how they differ.
+
+**Primary, from Taalas** ([product page](https://taalas.com/products/), [Bajic's launch post](https://taalas.com/the-path-to-ubiquitous-ai/)): 815 mm², TSMC 6nm, 53 billion transistors, 2.5 kW for a ten-card server, 17k tokens/sec/user on Llama 3.1 8B, 1k-in/1k-out. Also on the record: the quantization is a custom **3-bit base type with 3-bit and 6-bit parameters mixed**, which Bajic states "introduces some quality degradations relative to GPU benchmarks."
+
+**Primary, from AMD** ([newsroom](https://newsroom.amd.com/news/amd-acquires-taalas-ai-inference/)): a *definitive agreement*, subject to closing conditions and regulatory approval. Price undisclosed. So the shorts are slightly ahead of reality — this is an announced deal, not a completed acquisition.
+
+**Third-party**: [The Next Platform](https://www.nextplatform.com/compute/2026/02/19/taalas-etches-ai-models-onto-transistors-to-rocket-boost-inference/4092140) got the only substantive technical interview, and its founder history is worth knowing: Ljubisa Bajic founded Tenstorrent, then left to build Taalas; all three co-founders came from Tenstorrent, and before that AMD. Version 1 of the company was general-purpose AI silicon. Version 2 is the exact opposite bet.
+
+**Not established**: there is no independent third-party benchmark. The B200 baseline was run by Taalas. The Groq, SambaNova and Cerebras comparison points come from Artificial Analysis via Taalas's own chart. Every ratio in this post that is not arithmetic is vendor-reported.
+
+## The Ceiling That Explains Everything
+
+LLM decoding is not compute-bound. To emit one token you must touch every weight exactly once, and at 16-bit precision that is 16.06 GB of data that has to be hauled out of DRAM **per token, forever**. This puts a hard ceiling on any conventional accelerator, from any vendor:
+
+| Chip | HBM bandwidth | Weights read per token | Ceiling | Measured |
+|---|---|---|---|---|
+| H200 | 4.8 TB/s | 16.06 GB | **299 tok/s** | ~200 (67% of ceiling) |
+| B200 | 8.0 TB/s | 16.06 GB | **498 tok/s** | ~350 (70% of ceiling) |
+
+That table is the whole story, and it cuts both ways. Read one way, it says modern GPUs are nowhere near the theoretical limit. Read the other, and it says they are already at **70% of a wall that physics put there** — which is a well-engineered chip doing its job, not a chip that can be optimised into 17,000 tok/s. You cannot get to 17,000 by making the memory faster. You have to stop reading the weights.
+
+The self-consistency here is a good sign for the rest: Taalas's own quoted H200 baseline of ~200 tok/s lands at 67% of the ceiling computed from published bandwidth. A vendor inflating a baseline would have picked a number below the ceiling, not one that survives an independent check against HBM specs.
+
+## A Weight That Is Not Data
+
+The mechanism is a **mask ROM**. In a mask ROM a bit is not a charge in a cell — it is the *presence or absence of a contact* at a wire crossing. Value is geometry in a metal layer. Bajic's description of the consequence:
+
+> "We have got this scheme for the mask ROM recall fabric — the hard-wired part — where we can store four bits away and do the multiply related to it — everything — with a single transistor. So the density is basically insane. And this is not nuclear physics — it is fully digital. It is just a clever trick that we don't want to broadcast."
+
+The lever is that a weight is a **constant**, fixed at fab time. Multiplying by a constant is not really arithmetic — it is a lookup. So there is no multiplier array to build (Bajic calls multipliers "the big boy piece of the computer"), no register file to hold weights, and no weight movement at all. Only activations move, a few millimetres, on-die. The architecture pairs that immutable ROM fabric with a mutable SRAM fabric that holds the KV cache and LoRA adapters — so the model's skeleton is silicon and its mutable state is not.
+
+**Flagged as inference, not fact:** the specific reading that Taalas pre-computes all sixteen products of a 4-bit slice at manufacturing time and lets pass transistors *select* the correct pre-wired channel is our reconstruction from Bajic's own wording, not a statement Taalas has made. They are explicitly keeping the fabric secret ("we don't want to broadcast"). The functional claim — one transistor holds a weight and performs its multiply — is his, on the record. The circuit-level mechanism behind it is not, and this post does not lean on it.
+
+Two physical consequences follow, and they are why 200 W is credible. Multiplication by a constant bit decomposes into a conditional wire, so the dominant energy term disappears; and a ROM cell that is not being read does not toggle, so dynamic power tracks only the activations moving through. The measured power density is **0.25 W/mm²** — low enough that standard air cooling suffices, and low precisely *because* the data is not moving.
+
+## Does the Transistor Budget Add Up?
+
+This is the one part of the design that is externally checkable, so it is worth checking. Take Bajic's own ratio — four bits stored and multiplied per transistor — and Taalas's own quantization statement (3-bit base, 3-bit and 6-bit mixed, so call it ~4 bits per parameter on average):
+
+| Component | Derivation | Transistors |
+|---|---|---|
+| Weights, etched in ROM | 8.03B params × 4 bits ÷ 4 bits per transistor | **8.0B** (15%) |
+| KV cache, adders, muxes, clocking, routing | 53B − 8.0B | ~45B (85%) |
+
+The arithmetic closes on the stated figure, which is not nothing — a fundamentally different storage scheme that came out three orders of magnitude off the announced transistor count would be a problem. It also says something about where the silicon actually goes: **the weights are only about 15% of the die.** The rest is the compute fabric and the mutable state, and the KV cache has to live in that budget — which is why "configurable context window size" is a configuration choice made at tapeout rather than a runtime dial.
+
+A useful contrast: the B200 carries 208 billion transistors on roughly 1,600 mm² of die — about **130 MTr/mm²** against HC1's 65 MTr/mm². The ROM chip is *half* the density. Density was never the problem being solved. Not moving the data was.
+
+## Three Numbers Called "Efficiency"
+
+This is where the headline claims have to be taken apart, because three quite different figures get flattened into one.
+
+**Latency: ~85×, and it is structural.** 17,000 tok/s is 58.8 µs per token, which across 32 transformer layers is **1,838 ns per layer** — for RMSNorm, QKV projection, attention and the MLP combined. For contrast, take the same ceiling table and ask what one *layer* costs on an H200: 502 MB of weights per layer at 4.8 TB/s is **105 µs of pure memory time**, before a single multiply. That is a 57× gap in memory time alone, and it is a gap that no amount of batching closes, because it is per-token serial latency either way. The ratio end to end against the H200 at 200 tok/s is 85×; against the B200 at 350 tok/s it is the 48× in Taalas's own marketing. It is the most defensible number in the whole story.
+
+**Energy per token: about 3×, not 1000×.** At 200 W a card, HC1 spends **11.8 mJ per token**. An H200 running one stream at 200 tok/s spends 3,500 mJ per token — 298× worse, which is the comparison the marketing uses. But a *batched* H200 at, say, 20,000 tok/s aggregate is already down to 35 mJ per token: only **3×** behind. Batching exists precisely to amortise the GPU's weakness, and at scale it mostly does.
+
+**The 1000× is a utilisation figure.** Here is the arithmetic that produces it. A B200 at 350 tok/s on this model is doing 350 × 16.06 GFLOP = 5.6 TFLOP/s against a peak of 9,000 TFLOP/s dense FP4 — **0.062% of peak**. Invert that and you get **1,601×**. That is the number. Taalas runs at approximately 100% of what its own design does, because there is nothing to wait for, and the "1000× more efficient" claim is the reciprocal of GPU utilisation at batch size 1. Nor is it a claim about energy efficiency in any absolute sense: HC1's 273 TFLOP/s effective throughput over 200 W is **1.37 TFLOP/J**, against the B200's 9.00 TFLOP/J at peak — the GPU is **6.6× better per joule at peak**. It just cannot *reach* its peak on a batch-1 decode.
+
+The physical bedrock under all of this is [Horowitz's ISSCC 2014 numbers](https://gwern.net/doc/cs/hardware/2014-horowitz-2.pdf), and they are brutal:
+
+| Operation | Energy |
+|---|---|
+| 32-bit floating-point multiply | 3.7 pJ |
+| On-chip functional operation | 10 pJ |
+| DRAM I/O | **over 20 pJ per bit** |
+| Full DRAM access | 1–2 nJ |
+
+Reading a single weight from DRAM costs many times more than the arithmetic it feeds, and a weight is sixteen bits. Delete the read and most of the bill disappears. That is the entire thesis, and it is a real one.
+
+## What It Cannot Do
+
+- **One model per chip.** A new model is a new tapeout. Only two metal layers change, so it is far cheaper and faster than a full design — Taalas quotes **two months** from an unseen model to deployable cards — but it is a hard discontinuity, not a config file.
+- **Quality is knowingly traded.** Taalas's own words on the 3-bit/6-bit mix: "some quality degradations." Comparing a degraded 8B model at 17k tok/s to a clean one at 200 is not comparing like with like.
+- **Long context is the weak axis.** The KV cache grows per token and lives in fixed on-chip SRAM. Context length is bought at tapeout, not at runtime.
+- **Mixture-of-experts inverts the economics.** MoE activates a small fraction of weights per token, so a GPU's bandwidth bill drops with it. A ROM chip must bake *all* the experts into silicon to serve any of them, then traverse only some — the whole area cost, a fraction of the benefit. Next Platform estimated roughly 35 cards to run DeepSeek R1 671B; that ratio is the tell.
+- **One die is one die.** At 815 mm² the part is already at 95% of the 858 mm² single-exposure reticle limit. Anything larger than a mid-sized model has to be pipelined across chips.
+- **No independent verification.** Vendor-run benchmarks, as of the launch.
+
+## Why AMD Bought It
+
+Two things are happening at once. The obvious one: Nvidia acquired Groq's inference assets for a reported ~$20 billion months earlier, and AMD has no equivalent asset and no CUDA moat to defend. Buying a decode-specialised chip is differentiation by a different route, and AMD's stated plan — integrate it alongside Instinct GPUs in Helios racks — is a division of labour rather than a replacement. GPUs keep prefill, training and flexibility; the hardwired part eats the serial-decode latency problem that GPUs cannot structurally solve.
+
+The less obvious one is who is being bought. Bajic was an AMD architect on hybrid CPU-GPU designs before founding Tenstorrent; his co-founders came through AMD and ATI as well. Asked about the economics, the framing from Taalas is that hardening a model costs about one hundredth of training it. That only works if you need to serve *that specific model* for long enough to amortise the tapeout — which is a bet that models stop churning every three months. Llama 3.1 8B is still being served today, years after release, and frontier release cadence has been lengthening. It is a bet with evidence behind it, which is not the same as a safe one.
+
+## What We Learned
+
+**What worked:** the derivation. Almost every dramatic number in this story is reproducible from constants that are published — parameter count, HBM bandwidth, TDP, transistor count, die area — and doing that arithmetic first is what separated the three "efficiency" claims from each other. The 299 tok/s ceiling is not Taalas marketing; it falls out of dividing two public specs, and it is *why* the 17,000 figure is plausible rather than absurd. Likewise the transistor budget closing at 15% weights and 85% everything-else, and HC1's power density landing low in a way that is consistent with the claim that nothing is moving.
+
+**What didn't:** the headline framing survives contact with the hardware but not with the arithmetic. "1000× more efficient" is a true statement about *utilisation* — 1/0.062% — and a false-sounding one about energy, where batching already narrows the gap to roughly 3×. The genuinely large, genuinely structural win is latency, at ~85×, and it is the number that gets the least airtime because round numbers sell better. It is also the one that matters most for the use case Taalas actually names: agentic loops and interactive coding, where the constraint is that a model cannot afford to think slower than the human it is working with.
+
+**The uncomfortable part:** the design removes one constraint and promotes another. Once nothing is bandwidth-bound, what is left is per-layer serial latency, power delivery, and the reticle limit — and then the deepest constraint of all, which is that the model is frozen. Whether that is a good trade depends entirely on a prediction about how fast models will keep changing, which is a prediction about the world rather than about silicon. The hardware is sound. The bet is the interesting part.
+
+---
+
+The arithmetic in this post is re-derived, not transcribed: every figure is recomputed from the published constants above by [scripts/check-taalas-post.py](https://github.com/brsbyrk/bayrak.dev/blob/main/scripts/check-taalas-post.py), which will fail the build if the numbers drift.
