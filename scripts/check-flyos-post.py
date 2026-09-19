@@ -5,7 +5,7 @@ Rule: numbers are RE-READ from artifacts, never transcribed from prose or conver
 can be re-derived from raw run output it is re-derived rather than looked up, so the check is
 independent of any document - including the ones written during the project.
 """
-import csv, json, pathlib, subprocess, sys
+import csv, json, pathlib, statistics, subprocess, sys
 
 REPO = pathlib.Path("/Users/baris/Workspace/flyos")
 results = []
@@ -310,6 +310,54 @@ for lbl, want in (("cx_block_20", 2.70), ("cx_sign_20", 2.44)):
 _got = _activity("cal_ctrlbin20.log")
 check("44: ctrl-101 cannot be matched", "0.01%", f"{_got:.2f}%" if _got is not None else "missing",
       _got is not None and _got < 0.05)
+
+# ------------------------------------------------- §47-§49: campaign and spectral results
+# The sections added after the campaign and the spectral work carry new numbers; they need checking too,
+# or the checker is decoration. All values are re-read from committed artifacts.
+
+_spectral = json.loads((REPO / "experiments/degree-weight-corr.json").read_text())
+_by_label = {r["label"]: r for r in _spectral["rows"]}
+
+_v = []
+for _f in sorted((REPO / "logs/campaign").glob("sign-*.log")):
+    _m = re.search(r"final ([\d.]+)%", _f.read_text())
+    if _m:
+        _v.append(float(_m.group(1)))
+check("47: campaign replicate count", "146", str(len(_v)), len(_v) == 146)
+check("47: campaign mean retention", "13.7%", f"{statistics.mean(_v):.1f}%" if _v else "none",
+      bool(_v) and abs(statistics.mean(_v) - 13.7) < 0.05)
+check("47: campaign max (0 above 77.5%)", "0 above 77.5", f"max {max(_v):.0f}%",
+      bool(_v) and max(_v) < 77.5)
+
+for _lab, _want in (("biological", 6031.8), ("rewire-0.02", 5750.7), ("rewire-0.1", 4912.2),
+                    ("rewire-0.5", 2591.1), ("rewire-2.0", 1973.5), ("weights-101", 1934.2)):
+    _r = _by_label.get(_lab)
+    check(f"48: rho {_lab}", f"{_want:.1f}", f"{_r['rho']:.1f}" if _r else "missing",
+          _r is not None and abs(_r["rho"] - _want) < 1.0)
+
+_wp, _sg = _by_label.get("weights-101"), _by_label.get("sign-401")
+if _wp and _sg:
+    _gap = abs(_wp["rho"] - _sg["rho"]) / max(_wp["rho"], _sg["rho"]) * 100
+    check("49: matched pair rho distance", "0.4% apart", f"{_gap:.1f}% apart", _gap < 1.0)
+    _rr = _wp["retention_pct"] / _sg["retention_pct"]
+    check("49: matched pair retention ratio", "3.7x", f"{_rr:.1f}x", abs(_rr - 3.7) < 0.1)
+
+_inv = {round(_r["pearson_deg_totw"], 4) for _r in _spectral["rows"]
+        if _r["label"] != "weights-101"}
+check("49: degree-weight corr is INVARIANT", "0.7899 for many graphs",
+      f"{len(_inv)} distinct value(s): {sorted(_inv)}",
+      len(_inv) == 1 and abs(list(_inv)[0] - 0.7899) < 5e-4)
+
+for _lab, _want in (("biological", 0.0633), ("rewire-2.0", 0.0011), ("weights-101", -0.0003)):
+    _r = _by_label.get(_lab)
+    if _r:
+        check(f"49: weight->hub targeting {_lab}", f"{_want:+.4f}",
+              f"{_r['pearson_weight_target_indeg']:+.4f}",
+              abs(_r["pearson_weight_target_indeg"] - _want) < 5e-4)
+
+check("49: Spearman(rho, weight->hub)", "+0.86",
+      f"{_spectral['spearman_rho_vs_weight_target_indeg']:+.4f}",
+      abs(_spectral["spearman_rho_vs_weight_target_indeg"] - 0.86) < 0.02)
 
 # ---------------------------------------------------------------- report
 w = max(len(r[0]) for r in results)

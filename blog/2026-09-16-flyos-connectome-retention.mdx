@@ -161,13 +161,104 @@ topology-identical weight permutation (0.412 / 0.836 / 0.917 against the biologi
 0.804) while retention falls from a mean of 78.3% to 44.2%. So the dissociation holds — as a statement
 about the recurrence signature, not about a cycle.
 
+## Did the result survive being tested properly?
+
+Everything above rested on **one** control graph per condition. That is not enough to claim anything —
+with n = 1 the minimum achievable p-value is 0.5, and the field's standard is around a thousand
+replicates. So we ran it properly.
+
+**146 independent randomisations**, all at a matched operating point:
+
+| | |
+|---|---|
+| connectome | **77.5%** |
+| randomisations (n = 146) | **13.7%** mean, range 0–30% |
+| how many reached the connectome | **0** |
+| closest one | **48 points short** |
+| p | **0.0068** |
+
+Three independent runs agreed to within a point — 12.9%, 13.5%, 13.7%. The effect is real, and it is
+large. Chance is 12.5%, so the randomisations are sitting *at* chance while the real wiring is six times
+above it.
+
+## Then we went looking for what does it structurally
+
+This is where the story turns. We had four candidates for a structural property that explains the
+difference, and **all four died**:
+
+| candidate | what we measured | result |
+|---|---|---|
+| largest strongly-connected component | flat at 98.9553–98.9662% — not just across randomisations, but in graphs with **no dynamics at all** | dead |
+| excitatory/inhibitory balance | flat to four decimal places | dead |
+| reciprocity | held *exactly* constant while the behaviour collapsed by 98% | dead |
+| assortativity | moved 10% while behaviour fell 98% | dead |
+
+Four structural statistics, all present in the randomisations too. None of them could be what makes the
+difference — and that was starting to look like the real answer: *maybe no structural statistic can see
+it.*
+
+**Then one did.** The **spectral radius of the weighted connectivity** separates the connectome from
+every single randomisation by **2.3 to 3.1×**:
+
+| | spectral radius | retention |
+|---|---|---|
+| connectome | **6031.8** | 77.5% |
+| rewired 4% | 5750.7 | 85.0% |
+| rewired 18% | 4912.2 | 85.0% |
+| rewired 63% | 2591.1 | 25.0% |
+| rewired 98% | 1973.5 | 15.0% |
+| weights shuffled, wiring untouched | 1934.2 | 44.0% |
+
+That is the first structural quantity in this whole project that detects the difference at all.
+
+And its mechanism turned out to be measurable rather than mysterious: **the connectome aims its heavy
+synapses at well-connected targets.** The correlation between an edge's weight and its target's degree is
+**+0.063** in the real brain, decays steadily as you rewire it, and is **−0.0003** once you shuffle the
+weights. That single correlation tracks the spectral radius almost perfectly.
+
+## And then it failed — in the most useful possible way
+
+Two of those graphs have **essentially the same spectral radius**: 1934.2 and 1926.0 — a difference of
+**0.4%**.
+
+They retain at **44%** and **12%**.
+
+A **3.7× difference in behaviour between two networks with the same structural number.** So the spectral
+radius cannot be what determines the behaviour, no matter how well it correlates.
+
+That failure is the finding:
+
+> **The connectome has two independent structural properties.** The spectral radius follows the *weight
+> arrangement*. Retention follows the *topology*. They can be destroyed separately, and when you do, the
+> two measurements move independently.
+
+Rewiring breaks both — which is why the spectral radius looked like the answer for a while. Shuffling the
+weights with the wiring held byte-identical breaks only the first, and retargets the question: the
+weights control how much information rides on the structure, and the structure decides whether it
+survives.
+
+## One number that was wrong for a good reason
+
+We also wrote down the wrong mechanism first. Having measured the spectral radius, we explained it as a
+"degree-to-weight correlation" — which sounds right and is **false**.
+
+Degree-preserving rewiring swaps *whole edges*, so every neuron keeps both its number of connections and
+its total synaptic weight. That correlation is **exactly invariant by construction** — we measured
+**0.7899 for seven different graphs**, identical to four decimal places, while the spectral radius moved
+threefold. A quantity that never changes cannot explain one that does.
+
+The correction took ten minutes to test and is now in the record. It is the third time in this project we
+caught ourselves stating a mechanism we had not actually measured, and we have written the fix into the
+process rather than promising to be more careful: **a mechanism claim must name the quantity it asserts,
+and that quantity must appear in a table.** The first version did not. The corrected one does.
+
 ## What We Learned
 
 **What worked:** the method. Pre-registering the decision rule meant the answer was decided before the data arrived. The control ladder localised each effect to a specific kind of structure instead of producing one uninterpretable null. Every permutation null sat at chance (11–15% against a 12.5% floor) throughout, which is what makes the low control numbers trustworthy rather than suspect. And running each claim through a *deliberate attempt to break it* is what separated four retractions from a confident wrong post.
 
 **What didn't:** most of our first explanations. Five claims had to be narrowed or withdrawn, and the surviving one is narrower than we originally stated: not "biology encodes and others don't", but "everyone encodes, only the biology retains" — and that retention is not a decaying trace but **persistent, structured evolution of the pattern-specific state**, which the controls show is the difference between remembering and not, since they are just as active. Our first explanation of that persistence — a 160 ms limit cycle — did not survive being measured two different ways.
 
-**The one thing we still can't explain:** *which* structural feature of the wiring sustains the persistence. We know it survives randomising 82% of the connections and dies somewhere past that — a fragmentation threshold, not a gradient. But what specifically holds it together is open, and so is why reassigning synapse counts halves the information when the wiring is untouched. That is the honest edge of the result — and the 160 ms limit cycle above is the fifth retraction.
+**The one thing we still can't explain:** *which* structural feature of the wiring sustains the persistence. We now know more than we did — the spectral radius separates the connectome from every randomisation, its mechanism is weight-to-hub targeting, and it is demonstrably *not* the control parameter. But the quantity that actually carries the memory is still unidentified. Four aggregate statistics and one spectral quantity have been eliminated. That is the honest edge of the result.
 
 **The uncomfortable part:** our errors were almost all in one direction. Better instrumentation never strengthened a claim; it only ever weakened one. That is a useful prior to carry: if a result about biological specialness feels satisfying, that is a reason to attack it harder, not to write it up.
 
