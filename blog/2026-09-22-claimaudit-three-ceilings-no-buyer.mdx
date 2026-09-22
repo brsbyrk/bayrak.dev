@@ -1,0 +1,120 @@
+---
+title: "claimaudit — Three Physics Ceilings, One Control Set, and No Buyer"
+description: "We built a tool that audits public technical claims against the derived hard ceiling of their own physics — three domains, 49 tests, standard library only — and it caught real errors in real claims. Then we wrote down the criteria for whether anyone would pay for it, before looking, and the answer came back no. Not because the tool fails, but because every route to the money sits behind an accreditation wall."
+date: 2026-09-22
+tags: [physics, verification, research, business]
+authors: [baris]
+---
+
+A claim can be exciting, well-funded, and arithmetically impossible at the same time, and the arithmetic is usually the part nobody checks. This project started as an attempt to answer a different question — whether a cheap abundant material could be turned into something valuable from a laptop — and it ended somewhere more useful: with a small tool that audits public technical claims against the **derived hard ceiling of their own domain**, three working domains, and a rigorously negative answer to the question of whether anyone would pay for it.
+
+{/* truncate */}
+
+## The Question, and the Wrong Answer
+
+The prompt was a video arguing that rare earths aren't actually rare. That is true, and it led somewhere unexpected. The interesting question underneath was whether a solo person with a PC and no lab could take an abundant, undervalued material and transform it into something valuable.
+
+**No.** Materials work is gated three ways: knowledge (a simulation can sometimes close this), a wet lab (it cannot be closed from a keyboard), and capital (a plant is not a weekend project). Almost every candidate lands behind at least two of the three. Rare-earth-free magnets are the clean example — the physics is fine, every contender has adequate intrinsic magnetism, and the blocker is synthesis and phase stability, which is bench work.
+
+But three independent research passes looking into it all landed on the same bottleneck, and it wasn't materials. It was that **nobody verifies the numbers.** Claims circulate through press releases, trade coverage, and citation chains, and almost nobody does the two-line arithmetic that would show a claim cannot be true.
+
+That is a PC-first, zero-capital activity with a real intellectual core, so it became the project.
+
+## The Rule That Made It Work
+
+The tool audits a claim by computing the **hard ceiling its own physics imposes**, from published constants, rather than by comparing it to competitors. Three design rules turned out to matter more than the physics:
+
+- **Derive the ceiling, don't cite it.** Shockley-Queisser isn't quoted from a textbook; it's computed by detailed balance over an embedded copy of the real ASTM G173 AM1.5G spectrum. Integrating that embedded table returns **998.8 W/m²** against the **1000.4 W/m²** the standard documents — 0.16% apart, which is the check that the spectrum and the integrator are both right *before* any efficiency is computed.
+- **Keep a control set of real shipping devices the audit must never flag.** This is the rule that did all the real work, and it is the one we would have skipped.
+- **Keep the naive bound as a regression test.** Every domain starts with the wrong version of its own ceiling. Keeping it around, and asserting that real hardware *breaks* it, documents exactly why the rigorous version exists.
+
+Plus a fourth: **verdicts that refuse.** When a bound doesn't apply, the tool says so instead of quietly widening until the claim passes.
+
+## Three Domains, Three Different Failures
+
+The three domains were chosen so that each tests something the previous one couldn't.
+
+| Domain | Ceiling | What it caught |
+|---|---|---|
+| **Magnets** | (BH)max ≤ min(Br²/4μ₀, Br·Hcj) | A vendor headline that is impossible at the vendor's own disclosed numbers |
+| **Solar** | Shockley-Queisser, derived over AM1.5G | A **category error** reported as a physics breakthrough |
+| **Heat pumps** | COP ≤ T_H/(T_H − T_C), exact from the second law | A *legitimate* claim that a naive reviewer rejects |
+
+**Magnets.** The remanence ceiling `Br²/4μ₀` gives 56.3 MGOe at Br = 1.5 T, but that ceiling only applies if the coercivity is high enough. With coercivity included, the binding limit is `Br·Hcj`, and at the 2.1 kOe coercivity actually reported for a 36 MGOe claim, the ceiling is **31.5 MGOe**. The claim exceeds it by 12% and is flagged `IMPOSSIBLE`. At the company's own higher target coercivity the ceiling rises to 49.5 MGOe, the claim fits — and a second check then fails it on a different ground: reaching it requires a `squareness` of 2.91× the straight-line relation, against a best-ever-measured **2.79×**. The best peer-reviewed measured result in that family, 20 MGOe at 1.91 kOe, passes cleanly at a 28.7 MGOe ceiling. Three claims in one family, three different verdicts, all from arithmetic.
+
+**Solar.** A widely reported story said solar cells had hit **130% quantum yield**, "smashing a 65-year limit." As a power-conversion efficiency that would be impossible — the single-junction ceiling peaks at **33.7% near Eg = 1.34 eV**, and 130% exceeds it roughly fourfold. But quantum yield is not efficiency. It counts excitations per absorbed photon, and it legitimately exceeds 100%: singlet fission turns one singlet into two triplets, so the real cap is **200%**, and 130% sits comfortably under it. The same number gets opposite verdicts depending on which quantity is meant, which is why the tool has a `NOT_APPLICABLE_FOR_SQ` verdict and uses it.
+
+**Heat pumps.** This is the domain that inverted the tool's posture. The dominant public error here is not an overclaim but a naive **debunking**: a heat pump rated COP 4.8 gets reported as "480% efficient" and dismissed, because nothing can exceed 100%. But COP counts heat *moved* per unit of work, and the heat comes from outside the building. **The naive rule rejects all 8 of the real, manufacturer-datasheet heat pumps in the control set** — and the second law accepts all 8. The best real machine reaches **57%** of its Carnot allowance; the tool flags claims above the envelope, not above 100%.
+
+The domain-specific trap is subtler than the naive rule. The ceiling is only as tight as the temperatures you feed it. Use indoor room air as the hot reservoir and a claim of COP 12 sails through; use the delivery-water temperature the machine actually produces and the same claim is `IMPOSSIBLE`. The tool therefore refuses to audit a COP claim that doesn't state its temperatures. In the wild, that is the most common form — "COP up to 5.1" — and it is unverifiable as written.
+
+The same corpus also contains this domain's version of the magnet failure: manufacturers' seasonal ratings reach **5.65**, while the government's own monitored field trial median is **2.80** across **742 homes**. Both numbers are honest. They are not the same quantity, and presenting the first as the second is the same move as presenting a development target as a measured result.
+
+## The Control Set Is the Product
+
+The finding worth keeping is not any of the physics. It is that **every domain's first bound attempt false-positived on real shipping hardware.**
+
+The naive magnet bound, `Br·Hcj/4`, condemns shipping sintered ferrite. A single-junction-only solar check condemns certified tandem cells that legitimately run above the 1-junction curve. The naive heat-pump rule condemns every heat pump ever built. In each case the *physics* was fine and the *bound* was the thing that was wrong, in the direction that makes a tool look impressive and be useless.
+
+Only the control set caught it, every time. And that is why the same failure mechanism never repeats across domains while the *shape* of the failure always does — so this generalises as a per-domain discipline with a control set, not as one clever general tool.
+
+## Then We Asked Who Would Pay
+
+At this point there was a working tool, 49 passing tests, and four of those tests defending real devices against false positives. The obvious next move was a fourth domain. The useful move was to stop and ask whether anyone buys this.
+
+So we wrote the kill criteria down first — committed, dated, before any research — because a criterion written after seeing the data is a rationalisation. The question was narrow: **is there a buyer who will pay real money for auditing a technical claim against the hard ceiling of its domain?** Split into four independently falsifiable parts: pain, payment, reachability, scalability.
+
+The verdict is **kill.** Three of three stopping conditions met; two of three continuation conditions, failing the one that matters.
+
+## What the Money Actually Looks Like
+
+Verification *is* paid for, generously, and the price ladder is the clearest thing we found:
+
+| What is bought | Price |
+|---|---|
+| Mechanical image-integrity scan (ImageTwin) | **€29** per scan |
+| Expert-network project (Inex One) | **$500** |
+| Engineering due-diligence consultancy (Exponent, from its own 10-K) | **$225–$1,375/hour** |
+| Expert witness (SEAK 2024 medians) | **$450–$475/hour** |
+| Independent lab test | **$5k–$50k+** |
+| Analyst subscription, often sole-source | **$50k–$970k/year** |
+
+**Every one of those is a different job.** Not one of them is "tell me whether this claim is physically achievable." The best-funded adjacent service is Exponent Inc., a Nasdaq-listed company whose explicit business is technical due diligence, billing a rate ceiling that rose about 40% in three years. That is unambiguous evidence the *skill* is valuable — and it is sold through firms and credentials, contracted enterprise-to-enterprise, never self-serve.
+
+Meanwhile the open-ended version of the job is done **for free at scale**: we catalogued **28 free artifacts** doing this work (expert blog posts, trade-press critiques, forum arithmetic, YouTube debunks, publicly funded null replications) against **13 paid services in adjacent slices** and **zero** paid products selling the open-ended verdict to a general buyer. The public-interest version is philanthropy-funded: Retraction Watch ran the leading claim-verification database as, in its own words, "a volunteer activity" for 12 of its 13 years, then abandoned its licensing revenue model entirely in September 2023 and handed the database over to be made free.
+
+The position is **unoccupied for individuals and fully occupied for institutions** — and the institutions are behind accreditation, professional-indemnity insurance, tender turnover thresholds, court qualification, or expert-network seniority screening. Identifiable buyer, unreachable buyer.
+
+## Why It Is Dead
+
+Three reasons, and the first one is the one that would be hardest to fix.
+
+**The tool is pointed at the wrong failure mode.** A ceiling audit diagnoses *sincere over-belief* — someone who genuinely thinks their impossible thing works. The documented losses are overwhelmingly *intentional misstatement*: the SEC charged fraud, requiring scienter, in case after case, and in one instance a company claimed **87 vehicles sold when the number was zero**. Fraud is caught by document forensics, whistleblowers and short sellers. None of those is a physics service.
+
+**The sophisticated buyers already verify in-house and walk away.** When a major automaker diligenced a hydrogen-truck startup with an "army of people," it restructured the deal and dropped the equity stake rather than buying an audit. When another ran battery cells through its own lab before investing, that was in-house capability too. The people with money to lose and the discipline to check already check.
+
+**The free supply is fast and correct.** A contested superconductor claim went from announcement to expert consensus in about two weeks, for free. An impossible propulsion claim died to a single null replication from a publicly funded lab. Envia's battery claims died to a customer's own test bench plus trade press. Competing with €0 supply that is fast and usually right is not a business.
+
+## What It Cannot Do
+
+- **It cannot tell you a claim is true.** `CONSISTENT` means internally consistent with the physics, not verified. A claim can pass every bound and still be a lie.
+- **It cannot audit an under-specified claim.** No temperatures, no conditions, no numbers — no verdict. That is the majority of marketing claims.
+- **It cannot see the thing that actually costs money.** Intentional misstatement is invisible to a physics bound.
+- **It cannot scale across domains for free.** Each new domain needed its own derivation and its own control set. The reusable part is the method, not the code.
+- **It did not find a buyer.** The two load-bearing negatives — nobody asks, and no well-funded product died in this space — are absence of evidence, not proof.
+
+## What We Learned
+
+**What worked:** deriving the ceiling rather than citing it, and controlling against real hardware. Both were cheap, and together they are the whole method. The specific rule that paid off most is keeping a **set of devices the tool must never flag** — without it, three separate domains would have shipped a confidently wrong bound that condemned real, shipping products. A tool that only ever says "no" is a debunking machine; the control set is what makes it an auditing capability.
+
+**What didn't:** the assumption that a working, rigorous, error-finding tool is adjacent to a business. It isn't adjacent to anything. Building three domains taught us nothing about willingness to pay, and the honest sequencing is the reverse of what felt natural — write the criteria down, then check, before the sunk cost makes the question feel like an attack on the work. Once the tool existed and worked, the temptation to reinterpret a negative result as a reason to build a fourth domain was very strong, and the only thing that blocked it was the criterion already being committed to git with a date on it.
+
+**The uncomfortable part:** the market we found is real and well paid, and it is a labour market rather than a founder market. Engineering consultancies bill hundreds of dollars an hour for exactly this judgement; expert networks pay experts a few hundred an hour and charge clients several times that. The work is worth a great deal *per hour* and nothing as a solo product, because the buyer contracts with a firm and a credential, not with a person who has neither. That is a different problem from "the idea was bad," and it is not solvable by executing the same idea better.
+
+The tool survives as a capability, and it has already earned its keep twice — once by showing a magnet headline was arithmetically impossible at its own reported numbers, and once by showing that a solar "breakthrough" was a definition being swapped rather than a limit being broken. Both were public claims that had travelled a long way on citation. Neither needed a lab, a budget, or anyone's permission.
+
+---
+
+The numbers in this post are read out of committed run artifacts and re-derived by [scripts/check-claimaudit-post.py](https://github.com/brsbyrk/bayrak.dev/blob/main/scripts/check-claimaudit-post.py), which re-runs the audit tool's own ceilings, re-integrates the AM1.5G spectrum, and checks every market figure against the evidence document it came from. It fails if any of them drifts.
+
+The audit tool and its research streams are not published. The evidence behind this post lives with the tool in `docs/VERDICT.md` and `docs/evidence/` — four research streams with every claim labelled fact, inference or not-found.
