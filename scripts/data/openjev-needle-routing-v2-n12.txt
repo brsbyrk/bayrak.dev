@@ -1,0 +1,80 @@
+    Finished `release` profile [optimized] target(s) in 0.00s
+     Running `target/release/needle-probe`
+weights: /Users/baris/Workspace/research/system-one-decision-models/probe/needle-probe/../vendor/needle3-macos-arm64/needle3.cact (35335380 bytes)
+needle_load -> 0 in 10.62875ms
+tool descriptions: v2
+needle_init -> 903 (static prefix tokens) in 1.43214825s
+
+[ 1] PASS  (189 ms)
+     q: show me the unstaged changes in this repo
+     want: git_diff
+     got : git_diff
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"git_diff","arguments":{"scope":"unstaged","target":"unstaged"}}],"suppressed_calls":[],"reasoning":"'unstaged' -> scope 'unstaged'; 'this repo' -> target 'unstaged'; git_diff tool.","confidence":0.6308,"prefill_tps":622.2,"decode_tps":397.9,"peak_ram_mb":104.7,"validation":{"ungrounded":[],"negation":false}}
+
+[ 2] PASS  (220 ms)
+     q: read the file src/main.rs
+     want: read_file
+     got : read_file
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"read_file","arguments":{"path":"src/main.rs"}}],"suppressed_calls":[],"reasoning":"'read the file src/main.rs' -> read_file with path 'src/main.rs'.","confidence":1.0000,"prefill_tps":651.2,"decode_tps":271.1,"peak_ram_mb":104.8,"validation":{"ungrounded":[],"negation":false}}
+
+[ 3] PASS  (179 ms)
+     q: write a file notes.md with the text hello
+     want: write_file
+     got : write_file
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"write_file","arguments":{"path":"notes.md","content":"hello"}}],"suppressed_calls":[],"reasoning":"'write a file' -> write_file; 'notes.md' -> path; 'hello' -> content 'hello'.","confidence":0.9818,"prefill_tps":582.0,"decode_tps":411.1,"peak_ram_mb":105.5,"validation":{"ungrounded":[],"negation":false}}
+
+[ 4] FAIL  (140 ms)
+     q: search for TODO in the rust sources
+     want: search_files
+     got : web_search
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"web_search","arguments":{"query":"TODO in the rust sources"}}],"suppressed_calls":[],"reasoning":"query 'TODO in the rust sources' from user's words; web_search tool.","confidence":0.9055,"prefill_tps":604.3,"decode_tps":466.7,"peak_ram_mb":105.6,"validation":{"ungrounded":[],"negation":false}}
+
+[ 5] PASS  (117 ms)
+     q: run cargo test
+     want: execute_command
+     got : execute_command
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"execute_command","arguments":{"command":"cargo test"}}],"suppressed_calls":[],"reasoning":"'cargo test' -> command 'cargo test'. No required params.","confidence":1.0000,"prefill_tps":573.1,"decode_tps":472.6,"peak_ram_mb":105.6,"validation":{"ungrounded":[],"negation":false}}
+
+[ 6] PASS  (173 ms)
+     q: what is the latest news about the TypeSafe Jev launch?
+     want: web_search
+     got : web_search
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"web_search","arguments":{"query":"TypeSafe Jev launch news"}}],"suppressed_calls":[],"reasoning":"'what is the latest news about the TypeSafe Jev launch' -> web_search query 'TypeSafe Jev launch news'.","confidence":0.9629,"prefill_tps":568.1,"decode_tps":446.5,"peak_ram_mb":105.7,"validation":{"ungrounded":["web_search.query"],"negation":false}}
+
+[ 7] PASS  (159 ms)
+     q: fetch https://example.com and tell me its title
+     want: web_fetch
+     got : web_fetch
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"web_fetch","arguments":{"url":"https://example.com"}}],"suppressed_calls":[],"reasoning":"url 'https://example.com' from query; required parameter url is required but not provided; only URL is required.","confidence":0.5438,"prefill_tps":603.9,"decode_tps":466.1,"peak_ram_mb":105.7,"validation":{"ungrounded":[],"negation":false}}
+
+[ 8] PASS  (443 ms)
+     q: POST the body {"a":1} to https://api.example.com/v1/things
+     want: http_request
+     got : http_request
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"http_request","arguments":{"method":"POST","url":"https://api.example.com/v1/things","body":"a 1"}}],"suppressed_calls":[],"reasoning":"'POST' -> URL 'https://api.example.com/v1/things'; 'a 1' -> body 'a 1'; no headers or body given -> required params omitted.","confidence":0.5598,"prefill_tps":656.8,"decode_tps":237.1,"peak_ram_mb":106.1,"validation":{"ungrounded":[],"negation":false}}
+
+[ 9] FAIL  (536 ms)
+     q: remember that Penelope's providers are a closed enum
+     want: deposit_knowledge
+     got : web_search
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"web_search","arguments":{"query":"Penelope providers closed enum"}}],"suppressed_calls":[],"reasoning":"'remember that Penelope's providers are a closed enum' -> web_search query 'Penelope providers closed enum'","confidence":0.8080,"prefill_tps":173.7,"decode_tps":173.5,"peak_ram_mb":106.7,"validation":{"ungrounded":["web_search.query"],"negation":false}}
+
+[10] PASS  (96 ms)
+     q: what do you know about the security policy?
+     want: query_knowledge
+     got : query_knowledge
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"query_knowledge","arguments":{"query":"security policy"}}],"suppressed_calls":[],"reasoning":"User asks for knowledge base of 'security policy' -> query_knowledge with query 'security policy'.","confidence":0.8408,"prefill_tps":1456.9,"decode_tps":523.6,"peak_ram_mb":106.7,"validation":{"ungrounded":[],"negation":false}}
+
+[11] PASS  (93 ms)
+     q: spin up a child agent to audit the test suite
+     want: spawn_agent
+     got : spawn_agent
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"spawn_agent","arguments":{"purpose":"audit the test suite"}}],"suppressed_calls":[],"reasoning":"spawn_agent tool; purpose 'audit the test suite' from query; no personality or model specified.","confidence":0.7963,"prefill_tps":1237.1,"decode_tps":775.3,"peak_ram_mb":106.8,"validation":{"ungrounded":[],"negation":false}}
+
+[12] FAIL  (63 ms)
+     q: what is the capital of France?
+     want: <refusal>
+     got : web_search
+     raw: {"type":"call","success":true,"error":null,"error_code":null,"reason":null,"function_calls":[{"name":"web_search","arguments":{"query":"capital France"}}],"suppressed_calls":[],"reasoning":"User asks for capital of France. web_search with query 'capital France'.","confidence":0.9420,"prefill_tps":1662.7,"decode_tps":784.1,"peak_ram_mb":106.8,"validation":{"ungrounded":["web_search.query"],"negation":false}}
+
+==== routing 9 / 12 correct · mean 201 ms/turn ====

@@ -1,0 +1,64 @@
+    Finished `release` profile [optimized] target(s) in 0.00s
+     Running `target/release/abstain local`
+surface: local-only (8 tools) · prefix 530 tokens
+
+--- 12 off-topic controls (correct = empty function_calls) ---
+  CALLED   query_knowledge conf=0.891    ungrounded=true  what is the capital of France?
+  CALLED   search_files conf=0.777    ungrounded=false who won the 2018 world cup?
+  CALLED   search_files conf=0.549    ungrounded=true  what is the weather in Istanbul tomorrow?
+  CALLED   write_file conf=0.390    ungrounded=false explain how a transformer attention head works
+  CALLED   search_files conf=0.566    ungrounded=true  give me a recipe for lentil soup
+  CALLED   git_diff conf=0.662    ungrounded=false tell me a joke about programmers
+  CALLED   write_file conf=0.243    ungrounded=true  write a haiku about the sea
+  CALLED   search_files conf=0.396    ungrounded=false translate good morning into Japanese
+  CALLED   query_knowledge conf=0.679    ungrounded=false what is 17 times 24?
+  CALLED   query_knowledge conf=0.792    ungrounded=false summarise the history of the Ottoman Empire
+  CALLED   query_knowledge conf=0.836    ungrounded=false do you think Rust is better than C++?
+  CALLED   search_files conf=0.778    ungrounded=false recommend a book about distributed systems
+  CALLED   query_knowledge conf=0.864    ungrounded=false what's the tallest mountain in Chile?
+  REFUSED  conf=0.990    play some jazz music
+  CALLED   search_files conf=0.149    ungrounded=false book a table for two at eight tonight
+  REFUSED  conf=0.986    convert 30 degrees celsius to fahrenheit
+  CALLED   query_knowledge conf=0.548    ungrounded=false why is the sky blue?
+  CALLED   search_files conf=0.860    ungrounded=false give me three startup name ideas
+  CALLED   read_file conf=0.363    ungrounded=false who wrote Pride and Prejudice?
+  REFUSED  conf=0.990    what time is it in Tokyo right now?
+  CALLED   query_knowledge conf=0.810    ungrounded=true  help me figure out why I feel unmotivated
+  CALLED   write_file conf=0.595    ungrounded=false draw a picture of a cat
+  CALLED   query_knowledge conf=0.815    ungrounded=false what were the main causes of the 2008 financial crisis?
+  CALLED   search_files conf=0.490    ungrounded=true  suggest a name for my new dog
+
+--- 12 in-scope requests (correct = named tool) ---
+  PASS want=git_diff           got=git_diff           conf=0.536    ungrounded=false show me the unstaged changes in this repo
+  PASS want=read_file          got=read_file          conf=1.000    ungrounded=false read the file src/core/config.rs
+  FAIL want=write_file         got=read_file          conf=0.977    ungrounded=false write a file notes.md with the text hello
+  PASS want=search_files       got=search_files       conf=0.962    ungrounded=true  search for TODO in the rust sources
+  PASS want=execute_command    got=execute_command    conf=0.891    ungrounded=false run cargo test
+  FAIL want=deposit_knowledge  got=execute_command    conf=0.262    ungrounded=false remember that Penelope's providers are a closed enum
+  PASS want=query_knowledge    got=query_knowledge    conf=0.698    ungrounded=false what do you know about the security policy?
+  PASS want=spawn_agent        got=spawn_agent        conf=1.000    ungrounded=false spin up a child agent to audit the test suite
+  FAIL want=git_diff           got=search_files       conf=0.932    ungrounded=true  what files changed on the main branch compared with HEAD?
+  FAIL want=search_files       got=spawn_agent        conf=0.958    ungrounded=false grep for 'unwrap()' inside the engine directory
+  FAIL want=deposit_knowledge  got=read_file          conf=1.000    ungrounded=false note down that the store is SQLite with FTS5
+  PASS want=spawn_agent        got=spawn_agent        conf=1.000    ungrounded=false launch a subagent to review the migrations
+  PASS want=read_file          got=read_file          conf=0.774    ungrounded=false open up README.md and show me what is in it
+  PASS want=write_file         got=write_file         conf=0.926    ungrounded=false create a file called CHANGELOG.md containing the text initial
+  PASS want=search_files       got=search_files       conf=0.698    ungrounded=true  find every occurrence of unsafe in the codebase
+  PASS want=git_diff           got=git_diff           conf=0.995    ungrounded=false show me what has changed since the main branch
+  PASS want=execute_command    got=execute_command    conf=0.804    ungrounded=false build the project with cargo build
+  FAIL want=web_search         got=<none>             conf=0.987    ungrounded=false look up the current price of an iPhone on the web
+  FAIL want=web_fetch          got=read_file          conf=0.659    ungrounded=true  download https://docs.rs/tokio and summarise it
+  FAIL want=http_request       got=execute_command    conf=0.923    ungrounded=false send a GET request to https://api.github.com/zen
+  FAIL want=deposit_knowledge  got=execute_command    conf=0.711    ungrounded=false save a note that the CLI is called penelope
+  FAIL want=query_knowledge    got=search_files       conf=0.845    ungrounded=true  search your saved notes for anything about sessions
+  PASS want=spawn_agent        got=spawn_agent        conf=1.000    ungrounded=false delegate the migration review to a subagent
+  PASS want=write_file         got=write_file         conf=0.761    ungrounded=false write notes.md with the body todo fix the flaky test
+
+================ SUMMARY ================
+surface                     : local-only (8)
+off-topic refusals          : 3 / 24  (12%)
+in-scope accuracy           : 14 / 24  (58%)
+mean confidence, WRONG calls: 0.622
+mean confidence, RIGHT calls: 0.860
+ungrounded caught           : 6 failed off-topic calls, 7 in-scope misses slipped through unflagged
+=> a confidence>=0.7 gate would ACT on 9 of 24 off-topic inputs

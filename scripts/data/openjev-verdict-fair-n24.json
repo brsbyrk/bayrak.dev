@@ -1,0 +1,1112 @@
+[
+  {
+    "tag": "all-11-natural-labels",
+    "labels": 12,
+    "abstentions": 16,
+    "accuracy": 15,
+    "p_wrong": 0.28298017347023763,
+    "p_right": 0.49651206558127825,
+    "rows": [
+      {
+        "set": "off_topic",
+        "q": "what is the capital of France?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2383048445617838,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "who won the 2018 world cup?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.26985046770145127,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what is the weather in Istanbul tomorrow?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.24214821016526067,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "explain how a transformer attention head works",
+        "selected": "execute_command",
+        "p": 0.2311430755241531,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "give me a recipe for lentil soup",
+        "selected": "__insufficient_evidence__",
+        "p": 0.21220400968977066,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "tell me a joke about programmers",
+        "selected": "execute_command",
+        "p": 0.3702531789453065,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "write a haiku about the sea",
+        "selected": "write_file",
+        "p": 0.38769632847296964,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "translate good morning into Japanese",
+        "selected": "__insufficient_evidence__",
+        "p": 0.1654931905967988,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what is 17 times 24?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.21035584691057033,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "summarise the history of the Ottoman Empire",
+        "selected": "write_file",
+        "p": 0.20606291377652336,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "do you think Rust is better than C++?",
+        "selected": "execute_command",
+        "p": 0.383939759971731,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "recommend a book about distributed systems",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2172713065960614,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what's the tallest mountain in Chile?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.254337288094795,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "play some jazz music",
+        "selected": "__insufficient_evidence__",
+        "p": 0.21848925109175596,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "book a table for two at eight tonight",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2377573824067825,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "convert 30 degrees celsius to fahrenheit",
+        "selected": "__insufficient_evidence__",
+        "p": 0.24269584857687077,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "why is the sky blue?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2694615210981031,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "give me three startup name ideas",
+        "selected": "execute_command",
+        "p": 0.23469832364694532,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "who wrote Pride and Prejudice?",
+        "selected": "write_file",
+        "p": 0.2319050195848562,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what time is it in Tokyo right now?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.1969557775913096,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "help me figure out why I feel unmotivated",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2022258871215759,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "draw a picture of a cat",
+        "selected": "write_file",
+        "p": 0.21814278783941585,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what were the main causes of the 2008 financial crisis?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2905632197927769,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "suggest a name for my new dog",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2093472472975133,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "show me the unstaged changes in this repo",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.7881628931877939,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "read the file src/core/config.rs",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.6664401780229964,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write a file notes.md with the text hello",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.7065307830821431,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "search for TODO in the rust sources",
+        "want": "search_files",
+        "selected": "web_search",
+        "p": 0.545976220035992,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "run cargo test",
+        "want": "execute_command",
+        "selected": "execute_command",
+        "p": 0.32244567764639664,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2637644243091523,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "what do you know about the security policy?",
+        "want": "query_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.30428770127838906,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.2634773232310117,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.6110376546418519,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files",
+        "selected": "search_files",
+        "p": 0.29500731757914245,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2266925403224999,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "launch a subagent to review the migrations",
+        "want": "spawn_agent",
+        "selected": "execute_command",
+        "p": 0.4810727321622044,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "open up README.md and show me what is in it",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.3245157557137119,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.42433763759191107,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "find every occurrence of unsafe in the codebase",
+        "want": "search_files",
+        "selected": "query_knowledge",
+        "p": 0.375604118610826,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "show me what has changed since the main branch",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.5504977703094482,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "build the project with cargo build",
+        "want": "execute_command",
+        "selected": "__insufficient_evidence__",
+        "p": 0.2441581705950055,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "look up the current price of an iPhone on the web",
+        "want": "web_search",
+        "selected": "web_search",
+        "p": 0.5511828809830394,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch",
+        "selected": "web_search",
+        "p": 0.23467286276865795,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "send a GET request to https://api.github.com/zen",
+        "want": "http_request",
+        "selected": "http_request",
+        "p": 0.5546736190312457,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge",
+        "selected": "execute_command",
+        "p": 0.5948077576523239,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "search your saved notes for anything about sessions",
+        "want": "query_knowledge",
+        "selected": "query_knowledge",
+        "p": 0.4904408831697308,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "delegate the migration review to a subagent",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.42773921333366965,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.4711913961950809,
+        "abstain": false
+      }
+    ]
+  },
+  {
+    "tag": "first-4-tools",
+    "labels": 5,
+    "abstentions": 19,
+    "accuracy": 10,
+    "p_wrong": 0.4233099044647153,
+    "p_right": 0.6489856449476411,
+    "rows": [
+      {
+        "set": "off_topic",
+        "q": "what is the capital of France?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4388544232506735,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "who won the 2018 world cup?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5396400013619661,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what is the weather in Istanbul tomorrow?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4061763200404811,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "explain how a transformer attention head works",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4344896674156189,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "give me a recipe for lentil soup",
+        "selected": "__insufficient_evidence__",
+        "p": 0.43231093883514404,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "tell me a joke about programmers",
+        "selected": "__insufficient_evidence__",
+        "p": 0.39909965982582596,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "write a haiku about the sea",
+        "selected": "write_file",
+        "p": 0.6021994047932039,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "translate good morning into Japanese",
+        "selected": "write_file",
+        "p": 0.3673823623314277,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what is 17 times 24?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3784375176636967,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "summarise the history of the Ottoman Empire",
+        "selected": "write_file",
+        "p": 0.3294614178326187,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "do you think Rust is better than C++?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4276382775087961,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "recommend a book about distributed systems",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3805698099647491,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what's the tallest mountain in Chile?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.46118059007580453,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "play some jazz music",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4274879300410763,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "book a table for two at eight tonight",
+        "selected": "__insufficient_evidence__",
+        "p": 0.46795967760892404,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "convert 30 degrees celsius to fahrenheit",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5371568002865911,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "why is the sky blue?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.48516779864944376,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "give me three startup name ideas",
+        "selected": "__insufficient_evidence__",
+        "p": 0.479880167235151,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "who wrote Pride and Prejudice?",
+        "selected": "write_file",
+        "p": 0.4219479529414478,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what time is it in Tokyo right now?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.38015475450562647,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "help me figure out why I feel unmotivated",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4476555154426242,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "draw a picture of a cat",
+        "selected": "write_file",
+        "p": 0.39555838442487845,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what were the main causes of the 2008 financial crisis?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5386820656266165,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "suggest a name for my new dog",
+        "selected": "__insufficient_evidence__",
+        "p": 0.45162917529431507,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "show me the unstaged changes in this repo",
+        "want": "git_diff",
+        "selected": "read_file",
+        "p": 0.4704456083898873,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "read the file src/core/config.rs",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.8441665485594462,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write a file notes.md with the text hello",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.8385748704524644,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "search for TODO in the rust sources",
+        "want": "search_files",
+        "selected": "search_files",
+        "p": 0.639171062709445,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "run cargo test",
+        "want": "execute_command",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5074166844567911,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5546623816492089,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "what do you know about the security policy?",
+        "want": "query_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5486610368293214,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.418479599584958,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff",
+        "selected": "read_file",
+        "p": 0.33707561712255013,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files",
+        "selected": "search_files",
+        "p": 0.7330991209307254,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.43849126811299527,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "launch a subagent to review the migrations",
+        "want": "spawn_agent",
+        "selected": "__insufficient_evidence__",
+        "p": 0.33315570403470485,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "open up README.md and show me what is in it",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.7131605842271411,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.6113603376993682,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "find every occurrence of unsafe in the codebase",
+        "want": "search_files",
+        "selected": "search_files",
+        "p": 0.33759138428259583,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "show me what has changed since the main branch",
+        "want": "git_diff",
+        "selected": "read_file",
+        "p": 0.3907202155453115,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "build the project with cargo build",
+        "want": "execute_command",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5344432750428019,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "look up the current price of an iPhone on the web",
+        "want": "web_search",
+        "selected": "__insufficient_evidence__",
+        "p": 0.46835091332804124,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3211521912007396,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "send a GET request to https://api.github.com/zen",
+        "want": "http_request",
+        "selected": "__insufficient_evidence__",
+        "p": 0.37114753551170443,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.37774113102064377,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "search your saved notes for anything about sessions",
+        "want": "query_knowledge",
+        "selected": "search_files",
+        "p": 0.5901978180799023,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "delegate the migration review to a subagent",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.6808179895915012,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.6734349514387656,
+        "abstain": false
+      }
+    ]
+  },
+  {
+    "tag": "first-8-tools",
+    "labels": 9,
+    "abstentions": 8,
+    "accuracy": 14,
+    "p_wrong": 0.45625624889104294,
+    "p_right": 0.7582880590661285,
+    "rows": [
+      {
+        "set": "off_topic",
+        "q": "what is the capital of France?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.36574665444566434,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "who won the 2018 world cup?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3990678284100217,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what is the weather in Istanbul tomorrow?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.36338141867226725,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "explain how a transformer attention head works",
+        "selected": "execute_command",
+        "p": 0.3861801753775089,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "give me a recipe for lentil soup",
+        "selected": "execute_command",
+        "p": 0.38325932711390975,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "tell me a joke about programmers",
+        "selected": "execute_command",
+        "p": 0.6544015037015598,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "write a haiku about the sea",
+        "selected": "write_file",
+        "p": 0.7577760656830282,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "translate good morning into Japanese",
+        "selected": "execute_command",
+        "p": 0.3158211381583043,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what is 17 times 24?",
+        "selected": "execute_command",
+        "p": 0.3237037985354532,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "summarise the history of the Ottoman Empire",
+        "selected": "execute_command",
+        "p": 0.37301895570817695,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "do you think Rust is better than C++?",
+        "selected": "execute_command",
+        "p": 0.7350243910153555,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "recommend a book about distributed systems",
+        "selected": "__insufficient_evidence__",
+        "p": 0.34328176829006873,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "what's the tallest mountain in Chile?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3908755122672413,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "play some jazz music",
+        "selected": "execute_command",
+        "p": 0.32612391638129373,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "book a table for two at eight tonight",
+        "selected": "execute_command",
+        "p": 0.37127251089939634,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "convert 30 degrees celsius to fahrenheit",
+        "selected": "execute_command",
+        "p": 0.5680739749988426,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "why is the sky blue?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4042469685339834,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "give me three startup name ideas",
+        "selected": "execute_command",
+        "p": 0.39087086770359103,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "who wrote Pride and Prejudice?",
+        "selected": "write_file",
+        "p": 0.47644226559988384,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what time is it in Tokyo right now?",
+        "selected": "execute_command",
+        "p": 0.3887137767032592,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "help me figure out why I feel unmotivated",
+        "selected": "execute_command",
+        "p": 0.3664819300174713,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "draw a picture of a cat",
+        "selected": "execute_command",
+        "p": 0.4829353846596525,
+        "abstain": false
+      },
+      {
+        "set": "off_topic",
+        "q": "what were the main causes of the 2008 financial crisis?",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4795516768340047,
+        "abstain": true
+      },
+      {
+        "set": "off_topic",
+        "q": "suggest a name for my new dog",
+        "selected": "__insufficient_evidence__",
+        "p": 0.31330117349847275,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "show me the unstaged changes in this repo",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.9747789616181208,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "read the file src/core/config.rs",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.9515903009408505,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write a file notes.md with the text hello",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.9611806374526976,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "search for TODO in the rust sources",
+        "want": "search_files",
+        "selected": "web_search",
+        "p": 0.7689227395693611,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "run cargo test",
+        "want": "execute_command",
+        "selected": "execute_command",
+        "p": 0.5569357933808242,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.4699291035012454,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "what do you know about the security policy?",
+        "want": "query_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.5370136308466122,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.3701750605934935,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.8482259073513208,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files",
+        "selected": "search_files",
+        "p": 0.6283529363519047,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3829962914756537,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "launch a subagent to review the migrations",
+        "want": "spawn_agent",
+        "selected": "execute_command",
+        "p": 0.7523787817385004,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "open up README.md and show me what is in it",
+        "want": "read_file",
+        "selected": "read_file",
+        "p": 0.8452483612895357,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.7451972050410572,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "find every occurrence of unsafe in the codebase",
+        "want": "search_files",
+        "selected": "__insufficient_evidence__",
+        "p": 0.3237207868392021,
+        "abstain": true
+      },
+      {
+        "set": "in_scope",
+        "q": "show me what has changed since the main branch",
+        "want": "git_diff",
+        "selected": "git_diff",
+        "p": 0.8347345875675012,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "build the project with cargo build",
+        "want": "execute_command",
+        "selected": "execute_command",
+        "p": 0.4236282891691938,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "look up the current price of an iPhone on the web",
+        "want": "web_search",
+        "selected": "web_search",
+        "p": 0.8794642492315956,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch",
+        "selected": "web_search",
+        "p": 0.4220963090977424,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "send a GET request to https://api.github.com/zen",
+        "want": "http_request",
+        "selected": "web_search",
+        "p": 0.5450577284527433,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge",
+        "selected": "execute_command",
+        "p": 0.9107652272802609,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "search your saved notes for anything about sessions",
+        "want": "query_knowledge",
+        "selected": "web_search",
+        "p": 0.5690298946765481,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "delegate the migration review to a subagent",
+        "want": "spawn_agent",
+        "selected": "spawn_agent",
+        "p": 0.7674701996728136,
+        "abstain": false
+      },
+      {
+        "set": "in_scope",
+        "q": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file",
+        "selected": "write_file",
+        "p": 0.8290503372648911,
+        "abstain": false
+      }
+    ]
+  }
+]

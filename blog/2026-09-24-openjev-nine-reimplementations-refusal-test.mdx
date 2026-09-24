@@ -1,0 +1,123 @@
+---
+title: "OpenJEV — Nine Reimplementations, One Refusal Test, and an 80 MB File That Is Real"
+description: "Nine open reimplementations of TypeSafe's Jev appeared in nine days, and the interface is the easy part. We ran two of them — Needle 3 from Rust, Verdict through its ONNX export — against one real 11-tool surface and 24 off-topic controls: choosing the right tool was a tie at 14 of 24 and 15 of 24, while refusing an unusable request was 3 of 24 against 16 of 24. The axis that separates them is whether abstention is in the model's contract, not how well it was trained. Plus a 75.6 MB file named '8B' that is genuinely a head on a frozen 16 GB encoder, and a caching idea worth stealing."
+date: 2026-09-24
+tags: [research, models, inference, agents]
+authors: [baris]
+---
+
+On 15 September 2026 TypeSafe released **Jev**, a model that takes a state and a set of typed questions and returns decisions with probabilities rather than text. Within nine days there were at least nine open reimplementations of it, in five architecturally different ways, and one of them was trending on GitHub. That speed is itself the finding: **"don't generate tokens, return probabilities" is an interface, and an interface takes an afternoon to copy.** What does not copy is the part nobody puts in the launch video — whether the model can say *nothing here applies*.
+
+We ran two of the nine against a real tool surface, 48 requests, one machine. Choosing the correct tool was a tie: **14 of 24** for a 121M on-device model and **15 of 24** for a 151M encoder-based one. Refusing a request that no tool could serve was not a tie at all: **3 of 24** against **16 of 24**. Same inputs, same candidate set, same semantics — the difference is that one of them built the refusal into its schema.
+
+{/* truncate */}
+
+## The Question the Model Card Never Answers
+
+In an agent, a decision model sits in front of the tool list and answers "which of these applies?". The interesting case is not the request that matches a tool. It is the request that matches *none* of them, where the only correct output is an empty result.
+
+That framing is inherited, and it is worth naming where from. A tool from [an earlier project on this site](/2026/09/22/claimaudit-three-ceilings-no-buyer) audits technical claims against the hard ceiling of their own physics, and the single rule that made it work was **keeping a control set of real products the tool must never flag**. Without it, three separate domains shipped a confidently wrong bound. The same discipline applies here with the sign flipped: the control set is 24 requests that *no* tool in the set can serve, and the correct behaviour on every one of them is silence. A decision model that always returns an answer is not a router. It is a guessing machine with a probability attached.
+
+So: 11 tools, 24 requests each way. The tools are the real ones registered in our own Rust agent library, read from the source rather than invented for the test:
+
+| | |
+|---|---|
+| In scope — 24 requests, correct answer is a named tool | "show me the unstaged changes in this repo", "run cargo test", "search for TODO in the rust sources", "remember that the store is SQLite with FTS5", … |
+| Off-topic — 24 requests, correct answer is *nothing* | "what is the capital of France?", "give me a recipe for lentil soup", "play some jazz music", "write a haiku about the sea", … |
+
+## What We Ran, and One Control First
+
+**Needle 3** (Cactus Compute, 121M parameters, Apache-2.0) is the only one of the nine that ships a callable artifact: a static C engine plus a 2-bit container. We linked `libneedle.a` into a Rust binary, loaded the 35,335,380-byte weight file, and drove the C API directly. The whole runtime — weights, engine, tokenizer, config — is **36.7 MB**. No GPU, no Python, no network.
+
+**Verdict / OpenJev** (151M on a ModernBERT encoder, Apache-2.0) is a fine-tune of a GLiClass zero-shot classifier with an explicit abstention candidate in its schema. It exports to ONNX, so it is reachable from Rust, though we ran it through PyTorch. Its weights are **605.5 MB** in fp32 — 16× the whole Needle runtime, which is the price of the encoder design.
+
+The first thing we did with Verdict was **not** run our test. It was to run theirs. An earlier pass of our own — 12 labels described as bare imperatives — produced a near-uniform distribution that looked exactly like a broken model, and it was actually a mis-shaped instrument: the engine renders every option as the literal sentence `It is {description}`, so "Run a program or shell command" was never a sentence fragment that template could use. Their README example caught it in one run: **2 of 2** correct on its home domain, and it abstains cleanly on an off-topic request. Only then was our test fair. We discarded that first pass rather than publish its number.
+
+## The Result
+
+| 24 off-topic inputs where no tool applies | Needle 3 (121M, on-device C) | Verdict (151M, encoder + abstain route) |
+|---|---|---|
+| **Refused** | **3 of 24** — 12.5% | **16 of 24** — 67% |
+| Picked the right tool | **14 of 24** | **15 of 24** |
+| Mean confidence, wrong call | **0.622** | **0.283** |
+| Mean confidence, right call | **0.860** | **0.497** |
+
+The consequence for an agent is not symmetric. A wrong tool call is a bad turn. A router that answers **21 of 24** unusable requests is a system that cannot tell the user "I can't do that here" — and this is not a small model doing its best under a hard constraint, because the same model refuses correctly *some* of the time, which we will come to.
+
+Verdict's failures are the mirror image, and it publishes them: **four** of its misses were **false abstentions** — it declined requests that *did* have a tool, including "build the project with cargo build" and "remember that the store is SQLite with FTS5". Its own documentation puts abstention recall at 97.5% on held-out in-domain data with precision down to 89.45% and 23 false abstentions. That is a calibration trade, and it is the right trade for a router: a false "I can't" costs one clarification, a confident wrong tool call costs the turn and possibly the session.
+
+## Confidence Is Not a Refusal Signal
+
+This is the part we did not expect, and it is the most useful thing in the whole exercise.
+
+Needle's three refusals arrived at **0.986**, **0.990** and **0.990** confidence. Its **most confident wrong call was 0.891**. Whatever the refusal path is measuring, it is not the model's uncertainty: it declines when it is *certain* there is no tool, and calls when it is *uncertain but has a plausible match*. So `confidence` is not merely useless as a scope gate — in the tail it points the wrong way.
+
+Concretely: a gate set at **0.7** would have acted on **9 of 24** requests that no tool could serve. Confidence does separate right from wrong *on average* — **0.860** for correct calls against **0.622** for wrong ones — and that separation reproduced exactly across two sample sizes. It is simply a different quantity from "is this request in scope", and the two get conflated constantly because both are reported as a number between 0 and 1.
+
+## Nine Projects, Five Families
+
+The nine releases are not variations on one design. They are five different bets:
+
+| Family | Who | What it actually is |
+|---|---|---|
+| **Read the answer scores off a stock LLM** | SemIf (MIT), Simple Jev (featherless-ai) | No new weights at all — intercept the model before it generates and read its option logits |
+| **Train a dedicated non-generative model** | Laya, Von (395M), Verdict (151M), Nimble | Purpose-built encoders with decision heads; the honest projects publish calibration curves and failure slices |
+| **Retrofit an LLM with a decision head** | Kev (Qwen3.5 0.8B–8B) | Keep the LLM, add the head, share one reading of the state across many questions |
+| **Diffusion fill-in** | OpenJev on DiffusionGemma-26B | Blank the answer slots and fill them all in one shot, like inpainting |
+| **Freeze the LLM, train contrastive heads** | CLM | The encoder is never touched; what you download is a head, not a model |
+| *Not a reimplementation* | CUA-S1-FORMS (trycua) | Research code, **no weights distributed** — the one release here that cannot be run at all |
+
+Only one of those families puts abstention in the model's contract, and it is the one that scores **16 of 24**. That is not a coincidence of training quality: a schema with an explicit *insufficient evidence* route gives the model somewhere to put the answer. A schema of five options makes "none of them" unrepresentable, no matter how good the weights are.
+
+The most valuable sentence in any of the nine repositories is Verdict measuring itself against the thing it reimplements: on TypeSafe's public benchmark OpenJev scores **48.07%**, against **90.80%** for Jev and 88.43% for a 26B diffusion model. A small model honestly reporting that it is half as accurate as the model it copies — alongside a cardinality study showing its own top-1 accuracy falling from **97%** at three candidates to **72%** at 25 — is worth more than any launch chart.
+
+## The 80 MB File Called "8B"
+
+The ninth release, CLM, arrived with a claim that does not survive its own file listing: an **"8B"** model whose only weights file is **75.6 MB**. Eight billion parameters at fp16 is about 16 GB, so those numbers cannot describe the same object. They don't, and the model card says so plainly: CLM is "two small projection heads on top of a **frozen Qwen3-8B encoder**".
+
+The arithmetic confirms it exactly. Each head is a projection `4096 → 1536 → 1536 → 512`, which is `4096×1536 + 1536 + 1536×1536 + 1536 + 2×1536 + 512×1536 + 512` = **9,443,840** parameters, so the pair is **18,887,680** in fp32 = **75,550,720** bytes against a file of **75,557,149**. The remaining **6,429 bytes** — 0.0085% — are torch archive overhead, not weights.
+
+So the file is real, correctly described, and not the good news either. The base it requires, Qwen3-8B, is 8,190,726,144 parameters at bf16 = 16,381,452,288 bytes, which is **216.8×** the size of the artifact you download. Deploying CLM means serving an 8B encoder on a GPU with vLLM; the 19M of heads are a rounding error on top. It is the opposite of the on-device proposition, and it will never be small.
+
+Two more caveats are in the card rather than the announcement. The headline agentic results — DeepSWE **81.6%**, Terminal-Bench 2.1 **87.6%** — come from **fine-tuned heads in a separate repository**, not from this checkpoint, which is the starting point for that fine-tune. And its "up to 9×" is the card's own "**13× faster** with **~1k candidates**", which is a caching result.
+
+And the structural point that matters here: **CLM cannot abstain at all.** Searching its schema, server, engine, client and fine-tuning guide for any notion of abstention or refusal returns nothing. Its yes/no type is strictly `false`/`true`, and its choice type is a softmax over whatever candidates you supply — the card's own words are "**no generation**: CLM only scores the candidates you give it, and its probabilities are relative to that set". On our 24 controls it would return an answer every time, **0 of 24 by construction**, and adding a "none of the above" option is a modelling decision the user has to make because the API does not make it.
+
+## The Idea Worth Stealing
+
+CLM's speed claim is not about its architecture being clever. It is that **states and actions are encoded separately**, so the action side is computed once and reused while the state changes. For a fixed action set that is exactly the right decomposition — and it describes our problem precisely: an agent's tool list is fixed, and what changes per turn is the request. Encode the 11 tools once at startup, encode only the state per turn, score. That works with any scorer in the table above, needs no new model, and is the cheapest real improvement in this entire body of work.
+
+## Candidate Count Matters, and Not Monotonically
+
+One more measurement, because the candidate menu turns out to be a variable rather than a constant. Same 24 inputs at three menu sizes:
+
+| Verdict surface | labels | Off-topic refusals | Tool correct |
+|---|---|---|---|
+| first 4 tools | 5 | **19 of 24** (79%) | 10 of 24 |
+| first 8 tools | 9 | **8 of 24** (33%) | 14 of 24 |
+| all 11 tools | 12 | **16 of 24** (67%) | 15 of 24 |
+
+Refusal falls hard from 5 labels to 9, then *rises* at 12. Three points at n = 24 cannot explain that, and we are not going to pretend otherwise — but it is enough to say the effect is real and not simply "more options, worse", which is consistent with Verdict's own note that its abstention "depends heavily on the seen prompt structure". Their published curve, on 100 samples per slice, is the version to trust: **97% → 96% → 91% → 78% → 72%** accuracy as the menu grows from 3 to 25. An 11-tool router is a 12-candidate problem, which is where their own data already says to be careful.
+
+## What It Cannot Do
+
+- **It is 24 hand-written requests per side, not a benchmark.** The differences are large enough to act on; they are not precision measurements, and the sweep above shows how sharp the sensitivity to framing is.
+- **One tool surface, one language, one working domain.** These models are classifiers over text. Every number here is out-of-domain for the encoders involved.
+- **Nothing was fine-tuned.** Both engines ran zero-shot. The largest advertised gains in this field come from per-product fine-tuning, which we did not do.
+- **No engine was tested inside a live agent loop.** This measures whether the decision is right, not whether a turn improves.
+- **CLM was read, not run.** Reaching it means vLLM plus 16 GB of Qwen3-8B, which is not worth an afternoon to confirm something its own schema already settles.
+- **A refusal is not a safety property.** "Nothing applies" is a scope judgement. It is not a check that a request is *safe*, and nothing here should be put in a security path in place of a deterministic one.
+
+## What We Learned
+
+**What worked:** two things, both cheap. The first is the control set — 24 off-topic requests that no tool can serve — which is the only reason "3 of 24" is a number at all rather than a story about a model that seemed fine. The second is running the vendor's own example *before* judging it on ours; that single control separated "broken model" from "mis-shaped test" in one run, and the first number we would otherwise have published was wrong. And a third, quieter one: sometimes the answer is in the source rather than the weights. CLM's inability to refuse is not a measurement, it is a grep, and it took a minute.
+
+**What didn't — six of our own instruments, all caught before publication.** A C API whose return value is not a byte length, which silently truncated every response into what looked like a model that refuses everything. An off-by-one in our own validator that marked every call as ungrounded and turned a real signal into noise. A 12-label test that was mis-shaped for the model's label template. A summary line that reported "4 refusals" in a run where zero occurred, and whose first fix reported 3 — both wrong, in a log that a reader would have believed instead of the rows. A sample of 12 that let us write "it never refuses" when 24 makes it refuse three times. And a sweep we declared unreproducible and marked *do-not-cite* because we had read its log file while the job was still running; the file was complete, and we had condemned valid evidence on a stale read. That last one is the one worth generalising: **a background job's output is not evidence until the job has exited.**
+
+**The uncomfortable part:** the part of this that is genuinely hard is not the model. Nine teams reproduced the interface in nine days, and two of the four engines we could run at all got tool selection right at about the same rate — 58% and 63% on a task that is not that hard. What separated them was a design decision, made once, in the schema: giving the model somewhere to put "I don't know". That is not a training outcome and it is not a scaling result. It is a contract, and a contract is the one thing a reimplementation cannot copy from a launch video.
+
+---
+
+Every number above is re-read from committed run artifacts by [scripts/check-openjev-post.py](https://github.com/brsbyrk/bayrak.dev/blob/main/scripts/check-openjev-post.py) — the Needle counts are parsed out of the harness logs, the Verdict counts out of the per-request JSON, and the CLM arithmetic is re-derived from its config. It fails if any figure drifts, or if a figure appears in this post with no derivation behind it. `--live` re-fetches the pinned vendor claims, which are the parts that can change under a published post.
+
+**Updating this post.** This is meant to be re-run, not rewritten: the harness, the evidence rows for both engines, and the checker are all committed. To add a model, run it on the same 24 + 24 requests against the same 11 tools, add its rows, add one line to the family table, and let the checker decide whether the prose still holds.

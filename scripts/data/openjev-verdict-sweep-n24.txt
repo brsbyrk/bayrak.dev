@@ -1,0 +1,89 @@
+/Users/baris/Workspace/research/system-one-decision-models/probe/verdict/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Loading weights:   0%|          | 0/143 [00:00<?, ?it/s]Loading weights: 100%|██████████| 143/143 [00:00<00:00, 3712.28it/s]
+[transformers] You are using a model of type `GLiClass` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+engine: artifacts/v2 · calibrator=True · onnx=False
+
+=== A. all 11 tools, descriptions phrased for the `It is {label}` template ===
+[transformers] `use_return_dict` is deprecated! Use `return_dict` instead!
+  ABSTAIN  __insufficient_evidence__ p=0.238  what is the capital of France?
+  ABSTAIN  __insufficient_evidence__ p=0.270  who won the 2018 world cup?
+  ABSTAIN  __insufficient_evidence__ p=0.242  what is the weather in Istanbul tomorrow?
+  CALLED   execute_command    p=0.231  explain how a transformer attention head works
+  ABSTAIN  __insufficient_evidence__ p=0.212  give me a recipe for lentil soup
+  CALLED   execute_command    p=0.370  tell me a joke about programmers
+  CALLED   write_file         p=0.388  write a haiku about the sea
+  ABSTAIN  __insufficient_evidence__ p=0.165  translate good morning into Japanese
+  ABSTAIN  __insufficient_evidence__ p=0.210  what is 17 times 24?
+  CALLED   write_file         p=0.206  summarise the history of the Ottoman Empire
+  CALLED   execute_command    p=0.384  do you think Rust is better than C++?
+  ABSTAIN  __insufficient_evidence__ p=0.217  recommend a book about distributed systems
+  ABSTAIN  __insufficient_evidence__ p=0.254  what's the tallest mountain in Chile?
+  ABSTAIN  __insufficient_evidence__ p=0.218  play some jazz music
+  ABSTAIN  __insufficient_evidence__ p=0.238  book a table for two at eight tonight
+  ABSTAIN  __insufficient_evidence__ p=0.243  convert 30 degrees celsius to fahrenheit
+  ABSTAIN  __insufficient_evidence__ p=0.269  why is the sky blue?
+  CALLED   execute_command    p=0.235  give me three startup name ideas
+  CALLED   write_file         p=0.232  who wrote Pride and Prejudice?
+  ABSTAIN  __insufficient_evidence__ p=0.197  what time is it in Tokyo right now?
+  ABSTAIN  __insufficient_evidence__ p=0.202  help me figure out why I feel unmotivated
+  CALLED   write_file         p=0.218  draw a picture of a cat
+  ABSTAIN  __insufficient_evidence__ p=0.291  what were the main causes of the 2008 financial crisis?
+  ABSTAIN  __insufficient_evidence__ p=0.209  suggest a name for my new dog
+  PASS     want=git_diff           got=git_diff           p=0.788  show me the unstaged changes in this repo
+  PASS     want=read_file          got=read_file          p=0.666  read the file src/core/config.rs
+  PASS     want=write_file         got=write_file         p=0.707  write a file notes.md with the text hello
+  FAIL     want=search_files       got=web_search         p=0.546  search for TODO in the rust sources
+  PASS     want=execute_command    got=execute_command    p=0.322  run cargo test
+  FAIL     want=deposit_knowledge  got=__insufficient_evidence__ p=0.264  remember that Penelope's providers are a closed enum
+  FAIL     want=query_knowledge    got=__insufficient_evidence__ p=0.304  what do you know about the security policy?
+  PASS     want=spawn_agent        got=spawn_agent        p=0.263  spin up a child agent to audit the test suite
+  PASS     want=git_diff           got=git_diff           p=0.611  what files changed on the main branch compared with HEAD?
+  PASS     want=search_files       got=search_files       p=0.295  grep for 'unwrap()' inside the engine directory
+  FAIL     want=deposit_knowledge  got=__insufficient_evidence__ p=0.227  note down that the store is SQLite with FTS5
+  FAIL     want=spawn_agent        got=execute_command    p=0.481  launch a subagent to review the migrations
+  PASS     want=read_file          got=read_file          p=0.325  open up README.md and show me what is in it
+  PASS     want=write_file         got=write_file         p=0.424  create a file called CHANGELOG.md containing the text initial
+  FAIL     want=search_files       got=query_knowledge    p=0.376  find every occurrence of unsafe in the codebase
+  PASS     want=git_diff           got=git_diff           p=0.550  show me what has changed since the main branch
+  FAIL     want=execute_command    got=__insufficient_evidence__ p=0.244  build the project with cargo build
+  PASS     want=web_search         got=web_search         p=0.551  look up the current price of an iPhone on the web
+  FAIL     want=web_fetch          got=web_search         p=0.235  download https://docs.rs/tokio and summarise it
+  PASS     want=http_request       got=http_request       p=0.555  send a GET request to https://api.github.com/zen
+  FAIL     want=deposit_knowledge  got=execute_command    p=0.595  save a note that the CLI is called penelope
+  PASS     want=query_knowledge    got=query_knowledge    p=0.490  search your saved notes for anything about sessions
+  PASS     want=spawn_agent        got=spawn_agent        p=0.428  delegate the migration review to a subagent
+  PASS     want=write_file         got=write_file         p=0.471  write notes.md with the body todo fix the flaky test
+
+  all-11-natural-labels: labels=12
+    off-topic abstentions : 16/24
+    in-scope accuracy     : 15/24
+    mean p, wrong calls   : 0.283
+    mean p, right calls   : 0.497
+
+=== B. candidate-count sweep (same inputs) ===
+
+  first-4-tools: labels=5
+    off-topic abstentions : 19/24
+    in-scope accuracy     : 10/24
+    mean p, wrong calls   : 0.423
+    mean p, right calls   : 0.649
+
+  first-8-tools: labels=9
+    off-topic abstentions : 8/24
+    in-scope accuracy     : 14/24
+    mean p, wrong calls   : 0.456
+    mean p, right calls   : 0.758
+
+================ SWEEP ================
+
+surface                  labels   abstain    acc   p_wrong   p_right
+all-11-natural-labels        12        16     15     0.283     0.497
+first-4-tools                 5        19     10     0.423     0.649
+first-8-tools                 9         8     14     0.456     0.758
+
+--- Needle 3, same inputs, same surface: read ../logs/abstain-full-surface.txt ---
+(not hardcoded here on purpose: this file must not be the place a comparison
+ number can go stale. Re-run the Rust harness and read its summary line.)
+
+raw rows -> /Users/baris/Workspace/research/system-one-decision-models/probe/logs/ab-verdict-fair.json
