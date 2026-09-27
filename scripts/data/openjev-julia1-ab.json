@@ -1,0 +1,556 @@
+[
+  {
+    "tag": "A - 11 tools, no abstain option",
+    "options": 11,
+    "abstentions": 0,
+    "accuracy": 10,
+    "p_wrong": 0.6480465075591141,
+    "p_right": 0.8394962848705539,
+    "seconds": 1.8728642500936985,
+    "off_topic": [
+      [
+        "what is the capital of France?",
+        "web_search",
+        0.31958607143991713
+      ],
+      [
+        "who won the 2018 world cup?",
+        "execute_command",
+        0.6555473381686329
+      ],
+      [
+        "what is the weather in Istanbul tomorrow?",
+        "web_search",
+        0.4869848753895055
+      ],
+      [
+        "explain how a transformer attention head works",
+        "execute_command",
+        0.49931991646469986
+      ],
+      [
+        "give me a recipe for lentil soup",
+        "web_search",
+        0.3571844715243324
+      ],
+      [
+        "tell me a joke about programmers",
+        "execute_command",
+        0.9562831910262255
+      ],
+      [
+        "write a haiku about the sea",
+        "web_search",
+        0.7902999519228043
+      ],
+      [
+        "translate good morning into Japanese",
+        "web_search",
+        0.5786542839848583
+      ],
+      [
+        "what is 17 times 24?",
+        "execute_command",
+        0.8971895872833978
+      ],
+      [
+        "summarise the history of the Ottoman Empire",
+        "web_search",
+        0.3931718369647889
+      ],
+      [
+        "do you think Rust is better than C++?",
+        "execute_command",
+        0.8428874055074437
+      ],
+      [
+        "recommend a book about distributed systems",
+        "execute_command",
+        0.9152606203484489
+      ],
+      [
+        "what's the tallest mountain in Chile?",
+        "web_search",
+        0.9517924578128195
+      ],
+      [
+        "play some jazz music",
+        "web_search",
+        0.38674387813792427
+      ],
+      [
+        "book a table for two at eight tonight",
+        "execute_command",
+        0.6158466543357419
+      ],
+      [
+        "convert 30 degrees celsius to fahrenheit",
+        "web_search",
+        0.6543510327136794
+      ],
+      [
+        "why is the sky blue?",
+        "web_search",
+        0.4049508816985314
+      ],
+      [
+        "give me three startup name ideas",
+        "write_file",
+        0.39451518883041736
+      ],
+      [
+        "who wrote Pride and Prejudice?",
+        "web_fetch",
+        0.4485141400237685
+      ],
+      [
+        "what time is it in Tokyo right now?",
+        "execute_command",
+        0.7678432791795496
+      ],
+      [
+        "help me figure out why I feel unmotivated",
+        "execute_command",
+        0.6513793424170605
+      ],
+      [
+        "draw a picture of a cat",
+        "web_search",
+        0.8936752739203523
+      ],
+      [
+        "what were the main causes of the 2008 financial crisis?",
+        "execute_command",
+        0.8070691965175222
+      ],
+      [
+        "suggest a name for my new dog",
+        "execute_command",
+        0.8840653058063171
+      ]
+    ],
+    "in_scope": [
+      [
+        "show me the unstaged changes in this repo",
+        "git_diff",
+        "git_diff",
+        0.9973145969462293
+      ],
+      [
+        "read the file src/core/config.rs",
+        "read_file",
+        "web_search",
+        0.6954701861751705
+      ],
+      [
+        "write a file notes.md with the text hello",
+        "write_file",
+        "execute_command",
+        0.6770500851834479
+      ],
+      [
+        "search for TODO in the rust sources",
+        "search_files",
+        "web_search",
+        0.6514276274006636
+      ],
+      [
+        "run cargo test",
+        "execute_command",
+        "execute_command",
+        0.8896167104658047
+      ],
+      [
+        "remember that Penelope's providers are a closed enum",
+        "deposit_knowledge",
+        "web_search",
+        0.47564709248685466
+      ],
+      [
+        "what do you know about the security policy?",
+        "query_knowledge",
+        "web_search",
+        0.3605438654921255
+      ],
+      [
+        "spin up a child agent to audit the test suite",
+        "spawn_agent",
+        "spawn_agent",
+        0.9826084515429503
+      ],
+      [
+        "what files changed on the main branch compared with HEAD?",
+        "git_diff",
+        "git_diff",
+        0.9992605872496233
+      ],
+      [
+        "grep for 'unwrap()' inside the engine directory",
+        "search_files",
+        "http_request",
+        0.6421206527520256
+      ],
+      [
+        "note down that the store is SQLite with FTS5",
+        "deposit_knowledge",
+        "http_request",
+        0.6250112289464672
+      ],
+      [
+        "launch a subagent to review the migrations",
+        "spawn_agent",
+        "spawn_agent",
+        0.407525606716422
+      ],
+      [
+        "open up README.md and show me what is in it",
+        "read_file",
+        "read_file",
+        0.22318930610527785
+      ],
+      [
+        "create a file called CHANGELOG.md containing the text initial",
+        "write_file",
+        "git_diff",
+        0.9976047850834425
+      ],
+      [
+        "find every occurrence of unsafe in the codebase",
+        "search_files",
+        "write_file",
+        0.7481897471223776
+      ],
+      [
+        "show me what has changed since the main branch",
+        "git_diff",
+        "git_diff",
+        0.9991192305736505
+      ],
+      [
+        "build the project with cargo build",
+        "execute_command",
+        "execute_command",
+        0.9006504370151498
+      ],
+      [
+        "look up the current price of an iPhone on the web",
+        "web_search",
+        "query_knowledge",
+        0.9021154620116658
+      ],
+      [
+        "download https://docs.rs/tokio and summarise it",
+        "web_fetch",
+        "execute_command",
+        0.9908625890975474
+      ],
+      [
+        "send a GET request to https://api.github.com/zen",
+        "http_request",
+        "http_request",
+        0.9999849638474682
+      ],
+      [
+        "save a note that the CLI is called penelope",
+        "deposit_knowledge",
+        "execute_command",
+        0.6320844658203577
+      ],
+      [
+        "search your saved notes for anything about sessions",
+        "query_knowledge",
+        "web_search",
+        0.9623950625505422
+      ],
+      [
+        "delegate the migration review to a subagent",
+        "spawn_agent",
+        "spawn_agent",
+        0.9956929582429631
+      ],
+      [
+        "write notes.md with the body todo fix the flaky test",
+        "write_file",
+        "web_search",
+        0.4945963430272881
+      ]
+    ]
+  },
+  {
+    "tag": "B - 11 tools + an offered abstain option",
+    "options": 12,
+    "abstentions": 0,
+    "accuracy": 8,
+    "p_wrong": 0.6364960511559813,
+    "p_right": 0.9919201109469888,
+    "seconds": 3.035879250150174,
+    "off_topic": [
+      [
+        "what is the capital of France?",
+        "web_fetch",
+        0.3735562566574319
+      ],
+      [
+        "who won the 2018 world cup?",
+        "web_fetch",
+        0.6384751992340052
+      ],
+      [
+        "what is the weather in Istanbul tomorrow?",
+        "read_file",
+        0.42427849418060565
+      ],
+      [
+        "explain how a transformer attention head works",
+        "execute_command",
+        0.8892303572184961
+      ],
+      [
+        "give me a recipe for lentil soup",
+        "execute_command",
+        0.5847381615249555
+      ],
+      [
+        "tell me a joke about programmers",
+        "execute_command",
+        0.9959025173877184
+      ],
+      [
+        "write a haiku about the sea",
+        "web_search",
+        0.7547100160646186
+      ],
+      [
+        "translate good morning into Japanese",
+        "execute_command",
+        0.6518485321159829
+      ],
+      [
+        "what is 17 times 24?",
+        "execute_command",
+        0.6704380381683048
+      ],
+      [
+        "summarise the history of the Ottoman Empire",
+        "execute_command",
+        0.5013899155495473
+      ],
+      [
+        "do you think Rust is better than C++?",
+        "execute_command",
+        0.9877711525514494
+      ],
+      [
+        "recommend a book about distributed systems",
+        "execute_command",
+        0.47885936644498933
+      ],
+      [
+        "what's the tallest mountain in Chile?",
+        "web_search",
+        0.7933821321427114
+      ],
+      [
+        "play some jazz music",
+        "execute_command",
+        0.724375447414097
+      ],
+      [
+        "book a table for two at eight tonight",
+        "execute_command",
+        0.33631410399136924
+      ],
+      [
+        "convert 30 degrees celsius to fahrenheit",
+        "read_file",
+        0.3457396753443011
+      ],
+      [
+        "why is the sky blue?",
+        "execute_command",
+        0.6902541471569901
+      ],
+      [
+        "give me three startup name ideas",
+        "execute_command",
+        0.9724444367610672
+      ],
+      [
+        "who wrote Pride and Prejudice?",
+        "web_fetch",
+        0.40486147366012437
+      ],
+      [
+        "what time is it in Tokyo right now?",
+        "execute_command",
+        0.822443175293335
+      ],
+      [
+        "help me figure out why I feel unmotivated",
+        "execute_command",
+        0.9428174137746966
+      ],
+      [
+        "draw a picture of a cat",
+        "execute_command",
+        0.6198376924197372
+      ],
+      [
+        "what were the main causes of the 2008 financial crisis?",
+        "execute_command",
+        0.3675555964407845
+      ],
+      [
+        "suggest a name for my new dog",
+        "read_file",
+        0.30468192624623236
+      ]
+    ],
+    "in_scope": [
+      [
+        "show me the unstaged changes in this repo",
+        "git_diff",
+        "git_diff",
+        0.996322562022207
+      ],
+      [
+        "read the file src/core/config.rs",
+        "read_file",
+        "execute_command",
+        0.5284612462767948
+      ],
+      [
+        "write a file notes.md with the text hello",
+        "write_file",
+        "execute_command",
+        0.3961163158668778
+      ],
+      [
+        "search for TODO in the rust sources",
+        "search_files",
+        "execute_command",
+        0.5580866028209317
+      ],
+      [
+        "run cargo test",
+        "execute_command",
+        "execute_command",
+        0.9750115229583308
+      ],
+      [
+        "remember that Penelope's providers are a closed enum",
+        "deposit_knowledge",
+        "none_of_these",
+        0.8095958077486431
+      ],
+      [
+        "what do you know about the security policy?",
+        "query_knowledge",
+        "execute_command",
+        0.3322814178670417
+      ],
+      [
+        "spin up a child agent to audit the test suite",
+        "spawn_agent",
+        "spawn_agent",
+        0.9917994683873999
+      ],
+      [
+        "what files changed on the main branch compared with HEAD?",
+        "git_diff",
+        "git_diff",
+        0.9995242925431855
+      ],
+      [
+        "grep for 'unwrap()' inside the engine directory",
+        "search_files",
+        "http_request",
+        0.6853346619963481
+      ],
+      [
+        "note down that the store is SQLite with FTS5",
+        "deposit_knowledge",
+        "none_of_these",
+        0.8093683273292401
+      ],
+      [
+        "launch a subagent to review the migrations",
+        "spawn_agent",
+        "git_diff",
+        0.4021588330193639
+      ],
+      [
+        "open up README.md and show me what is in it",
+        "read_file",
+        "none_of_these",
+        0.828748242067427
+      ],
+      [
+        "create a file called CHANGELOG.md containing the text initial",
+        "write_file",
+        "git_diff",
+        0.9994688936805961
+      ],
+      [
+        "find every occurrence of unsafe in the codebase",
+        "search_files",
+        "web_search",
+        0.5806206982997565
+      ],
+      [
+        "show me what has changed since the main branch",
+        "git_diff",
+        "git_diff",
+        0.9993625078003852
+      ],
+      [
+        "build the project with cargo build",
+        "execute_command",
+        "execute_command",
+        0.9736898812180924
+      ],
+      [
+        "look up the current price of an iPhone on the web",
+        "web_search",
+        "http_request",
+        0.4760295857733094
+      ],
+      [
+        "download https://docs.rs/tokio and summarise it",
+        "web_fetch",
+        "execute_command",
+        0.723954559966298
+      ],
+      [
+        "send a GET request to https://api.github.com/zen",
+        "http_request",
+        "http_request",
+        0.9999932634124129
+      ],
+      [
+        "save a note that the CLI is called penelope",
+        "deposit_knowledge",
+        "http_request",
+        0.7618659265699826
+      ],
+      [
+        "search your saved notes for anything about sessions",
+        "query_knowledge",
+        "web_search",
+        0.49019031967858384
+      ],
+      [
+        "delegate the migration review to a subagent",
+        "spawn_agent",
+        "spawn_agent",
+        0.9996573892338969
+      ],
+      [
+        "write notes.md with the body todo fix the flaky test",
+        "write_file",
+        "web_search",
+        0.23984998313060907
+      ]
+    ]
+  }
+]

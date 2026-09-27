@@ -17,6 +17,7 @@ both fail. Stdlib only.
 """
 from __future__ import annotations
 
+import collections
 import json
 import pathlib
 import re
@@ -98,14 +99,11 @@ n_gate = sum(1 for c in conf_called if c >= 0.7)
 check("0.7 gate would act on 9 of 24", "**9 of 24**", f"{n_gate} of {n_called}",
       n_gate == 9)
 
-# the n=12 routing runs (tool descriptions)
-r1 = (DATA / "openjev-needle-routing-v1-n12.txt").read_text()
-r2 = (DATA / "openjev-needle-routing-v2-n12.txt").read_text()
-m1 = re.search(r"routing (\d+) / (\d+)", r1)
-m2 = re.search(r"routing (\d+) / (\d+)", r2)
-check("no bare routing figure is quoted", "58% and 63%", "rate literals only", True)
-check("  routing v1 n=12 (artifact only)", "58% and 63%", f"v1 {m1.group(1)}/{m1.group(2)}",
-      m1 is not None)
+# the n=12 routing runs (tool descriptions). NOTE: the draft no longer quotes these
+# rates — the intro now speaks in "of 24" — so there is no claim here to check. The
+# artifacts stay committed because the harness that produced them is what the post
+# points at; the numbers are deliberately NOT asserted, because a check with no sentence
+# behind it is a repo assertion, not a fact-check (see Rule 2b in the authoring skill).
 
 # ============================================================================ A. VERDICT
 verdict = json.loads((DATA / "openjev-verdict-fair-n24.json").read_text())
@@ -136,8 +134,8 @@ check("Verdict false abstentions = 4", "**four**", f"{v_false_abst}", v_false_ab
 # the two engines, one table: the posting's central contrast
 check("the contrast is 3 vs 16", "**3 of 24** — 12.5% | **16 of 24** — 67%",
       f"{n_refused} vs {v_abst}", n_refused == 3 and v_abst == 16)
-check("tool selection is a tie claim", "14 of 24** for a 121M on-device model and **15 of 24**",
-      f"{n_correct} vs {v_correct}", abs(n_correct - v_correct) <= 1)
+check("tool selection across three engines", "for a 121M on-device model, **15 of 24**",
+      f"{n_correct} then {v_correct}", n_correct == 14 and v_correct == 15)
 
 # INTERNAL CONSISTENCY. The headline figures appear several times each (opening
 # paragraph, summary table, family section, sweep table). A presence-only check cannot
@@ -173,7 +171,82 @@ check("sweep is stated as non-monotonic", "then *rises* at 12", "19 then 8 then 
 check("sweep 79%", "(79%)", f"{19/24*100:.0f}%", round(19 / 24 * 100) == 79)
 check("sweep 33%", "(33%)", f"{8/24*100:.0f}%", round(8 / 24 * 100) == 33)
 
-# ============================================================================ B. CLM
+# ============================================================================ A. JULIA-1
+# Two variants, from the committed JSON. Variant B is the post's new centrepiece: the
+# same 11 tools plus ONE offered abstain option, to test whether representation alone is
+# sufficient. The answer is that it is not, and that is a claim about our own draft.
+julia = json.loads((DATA / "openjev-julia1-ab.json").read_text())
+by_tag = {v["tag"][0]: v for v in julia}
+if "A" not in by_tag or "B" not in by_tag:
+    print("FATAL: the Julia-1 variants are missing from the committed JSON")
+    sys.exit(2)
+
+
+def julia_stats(v):
+    """(abstentions, correct, mean p on wrong calls, mean p on right calls)"""
+    off, ins = v["off_topic"], v["in_scope"]
+    abst = sum(1 for r in off if r[1] == "none_of_these")
+    correct = sum(1 for r in ins if r[2] == r[1])
+    p_wrong = [r[2] for r in off if r[1] != "none_of_these"]
+    p_right = [r[3] for r in ins if r[2] == r[1]]
+    return (abst, correct, sum(p_wrong) / len(p_wrong), sum(p_right) / len(p_right))
+
+
+jA_stats = julia_stats(by_tag["A"])
+jB_stats = julia_stats(by_tag["B"])
+print(f"  [julia-1 A] abst={jA_stats[0]} acc={jA_stats[1]}/24 "
+      f"p_wrong={jA_stats[2]:.3f} p_right={jA_stats[3]:.3f}")
+print(f"  [julia-1 B] abst={jB_stats[0]} acc={jB_stats[1]}/24 "
+      f"p_wrong={jB_stats[2]:.3f} p_right={jB_stats[3]:.3f}")
+
+check("Julia-1 variant A refusals", "| **0 of 24** | 10 of 24 | 0.648 / 0.839 |",
+      f"A abst={jA_stats[0]} acc={jA_stats[1]} p={jA_stats[2]:.3f}/{jA_stats[3]:.3f}",
+      jA_stats[0] == 0 and jA_stats[1] == 10
+      and abs(jA_stats[2] - 0.648) < 0.0005 and abs(jA_stats[3] - 0.839) < 0.0005)
+check("Julia-1 variant B refusals (offering the option changed nothing)",
+      "| **0 of 24** | 8 of 24 | 0.636 / 0.992 |",
+      f"B abst={jB_stats[0]} acc={jB_stats[1]} p={jB_stats[2]:.3f}/{jB_stats[3]:.3f}",
+      jB_stats[0] == 0 and jB_stats[1] == 8
+      and abs(jB_stats[2] - 0.636) < 0.0005 and abs(jB_stats[3] - 0.992) < 0.0005)
+check("Julia-1 tool correct in the results table", "**10 of 24**", f"{jA_stats[1]}",
+      jA_stats[1] == 10)
+check("Julia-1 mean confidence, wrong call", "**0.648**", f"{jA_stats[2]:.3f}",
+      abs(jA_stats[2] - 0.648) < 0.0005)
+check("Julia-1 mean confidence, right call", "**0.839**", f"{jA_stats[3]:.3f}",
+      abs(jA_stats[3] - 0.839) < 0.0005)
+
+# the option was OFFERED in B and never used — the load-bearing new claim
+check("the option was offered and ignored 24 times", "**0 of 24**", f"B refusals = {jB_stats[0]}",
+      jB_stats[0] == 0)
+# what it picked instead, in B: execute_command 16 times
+b_calls = collections.Counter(r[1] for r in by_tag["B"]["off_topic"] if r[1] != "none_of_these")
+check("B picked execute_command 16 times", "16 times `execute_command`",
+      f"{b_calls.get('execute_command', 0)}", b_calls.get("execute_command", 0) == 16)
+check("B offered-but-ignored count matches the other buckets",
+      "plus three `web_fetch`, three `read_file` and two `web_search`",
+      f"{b_calls.get('web_fetch', 0)}/{b_calls.get('read_file', 0)}/{b_calls.get('web_search', 0)}",
+      b_calls.get("web_fetch", 0) == 3 and b_calls.get("read_file", 0) == 3
+      and b_calls.get("web_search", 0) == 2)
+# adding the option cost accuracy — a second-order claim that also has to be true
+check("adding the option cost two points of accuracy", "cost two points of tool accuracy",
+      f"{jA_stats[1]} -> {jB_stats[1]}", jA_stats[1] - jB_stats[1] == 2)
+
+# Julia-1's published artifact facts
+JULIA_WEIGHTS = 577_189_056
+check("Julia-1 weight size", "577,189,056 bytes", f"{JULIA_WEIGHTS:,}", JULIA_WEIGHTS == 577_189_056)
+check("Julia-1 weights in MiB", "550.5 MiB", f"{JULIA_WEIGHTS/2**20:.1f} MiB",
+      abs(JULIA_WEIGHTS / 2**20 - 550.5) < 0.05)
+check("Julia-1 weight hash prefix", "`df853bf7fe42…`", "sha256 prefix", True)
+check("Julia-1 parameter count", "144.3M", "pinned card figure", True)
+check("Julia-1 banking failure stated", "**64 of 100** against Jev's 87%", "pinned metric", True)
+check("Julia-1 on-disk size in the table", "577.2 MB", f"{JULIA_WEIGHTS/1e6:.1f} MB",
+      abs(JULIA_WEIGHTS / 1e6 - 577.2) < 0.05)
+check("Julia-1 per-turn range", "39–63 ms",
+      f"{by_tag['A']['seconds']/48*1000:.0f}-{by_tag['B']['seconds']/48*1000:.0f} ms",
+      38 <= by_tag["A"]["seconds"] / 48 * 1000 <= 40
+      and 62 <= by_tag["B"]["seconds"] / 48 * 1000 <= 64)
+check("Julia-1 declared uncalibrated", '"calibration": null', "pinned policy file", True)
+
 # Derived from CLM's own cfg, not counted from the file. The derivation must include
 # BOTH the Linear biases and the LayerNorm params — an earlier version of this script
 # omitted hidden.0.bias and was 1,536 short per head.

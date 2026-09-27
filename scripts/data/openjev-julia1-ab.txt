@@ -1,0 +1,115 @@
+engine loaded in 3.4s
+
+--- A - 11 tools, no abstain option: 11 options ---
+  CALLED   web_search         p=0.320  what is the capital of France?
+  CALLED   execute_command    p=0.656  who won the 2018 world cup?
+  CALLED   web_search         p=0.487  what is the weather in Istanbul tomorrow?
+  CALLED   execute_command    p=0.499  explain how a transformer attention head works
+  CALLED   web_search         p=0.357  give me a recipe for lentil soup
+  CALLED   execute_command    p=0.956  tell me a joke about programmers
+  CALLED   web_search         p=0.790  write a haiku about the sea
+  CALLED   web_search         p=0.579  translate good morning into Japanese
+  CALLED   execute_command    p=0.897  what is 17 times 24?
+  CALLED   web_search         p=0.393  summarise the history of the Ottoman Empire
+  CALLED   execute_command    p=0.843  do you think Rust is better than C++?
+  CALLED   execute_command    p=0.915  recommend a book about distributed systems
+  CALLED   web_search         p=0.952  what's the tallest mountain in Chile?
+  CALLED   web_search         p=0.387  play some jazz music
+  CALLED   execute_command    p=0.616  book a table for two at eight tonight
+  CALLED   web_search         p=0.654  convert 30 degrees celsius to fahrenheit
+  CALLED   web_search         p=0.405  why is the sky blue?
+  CALLED   write_file         p=0.395  give me three startup name ideas
+  CALLED   web_fetch          p=0.449  who wrote Pride and Prejudice?
+  CALLED   execute_command    p=0.768  what time is it in Tokyo right now?
+  CALLED   execute_command    p=0.651  help me figure out why I feel unmotivated
+  CALLED   web_search         p=0.894  draw a picture of a cat
+  CALLED   execute_command    p=0.807  what were the main causes of the 2008 financial crisis?
+  CALLED   execute_command    p=0.884  suggest a name for my new dog
+  PASS     want=git_diff           got=git_diff           p=0.997  show me the unstaged changes in this repo
+  FAIL     want=read_file          got=web_search         p=0.695  read the file src/core/config.rs
+  FAIL     want=write_file         got=execute_command    p=0.677  write a file notes.md with the text hello
+  FAIL     want=search_files       got=web_search         p=0.651  search for TODO in the rust sources
+  PASS     want=execute_command    got=execute_command    p=0.890  run cargo test
+  FAIL     want=deposit_knowledge  got=web_search         p=0.476  remember that Penelope's providers are a closed enum
+  FAIL     want=query_knowledge    got=web_search         p=0.361  what do you know about the security policy?
+  PASS     want=spawn_agent        got=spawn_agent        p=0.983  spin up a child agent to audit the test suite
+  PASS     want=git_diff           got=git_diff           p=0.999  what files changed on the main branch compared with HEAD?
+  FAIL     want=search_files       got=http_request       p=0.642  grep for 'unwrap()' inside the engine directory
+  FAIL     want=deposit_knowledge  got=http_request       p=0.625  note down that the store is SQLite with FTS5
+  PASS     want=spawn_agent        got=spawn_agent        p=0.408  launch a subagent to review the migrations
+  PASS     want=read_file          got=read_file          p=0.223  open up README.md and show me what is in it
+  FAIL     want=write_file         got=git_diff           p=0.998  create a file called CHANGELOG.md containing the text initial
+  FAIL     want=search_files       got=write_file         p=0.748  find every occurrence of unsafe in the codebase
+  PASS     want=git_diff           got=git_diff           p=0.999  show me what has changed since the main branch
+  PASS     want=execute_command    got=execute_command    p=0.901  build the project with cargo build
+  FAIL     want=web_search         got=query_knowledge    p=0.902  look up the current price of an iPhone on the web
+  FAIL     want=web_fetch          got=execute_command    p=0.991  download https://docs.rs/tokio and summarise it
+  PASS     want=http_request       got=http_request       p=1.000  send a GET request to https://api.github.com/zen
+  FAIL     want=deposit_knowledge  got=execute_command    p=0.632  save a note that the CLI is called penelope
+  FAIL     want=query_knowledge    got=web_search         p=0.962  search your saved notes for anything about sessions
+  PASS     want=spawn_agent        got=spawn_agent        p=0.996  delegate the migration review to a subagent
+  FAIL     want=write_file         got=web_search         p=0.495  write notes.md with the body todo fix the flaky test
+
+  == A - 11 tools, no abstain option ==
+    off-topic abstentions    : 0/24
+    tool correct             : 10/24
+    mean p, wrong / right    : 0.648 / 0.839
+    wall clock for 48 turns  : 1.9s (39 ms/turn)
+
+--- B - 11 tools + an offered abstain option: 12 options ---
+  CALLED   web_fetch          p=0.374  what is the capital of France?
+  CALLED   web_fetch          p=0.638  who won the 2018 world cup?
+  CALLED   read_file          p=0.424  what is the weather in Istanbul tomorrow?
+  CALLED   execute_command    p=0.889  explain how a transformer attention head works
+  CALLED   execute_command    p=0.585  give me a recipe for lentil soup
+  CALLED   execute_command    p=0.996  tell me a joke about programmers
+  CALLED   web_search         p=0.755  write a haiku about the sea
+  CALLED   execute_command    p=0.652  translate good morning into Japanese
+  CALLED   execute_command    p=0.670  what is 17 times 24?
+  CALLED   execute_command    p=0.501  summarise the history of the Ottoman Empire
+  CALLED   execute_command    p=0.988  do you think Rust is better than C++?
+  CALLED   execute_command    p=0.479  recommend a book about distributed systems
+  CALLED   web_search         p=0.793  what's the tallest mountain in Chile?
+  CALLED   execute_command    p=0.724  play some jazz music
+  CALLED   execute_command    p=0.336  book a table for two at eight tonight
+  CALLED   read_file          p=0.346  convert 30 degrees celsius to fahrenheit
+  CALLED   execute_command    p=0.690  why is the sky blue?
+  CALLED   execute_command    p=0.972  give me three startup name ideas
+  CALLED   web_fetch          p=0.405  who wrote Pride and Prejudice?
+  CALLED   execute_command    p=0.822  what time is it in Tokyo right now?
+  CALLED   execute_command    p=0.943  help me figure out why I feel unmotivated
+  CALLED   execute_command    p=0.620  draw a picture of a cat
+  CALLED   execute_command    p=0.368  what were the main causes of the 2008 financial crisis?
+  CALLED   read_file          p=0.305  suggest a name for my new dog
+  PASS     want=git_diff           got=git_diff           p=0.996  show me the unstaged changes in this repo
+  FAIL     want=read_file          got=execute_command    p=0.528  read the file src/core/config.rs
+  FAIL     want=write_file         got=execute_command    p=0.396  write a file notes.md with the text hello
+  FAIL     want=search_files       got=execute_command    p=0.558  search for TODO in the rust sources
+  PASS     want=execute_command    got=execute_command    p=0.975  run cargo test
+  FAIL     want=deposit_knowledge  got=none_of_these      p=0.810  remember that Penelope's providers are a closed enum
+  FAIL     want=query_knowledge    got=execute_command    p=0.332  what do you know about the security policy?
+  PASS     want=spawn_agent        got=spawn_agent        p=0.992  spin up a child agent to audit the test suite
+  PASS     want=git_diff           got=git_diff           p=1.000  what files changed on the main branch compared with HEAD?
+  FAIL     want=search_files       got=http_request       p=0.685  grep for 'unwrap()' inside the engine directory
+  FAIL     want=deposit_knowledge  got=none_of_these      p=0.809  note down that the store is SQLite with FTS5
+  FAIL     want=spawn_agent        got=git_diff           p=0.402  launch a subagent to review the migrations
+  FAIL     want=read_file          got=none_of_these      p=0.829  open up README.md and show me what is in it
+  FAIL     want=write_file         got=git_diff           p=0.999  create a file called CHANGELOG.md containing the text initial
+  FAIL     want=search_files       got=web_search         p=0.581  find every occurrence of unsafe in the codebase
+  PASS     want=git_diff           got=git_diff           p=0.999  show me what has changed since the main branch
+  PASS     want=execute_command    got=execute_command    p=0.974  build the project with cargo build
+  FAIL     want=web_search         got=http_request       p=0.476  look up the current price of an iPhone on the web
+  FAIL     want=web_fetch          got=execute_command    p=0.724  download https://docs.rs/tokio and summarise it
+  PASS     want=http_request       got=http_request       p=1.000  send a GET request to https://api.github.com/zen
+  FAIL     want=deposit_knowledge  got=http_request       p=0.762  save a note that the CLI is called penelope
+  FAIL     want=query_knowledge    got=web_search         p=0.490  search your saved notes for anything about sessions
+  PASS     want=spawn_agent        got=spawn_agent        p=1.000  delegate the migration review to a subagent
+  FAIL     want=write_file         got=web_search         p=0.240  write notes.md with the body todo fix the flaky test
+
+  == B - 11 tools + an offered abstain option ==
+    off-topic abstentions    : 0/24
+    tool correct             : 8/24
+    mean p, wrong / right    : 0.636 / 0.992
+    wall clock for 48 turns  : 3.0s (63 ms/turn)
+
+raw rows -> /Users/baris/Workspace/research/system-one-decision-models/probe/logs/ab-julia1.json
