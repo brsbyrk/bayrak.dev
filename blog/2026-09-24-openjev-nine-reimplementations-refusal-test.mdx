@@ -2,6 +2,7 @@
 title: "OpenJEV — One Refusal Test, an 80 MB File That Is Real, and the Option That Did Not Help"
 description: "Ten open reimplementations of TypeSafe's Jev appeared in eleven days, and the interface is the easy part. We ran three of them — Needle 3 from Rust, Verdict through its ONNX export, and Supersonic Labs' Julia-1 on a CPU — against one real 11-tool surface and 24 off-topic controls. Choosing the right tool was close at 14, 15 and 10 of 24. Refusing an unusable request was not: 3, 16 and 0 of 24 — and with an explicit 'none of these' option offered, Julia-1 ignored it 24 times out of 24, which falsified the explanation this post first gave. Plus a 75.6 MB file named '8B' that is genuinely a head on a frozen 16 GB encoder. Updated: the field now has a public leaderboard — 140,178 requests, 0.59B to 26.09B models — and we measured whether a Jev-style model can emit a word at all."
 date: 2026-09-24
+slug: /writing/openjev-nine-reimplementations-refusal-test
 tags: [research, models, inference, agents]
 authors: [baris]
 ---
@@ -16,7 +17,7 @@ We ran three of them against a real tool surface, 48 requests, one machine. Choo
 
 In an agent, a decision model sits in front of the tool list and answers "which of these applies?". The interesting case is not the request that matches a tool. It is the request that matches *none* of them, where the only correct output is an empty result.
 
-That framing is inherited, and it is worth naming where from. A tool from [an earlier project on this site](/2026/09/22/claimaudit-three-ceilings-no-buyer) audits technical claims against the hard ceiling of their own physics, and the single rule that made it work was **keeping a control set of real products the tool must never flag**. Without it, three separate domains shipped a confidently wrong bound. The same discipline applies here with the sign flipped: the control set is 24 requests that *no* tool in the set can serve, and the correct behaviour on every one of them is silence. A decision model that always returns an answer is not a router. It is a guessing machine with a probability attached.
+That framing is inherited, and it is worth naming where from. A tool from [an earlier project on this site](./2026-09-22-claimaudit-three-ceilings-no-buyer.mdx) audits technical claims against the hard ceiling of their own physics, and the single rule that made it work was **keeping a control set of real products the tool must never flag**. Without it, three separate domains shipped a confidently wrong bound. The same discipline applies here with the sign flipped: the control set is 24 requests that *no* tool in the set can serve, and the correct behaviour on every one of them is silence. A decision model that always returns an answer is not a router. It is a guessing machine with a probability attached.
 
 So: 11 tools, 24 requests each way. The tools are the real ones registered in our own Rust agent library, read from the source rather than invented for the test:
 
@@ -138,7 +139,7 @@ The reference implementation is now fourth on a board Perplexity and Fastino hav
 
 Both cards lead their highlights with the same sentence: *"all 140,178 public requests answered, **none unsupported**."*
 
-Read that against the test above. **A decision model that never declines is a guessing machine with a probability attached** — that is precisely what we measured, where three engines refused **3, 16 and 0** of 24 requests that no tool could serve. Whether "none unsupported" is an achievement or a confession turns on one question the card does not answer: **does the 140,178-request suite contain cases where the correct answer is "unsupported"?** If it does not, the index cannot measure the behaviour that separated the engines here, and the claim is unfalsifiable rather than good. That is the control-set rule from [the claimaudit post](/2026/09/22/claimaudit-three-ceilings-no-buyer), pointed at the industry's own benchmark — and it is the first thing we would check before trusting the board.
+Read that against the test above. **A decision model that never declines is a guessing machine with a probability attached** — that is precisely what we measured, where three engines refused **3, 16 and 0** of 24 requests that no tool could serve. Whether "none unsupported" is an achievement or a confession turns on one question the card does not answer: **does the 140,178-request suite contain cases where the correct answer is "unsupported"?** If it does not, the index cannot measure the behaviour that separated the engines here, and the claim is unfalsifiable rather than good. That is the control-set rule from [the claimaudit post](./2026-09-22-claimaudit-three-ceilings-no-buyer.mdx), pointed at the industry's own benchmark — and it is the first thing we would check before trusting the board.
 
 ### Can These Models Emit a Word at All?
 

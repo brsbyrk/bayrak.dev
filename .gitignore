@@ -26,3 +26,4 @@ yarn-error.log*
 
 # Archive
 _archive
+scripts/__pycache__/
