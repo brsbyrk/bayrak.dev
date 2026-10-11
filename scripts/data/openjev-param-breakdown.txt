@@ -1,0 +1,20 @@
+file     : /Users/baris/Workspace/research/system-one-decision-models/probe/julia-1/model.safetensors
+tensors  : 170
+params   : 144,292,870
+
+     98,304,384   68.1%  encoder: token/position embeddings
+     42,188,928   29.2%  encoder: transformer layers
+      3,548,928    2.5%  head: extra transformer layers
+        148,993    0.1%  head: per-option scorer
+        100,098    0.1%  head: RL action head (unused for typed decisions)
+          1,152    0.0%  head: question-type embedding
+            384    0.0%  encoder: final norm
+              3    0.0%  other
+
+vocabulary: 256,000 tokens x 384 = 98,304,000 params (68.1% of the model)
+
+  re-vocab trade (encoder width fixed):
+    vocab 256,000: saves           0 params =      0 MB fp32 /    0.0 MB int8 -> model 144,292,870 (577 MB fp32)
+    vocab  64,000: saves  73,728,000 params =    295 MB fp32 /   73.7 MB int8 -> model 70,564,870 (282 MB fp32)
+    vocab  32,000: saves  86,016,000 params =    344 MB fp32 /   86.0 MB int8 -> model 58,276,870 (233 MB fp32)
+    vocab  16,000: saves  92,160,000 params =    369 MB fp32 /   92.2 MB int8 -> model 52,132,870 (209 MB fp32)

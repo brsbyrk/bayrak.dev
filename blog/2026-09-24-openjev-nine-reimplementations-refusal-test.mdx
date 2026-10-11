@@ -1,6 +1,6 @@
 ---
 title: "OpenJEV — One Refusal Test, an 80 MB File That Is Real, and the Option That Did Not Help"
-description: "Ten open reimplementations of TypeSafe's Jev appeared in eleven days, and the interface is the easy part. We ran three of them — Needle 3 from Rust, Verdict through its ONNX export, and Supersonic Labs' Julia-1 on a CPU — against one real 11-tool surface and 24 off-topic controls. Choosing the right tool was close at 14, 15 and 10 of 24. Refusing an unusable request was not: 3, 16 and 0 of 24 — and with an explicit 'none of these' option offered, Julia-1 ignored it 24 times out of 24, which falsified the explanation this post first gave. Plus a 75.6 MB file named '8B' that is genuinely a head on a frozen 16 GB encoder."
+description: "Ten open reimplementations of TypeSafe's Jev appeared in eleven days, and the interface is the easy part. We ran three of them — Needle 3 from Rust, Verdict through its ONNX export, and Supersonic Labs' Julia-1 on a CPU — against one real 11-tool surface and 24 off-topic controls. Choosing the right tool was close at 14, 15 and 10 of 24. Refusing an unusable request was not: 3, 16 and 0 of 24 — and with an explicit 'none of these' option offered, Julia-1 ignored it 24 times out of 24, which falsified the explanation this post first gave. Plus a 75.6 MB file named '8B' that is genuinely a head on a frozen 16 GB encoder. Updated: the field now has a public leaderboard — 140,178 requests, 0.59B to 26.09B models — and we measured whether a Jev-style model can emit a word at all."
 date: 2026-09-24
 tags: [research, models, inference, agents]
 authors: [baris]
@@ -118,6 +118,44 @@ One more measurement, because the candidate menu turns out to be a variable rath
 
 Refusal falls hard from 5 labels to 9, then *rises* at 12. Three points at n = 24 cannot explain that, and we are not going to pretend otherwise — but it is enough to say the effect is real and not simply "more options, worse", which is consistent with Verdict's own note that its abstention "depends heavily on the seen prompt structure". Their published curve, on 100 samples per slice, is the version to trust: **97% → 96% → 91% → 78% → 72%** accuracy as the menu grows from 3 to 25. An 11-tool router is a 12-candidate problem, which is where their own data already says to be careful.
 
+## A Month Later, the Field Has a Leaderboard
+
+Everything above measured ten reimplementations, none larger than 151M parameters. That is no longer the shape of the field. **Decision 3.0**, released on 10 October by the vLLM Semantic Router team, is six Apache-2.0 decision models from **0.59B to 26.09B**, built on Qwen3.5 and Qwen3.8 backbones, **multimodal** (images and video), and published as `zero-shot-classification` rather than text generation. Its card states the design intent in one sentence: the model "returns a probability for every answer, **without generating text**."
+
+So the interface we said takes an afternoon to copy is now a category label, and the category has a public number attached. The **Jev Decision Index 0.3.1** board runs on a suite of **140,178 requests**:
+
+| Model | Index | Public | Same-skill | New-domain |
+|---|---|---|---|---|
+| **d3** (26.09B) | **64.7** | **65.5** | **62.8** | **56.6** |
+| Perplexity Decider v1.1 (27B) | 62.8 | 62.3 | 61.1 | 55.6 |
+| Fastino GLiDE (28B, no-thinking) | 60.2 | 59.1 | 59.5 | 52.9 |
+| **Jev** — the model being reimplemented | 60.1 | 58.0 | 58.0 | 55.0 |
+| Torchcast Decision 27B | 59.9 | 65.1 | 58.1 | 50.8 |
+
+The reference implementation is now fourth on a board Perplexity and Fastino have entered. The column that should interest anyone building on this is **New-domain**, where even the leader reaches only **56.6** — that is the generalisation gap we could not measure with 24 hand-written controls and they now attempt with 140,178 requests. The size ladder tells its own story too: the same family scores **28.82** at 0.59B against **65.45** at 27B.
+
+### The Line to Interrogate
+
+Both cards lead their highlights with the same sentence: *"all 140,178 public requests answered, **none unsupported**."*
+
+Read that against the test above. **A decision model that never declines is a guessing machine with a probability attached** — that is precisely what we measured, where three engines refused **3, 16 and 0** of 24 requests that no tool could serve. Whether "none unsupported" is an achievement or a confession turns on one question the card does not answer: **does the 140,178-request suite contain cases where the correct answer is "unsupported"?** If it does not, the index cannot measure the behaviour that separated the engines here, and the claim is unfalsifiable rather than good. That is the control-set rule from [the claimaudit post](/2026/09/22/claimaudit-three-ceilings-no-buyer), pointed at the industry's own benchmark — and it is the first thing we would check before trusting the board.
+
+### Can These Models Emit a Word at All?
+
+We had asserted "no", so we measured it. The artifact settles half the question: a released Jev-style checkpoint carries **no language head**. Of the four pieces `ModernBertForMaskedLM` needs to produce a vocabulary distribution, **three are absent** — `head.dense`, `head.norm`, `decoder.bias` — leaving only the tied embedding table, which is a shared *input* tensor. Nothing in the file outputs a word distribution; the model returns one scalar per marked option.
+
+The other half needed a control. We loaded the parent `jhu-clsp/mmBERT-small`, which *does* carry the full MLM head, then swapped in **only** the post-trained encoder — **134 of 134** tensors changed:
+
+| prompt | parent (control) | post-trained encoder |
+|---|---|---|
+| "The guard lowered his `<mask>` and let the cart through." | horse .39 · head .18 · gun .09 | **gun .48** · pistol .23 · rifle .10 |
+| "…asked the traveller to `<mask>`" — the next word | a full stop .28, then return .27 · go .11 | **think .62** · remember .25 · stop .04 |
+| "The north `<mask>` is gone." | coast .25 · wind .19 · side .15 | america .32 · beauty .26 · telegraph .06 |
+
+Three things fall out of that. **The instrument works** — the parent produces clean continuations including at the *end* of a sentence, so a masked LM answering "the next word" is a legitimate query and the distribution-shift objection we expected does not apply at single-step. **The post-training did not destroy the language ability** — a guard lowering his **gun** is a better answer than the parent's "horse". And it is **unevenly** degraded: "the north ___" collapses to *america* and *beauty*, so the encoder has been specialised away from free-form completion.
+
+So: yes, mechanically — and only with a language head bolted back on, which costs about **98.7M parameters** for the parent's untied decoder. That is more than double the **42.2M** in all 22 encoder layers, entirely because the vocabulary is 256k. And it is single-step only: generating means re-encoding the whole prefix for every word, with no cache. Which is the conclusion the vendor reached from the other side, in the sentence quoted at the top of this section.
+
 ## What It Cannot Do
 
 - **It is 24 hand-written requests per side, not a benchmark.** The differences are large enough to act on; they are not precision measurements, and the sweep above shows how sharp the sensitivity to framing is.
@@ -127,13 +165,16 @@ Refusal falls hard from 5 labels to 9, then *rises* at 12. Three points at n = 2
 - **CLM was read, not run.** Reaching it means vLLM plus 16 GB of Qwen3-8B, which is not worth an afternoon to confirm something its own schema already settles.
 - **Julia-1's own abstentions do not come from the model.** Its metrics report coverage and an `abstained` status on Banking77, but the word does not appear in any code file it ships, and its reproduction script always returns a choice. Whatever produced those abstentions lives in a Banking77-specific harness that is not in the repository.
 - **Julia-1's probabilities are declared uncalibrated and are then cosmetically sharpened.** Its policy file sets `"calibration": null`, and a presentation step rounds a winner above 0.95 with all others under 0.045 to a one-hot `1.0`. That is a display rule, disclosed in the docstring, and it is why confident answers read as exactly **1.000** in our table. Do not read those ones as measured certainty.
+- **Decision 3.0's own numbers are its own.** Its card marks d3's results *internal evaluation* while the competitors' come from *live board data*, and the card does not say who operates the board. Treat the ordering as informative and the absolute values as unverified.
+- **The index's floor is unstated.** **28.82** at 0.59B against **64.7** at 26.09B is a large gap, but with no published floor neither number means anything on its own, and we are not going to guess one.
+- **Decision 3.0 loads with `trust_remote_code=True`.** That runs code shipped in the repository, so it is a supply-chain decision rather than a model download, and it is worth treating as one.
 - **A refusal is not a safety property.** "Nothing applies" is a scope judgement. It is not a check that a request is *safe*, and nothing here should be put in a security path in place of a deterministic one.
 
 ## What We Learned
 
 **What worked:** three things, all cheap. The first is the control set — 24 off-topic requests that no tool can serve — which is the only reason "3 of 24" is a number at all rather than a story about a model that seemed fine. The second is running the vendor's own example *before* judging it on ours; that single control separated "broken model" from "mis-shaped test" in one run, and the first number we would otherwise have published was wrong. And a third, quieter one: sometimes the answer is in the source rather than the weights. CLM's inability to refuse is not a measurement, it is a grep, and it took a minute. Julia-1 made the same point from the other direction — its published SHA-256 let us verify 577 MB of weights before running anything, and its own policy file told us not to trust its calibration before we had formed an opinion about it.
 
-**What didn't — seven of our own instruments, all caught before publication.** A C API whose return value is not a byte length, which silently truncated every response into what looked like a model that refuses everything. An off-by-one in our own validator that marked every call as ungrounded and turned a real signal into noise. A 12-label test that was mis-shaped for the model's label template. A summary line that reported "4 refusals" in a run where zero occurred, and whose first fix reported 3 — both wrong, in a log that a reader would have believed instead of the rows. A sample of 12 that let us write "it never refuses" when 24 makes it refuse three times. A sweep we declared unreproducible and marked *do-not-cite* because we had read its log file while the job was still running; the file was complete, and we had condemned valid evidence on a stale read. And a version pin we ignored: Julia-1 declares `transformers>=5.0,<5.1`, our shared environment had 5.17, and their encoder patch broke in a way that looked like a model failure until we built the environment they actually specified. Two of those generalise. **A background job's output is not evidence until the job has exited.** And when a release pins a dependency range, that range is part of the artifact.
+**What didn't — eight of our own instruments, all caught before publication.** A C API whose return value is not a byte length, which silently truncated every response into what looked like a model that refuses everything. An off-by-one in our own validator that marked every call as ungrounded and turned a real signal into noise. A 12-label test that was mis-shaped for the model's label template. A summary line that reported "4 refusals" in a run where zero occurred, and whose first fix reported 3 — both wrong, in a log that a reader would have believed instead of the rows. A sample of 12 that let us write "it never refuses" when 24 makes it refuse three times. A sweep we declared unreproducible and marked *do-not-cite* because we had read its log file while the job was still running; the file was complete, and we had condemned valid evidence on a stale read. A version pin we ignored: Julia-1 declares `transformers>=5.0,<5.1`, our shared environment had 5.17, and their encoder patch broke in a way that looked like a model failure until we built the environment they actually specified. And a language-head probe that returned pure subword soup on every prompt — which was briefly read as "the post-training destroyed the vocabulary geometry", until a control on the parent model showed that we had skipped the prediction head ModernBERT applies *before* the decoder, and the soup was our own. Two of those generalise. **A background job's output is not evidence until the job has exited.** And when a release pins a dependency range, that range is part of the artifact.
 
 **The uncomfortable part:** we published an explanation and the next release falsified it. Our claim was that abstention is a property of the schema — put a "none of these" option in the contract and the model has somewhere to put the answer. The first half is true and the second half is not: Julia-1 was offered exactly that option and used it zero times in 24, then lost accuracy for having been given it. What we got wrong was treating representability as sufficient, when it is only necessary — Verdict's route works because it was trained with an objective that rewards honest abstention, not because the label existed. That is a narrower claim than the one we first made, and it is the one the evidence supports. It is also the reason to run a control you did not design the model for: the 24 requests could only ever have shown us *that* the engines differ, and it took adding one option to a third engine to show us *why*.
 
@@ -144,3 +185,5 @@ Every number above is re-read from committed run artifacts by [scripts/check-ope
 **Updating this post.** This is meant to be re-run, not rewritten: the harness, the evidence rows for all three engines, and the checker are all committed. To add a model, run it on the same 24 + 24 requests against the same 11 tools, add its rows, add one line to the family table, and let the checker decide whether the prose still holds.
 
 **Updated 2026-09-26:** Julia-1 added and measured, which required correcting the explanation this post first gave for why abstention separates the engines. The correction is in place above rather than in a footnote, because we would rather the post be wrong in public for a day than quietly right later.
+
+**Updated 2026-10-11:** the field acquired a leaderboard. Decision 3.0 and the Jev Decision Index are added above, with the one line on that board we would not accept without a control set — plus our own measurement of whether a Jev-style model can emit a word at all, which is the question the whole category is defined by refusing to answer. Nothing in the measured core changed.

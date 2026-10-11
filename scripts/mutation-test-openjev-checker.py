@@ -31,6 +31,17 @@ MUTATIONS = [
     ("Qwen3-8B parameter count", "8,190,726,144", "8,180,726,144"),
     ("abstention rate", "12.5%", "13.5%"),
     ("overhead bytes", "**6,429 bytes**", "**7,429 bytes**"),
+    # --- the 2026-10-11 update: Decision 3.0 and the cloze probe ---
+    ("d3 size ladder", "**0.59B to 26.09B**", "**0.59B to 27.09B**"),
+    ("d3 board index", "| **d3** (26.09B) | **64.7**", "| **d3** (26.09B) | **66.7**"),
+    # appears TWICE in the post, so this one is caught by the variant-absence guard
+    ("suite size (two occurrences)", "**140,178 requests**", "**141,178 requests**"),
+    ("a competitor row", "Perplexity Decider v1.1 (27B) | 62.8",
+     "Perplexity Decider v1.1 (27B) | 63.8"),
+    ("the language head cost", "**98.7M parameters**", "**99.7M parameters**"),
+    ("a cloze probe token", "**gun .48**", "**gun .58**"),
+    ("a cloze probe probability", "coast .25", "coast .35"),
+    ("the encoder swap count", "**134 of 134**", "**133 of 134**"),
 ]
 
 original = POST.read_text()
