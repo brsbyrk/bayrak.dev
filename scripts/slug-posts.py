@@ -30,14 +30,14 @@ for path in sorted(glob.glob("blog/*.mdx")):
         print("  already has a slug: %s" % path)
         continue
 
-    new, n = re.subn(r"^(date: .*)$", r"\1\nslug: /writing/%s" % name,
+    new, n = re.subn(r"^(date: .*)$", r"\1\nslug: /blog/%s" % name,
                      src, count=1, flags=re.M)
     if n != 1:
         print("ABORT — no date: line in %s" % path, file=sys.stderr)
         sys.exit(1)
 
     open(path, "w").write(new)
-    print("  %-58s -> /writing/%s" % (path, name))
+    print("  %-58s -> /blog/%s" % (path, name))
     changed += 1
 
 print("  %d post(s) updated" % changed)
@@ -46,7 +46,7 @@ print("  %d post(s) updated" % changed)
 bad = []
 for path in sorted(glob.glob("blog/*.mdx")):
     head = open(path).read().split("---")[1] if "---" in open(path).read() else ""
-    if not re.search(r"^slug: /writing/", head, re.M):
+    if not re.search(r"^slug: /blog/", head, re.M):
         bad.append(path)
 if bad:
     print("ABORT — these posts still have no slug: %s" % bad, file=sys.stderr)

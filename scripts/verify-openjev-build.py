@@ -25,8 +25,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGE = (ROOT / "build" / "2026" / "09" / "24"
-        / "openjev-nine-reimplementations-refusal-test" / "index.html")
+PAGE = ROOT / "build" / "blog" / "openjev-nine-reimplementations-refusal-test" / "index.html"
 
 if not PAGE.exists():
     print(f"no built page at {PAGE}\nrun `npm run build` first")

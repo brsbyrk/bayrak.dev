@@ -28,17 +28,29 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // Every post moved from /<year>/<month>/<day>/<slug> to /writing/<slug>/.
-        // These are 301s, so existing links — and whatever signal the dated URLs
-        // accumulated — carry over instead of dying.
+        // Two post-URL shapes are dead. Every post first published at
+        // /<year>/<month>/<day>/<slug>, then briefly at /writing/<slug>, and now
+        // lives at /blog/<slug>. The real 301s are at the web server (one Caddy
+        // regex per dead shape, see ~/services/sites/caddy/Caddyfile); these
+        // entries keep the static build self-consistent when it is served
+        // without Caddy in front of it.
         redirects: [
-          { from: '/2026/06/30/carnot-compression-research', to: '/writing/carnot-compression-research/' },
-          { from: '/2026/07/30/carnot-gpu-rans', to: '/writing/carnot-gpu-rans/' },
-          { from: '/2026/09/12/carnot-graph-routing', to: '/writing/carnot-graph-routing/' },
-          { from: '/2026/09/16/flyos-connectome-retention', to: '/writing/flyos-connectome-retention/' },
-          { from: '/2026/09/17/taalas-etched-model-silicon', to: '/writing/taalas-etched-model-silicon/' },
-          { from: '/2026/09/22/claimaudit-three-ceilings-no-buyer', to: '/writing/claimaudit-three-ceilings-no-buyer/' },
-          { from: '/2026/09/24/openjev-nine-reimplementations-refusal-test', to: '/writing/openjev-nine-reimplementations-refusal-test/' },
+          // the original dated URLs
+          { from: '/2026/06/30/carnot-compression-research', to: '/blog/carnot-compression-research/' },
+          { from: '/2026/07/30/carnot-gpu-rans', to: '/blog/carnot-gpu-rans/' },
+          { from: '/2026/09/12/carnot-graph-routing', to: '/blog/carnot-graph-routing/' },
+          { from: '/2026/09/16/flyos-connectome-retention', to: '/blog/flyos-connectome-retention/' },
+          { from: '/2026/09/17/taalas-etched-model-silicon', to: '/blog/taalas-etched-model-silicon/' },
+          { from: '/2026/09/22/claimaudit-three-ceilings-no-buyer', to: '/blog/claimaudit-three-ceilings-no-buyer/' },
+          { from: '/2026/09/24/openjev-nine-reimplementations-refusal-test', to: '/blog/openjev-nine-reimplementations-refusal-test/' },
+          // the short-lived /writing/ prefix
+          { from: '/writing/carnot-compression-research', to: '/blog/carnot-compression-research/' },
+          { from: '/writing/carnot-gpu-rans', to: '/blog/carnot-gpu-rans/' },
+          { from: '/writing/carnot-graph-routing', to: '/blog/carnot-graph-routing/' },
+          { from: '/writing/flyos-connectome-retention', to: '/blog/flyos-connectome-retention/' },
+          { from: '/writing/taalas-etched-model-silicon', to: '/blog/taalas-etched-model-silicon/' },
+          { from: '/writing/claimaudit-three-ceilings-no-buyer', to: '/blog/claimaudit-three-ceilings-no-buyer/' },
+          { from: '/writing/openjev-nine-reimplementations-refusal-test', to: '/blog/openjev-nine-reimplementations-refusal-test/' },
         ],
       },
     ],
