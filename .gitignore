@@ -24,6 +24,9 @@ yarn-error.log*
 .vscode/
 .idea/
 
+# Local artifacts (mockups, renders) — anchored, so it never catches a nested out/
+/out/
+
 # Archive
 _archive
 scripts/__pycache__/
