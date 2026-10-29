@@ -5,9 +5,9 @@ import postsData from '@site/src/data/posts.json';
 import projectsData from '@site/src/data/projects.json';
 import styles from './site.module.css';
 
-// The rail is a deliberate choice, not "all projects": four entries, each of
-// which either has a public repo or says plainly that it does not.
-const RAIL = ['carnot', 'dizin', 'pliny', 'ethogram'];
+// The rail is a deliberate choice, not "all projects": each entry either has a
+// public repo or says plainly that it does not. The full list is on /projects.
+const RAIL = ['carnot', 'dizin', 'pliny'];
 
 function WorkRow({project}) {
   const {name, languages, summary, repo, writeups} = project;
@@ -39,14 +39,12 @@ export default function Home() {
   return (
     <Layout
       title="Baris Bayrak"
-      description="Systems engineer. Compression, retrieval and simulation in Rust and Python — with the measurements published, including the ones that went against me.">
+      description="Baris Bayrak — software engineer working in Rust and Python: compression, retrieval and simulation. Projects and write-ups.">
       <div className={styles.wrap}>
-        <h1 className={styles.statement}>
-          I build systems, then I measure whether they <em>actually</em> work.
-        </h1>
+        <h1 className={styles.statement}>Baris Bayrak</h1>
         <p className={styles.sub}>
-          Rust and Python — compression, retrieval, simulation. The write-ups carry their method,
-          the negative results, and the claims I had to retract.
+          Software engineer. I work in Rust and Python, mostly on compression, retrieval and
+          simulation.
         </p>
 
         <div className={styles.cols}>

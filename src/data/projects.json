@@ -48,17 +48,6 @@
       "writeups": []
     },
     {
-      "name": "ethogram",
-      "languages": [
-        "Python"
-      ],
-      "status": "in development",
-      "description": "Engine-agnostic, data-driven decision layer for game NPCs. Authored repertoire in data; a small local model ranks the candidates the world advertises.",
-      "summary": "Engine-agnostic, data-driven decision layer for game NPCs.",
-      "repo": null,
-      "writeups": []
-    },
-    {
       "name": "snnake",
       "languages": [
         "Python"
@@ -78,17 +67,6 @@
       "description": "A fast, embeddable linter for CI workflow files.",
       "summary": "A fast, embeddable linter for CI workflow files.",
       "repo": "https://github.com/brsbyrk/muhtesip",
-      "writeups": []
-    },
-    {
-      "name": "bitsink",
-      "languages": [
-        "Rust"
-      ],
-      "status": "public",
-      "description": "Lightweight and extensible backend system.",
-      "summary": "Lightweight and extensible backend system.",
-      "repo": "https://github.com/brsbyrk/bitsink",
       "writeups": []
     },
     {

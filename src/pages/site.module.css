@@ -2,7 +2,6 @@
    no new palette, no decoration. */
 .wrap{max-width:940px;margin:0 auto;padding:14px 24px 90px}
 .statement{font-size:clamp(28px,4.4vw,44px);line-height:1.12;font-weight:600;letter-spacing:-.035em;margin:12px 0 0;max-width:16em}
-.statement em{font-style:normal;color:var(--accent)}
 .sub{margin:22px 0 0;font-size:17.5px;max-width:40em;color:var(--soft)}
 .label{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0}
 .rule{height:1px;background:var(--border);margin:13px 0 0}
