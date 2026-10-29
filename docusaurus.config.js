@@ -63,14 +63,14 @@ const config = {
       ({
         docs: false,
         blog: {
-          routeBasePath: '/',
-          // Note: `permalink` is NOT a blog option in Docusaurus v3 (the build
-          // fails with '"permalink" is not allowed'), and routeBasePath cannot
-          // move because with no src/pages the blog IS the homepage. The URL
-          // is routeBasePath + the post's slug, and for a dated filename like
-          // 2026-09-24-name.mdx the plugin expands the date into the slug
-          // (blogUtils.js parseBlogFileName). So each post carries an explicit
-          // `slug: /writing/<name>` in its front matter instead.
+          // The writing lives under /blog/ and the homepage is a real page
+          // (src/pages/index.tsx). Each post still carries an ABSOLUTE
+          // `slug: /blog/<name>` in its front matter, which overrides both the
+          // filename and routeBasePath — so moving this line does NOT move a
+          // single post URL, and the sitemap still lists /blog/<name>.
+          routeBasePath: '/blog',
+          blogTitle: 'Writing',
+          blogDescription: 'Long-form notes on systems, compression, retrieval and simulation — measurements, negative results and corrections included.',
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
@@ -101,6 +101,8 @@ const config = {
         title: 'Baris Bayrak',
         hideOnScroll: true,
         items: [
+          {to: '/blog', label: 'Writing', position: 'right'},
+          {to: '/projects', label: 'Projects', position: 'right'},
           {to: '/about', label: 'About', position: 'right'},
         ],
       },

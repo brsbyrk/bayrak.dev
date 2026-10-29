@@ -1,0 +1,107 @@
+{
+  "projects": [
+    {
+      "name": "carnot",
+      "languages": [
+        "Rust",
+        "Python"
+      ],
+      "status": "public",
+      "description": "Experimental compression research — beating industry-standard compressors (gzip, lzma, zstd) with BWT + context mixing",
+      "summary": "Experimental compression research — beating industry-standard compressors (gzip, lzma, zstd) with BWT + context mixing.",
+      "repo": "https://github.com/brsbyrk/carnot",
+      "writeups": [
+        {
+          "href": "/blog/carnot-compression-research",
+          "label": "compression, GPUs, accumulators"
+        },
+        {
+          "href": "/blog/carnot-gpu-rans",
+          "label": "GPU rANS, CubeCL, BWT"
+        },
+        {
+          "href": "/blog/carnot-graph-routing",
+          "label": "graph routing, negative result"
+        }
+      ]
+    },
+    {
+      "name": "dizin",
+      "languages": [
+        "Rust"
+      ],
+      "status": "in development",
+      "description": "Metasearch library in Rust where every search engine is data (TOML spec), not code. Zero engines in the crate; nothing in src/ names a vendor.",
+      "summary": "Metasearch library in Rust where every search engine is data, not code.",
+      "repo": null,
+      "writeups": []
+    },
+    {
+      "name": "pliny",
+      "languages": [
+        "Rust"
+      ],
+      "status": "in development",
+      "description": "Shared knowledge infrastructure for humans and AI agents.",
+      "summary": "Shared knowledge infrastructure for humans and AI agents.",
+      "repo": null,
+      "writeups": []
+    },
+    {
+      "name": "ethogram",
+      "languages": [
+        "Python"
+      ],
+      "status": "in development",
+      "description": "Engine-agnostic, data-driven decision layer for game NPCs. Authored repertoire in data; a small local model ranks the candidates the world advertises.",
+      "summary": "Engine-agnostic, data-driven decision layer for game NPCs.",
+      "repo": null,
+      "writeups": []
+    },
+    {
+      "name": "snnake",
+      "languages": [
+        "Python"
+      ],
+      "status": "public",
+      "description": "A 13.8K-param neural network as a Snake game engine. Learns only the direction mapping — physics is exact arithmetic. Zero drift, 2.2KB ONNX, runs in a browser.",
+      "summary": "A 13.8K-param neural network as a Snake game engine — it learns only the direction mapping, because physics is exact arithmetic.",
+      "repo": "https://github.com/brsbyrk/snnake",
+      "writeups": []
+    },
+    {
+      "name": "muhtesip",
+      "languages": [
+        "Rust"
+      ],
+      "status": "public",
+      "description": "A fast, embeddable linter for CI workflow files.",
+      "summary": "A fast, embeddable linter for CI workflow files.",
+      "repo": "https://github.com/brsbyrk/muhtesip",
+      "writeups": []
+    },
+    {
+      "name": "bitsink",
+      "languages": [
+        "Rust"
+      ],
+      "status": "public",
+      "description": "Lightweight and extensible backend system.",
+      "summary": "Lightweight and extensible backend system.",
+      "repo": "https://github.com/brsbyrk/bitsink",
+      "writeups": []
+    },
+    {
+      "name": "is-prime",
+      "languages": [
+        "Rust",
+        "WebAssembly"
+      ],
+      "status": "public",
+      "description": "Rust-based WebAssembly project to check prime numbers and compute nth primes.",
+      "summary": "Rust-based WebAssembly project to check prime numbers and compute nth primes.",
+      "repo": "https://github.com/brsbyrk/is-prime",
+      "writeups": []
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import {
 import BlogLayout from '@theme/BlogLayout';
 import BlogPostItems from '@theme/BlogPostItems';
 import BlogListPageStructuredData from '@theme/BlogListPage/StructuredData';
+import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
 function BlogListPageMetadata(props) {
@@ -26,25 +27,29 @@ function BlogListPageMetadata(props) {
   );
 }
 
-function HomeHeader() {
+// The blog no longer owns '/', so this page is only ever the /blog/ index. The
+// homepage has its own copy and its own page (src/pages/index.jsx); keeping a
+// second bio here would be a duplicate to drift.
+function SectionHeader() {
   return (
     <header className={styles.header}>
-      <h1 className={styles.name}>Baris Bayrak</h1>
+      <h1 className={styles.name}>Writing</h1>
       <p className={styles.bio}>
-        Software engineer. I build systems, explore ideas, and write about
-        what I learn.
+        Long-form notes: what I built, what I measured, and what failed.
+      </p>
+      <p className={styles.bio}>
+        <Link to="/blog/archive">Archive</Link> · <Link to="/blog/tags">Tags</Link>
       </p>
     </header>
   );
 }
 
 function BlogListPageContent(props) {
-  const {metadata, items} = props;
-  const isHome = metadata.permalink === '/';
+  const {items} = props;
 
   return (
     <BlogLayout>
-      {isHome && <HomeHeader />}
+      <SectionHeader />
       <BlogPostItems items={items} />
     </BlogLayout>
   );

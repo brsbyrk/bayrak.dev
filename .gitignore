@@ -24,6 +24,9 @@ yarn-error.log*
 .vscode/
 .idea/
 
+# Derived at build time by scripts/gen-site-data.mjs
+src/data/posts.json
+
 # Local artifacts (mockups, renders) — anchored, so it never catches a nested out/
 /out/
 
