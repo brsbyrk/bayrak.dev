@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Give each dated post an explicit slug, so its URL stops carrying the date.
 
+The slug is the post's own name and nothing else: `blog.routeBasePath` is
+`/blog`, and the plugin composes the two, so writing `/blog/<name>` here would
+publish at `/blog/blog/<name>`.
+
 Why this and not a config option: Docusaurus v3's blog plugin has no `permalink`
 (the build rejects it), `routeBasePath` cannot move because the blog IS the
 homepage, and a `YYYY-MM-DD-name.mdx` filename makes the plugin expand the date
@@ -30,14 +34,16 @@ for path in sorted(glob.glob("blog/*.mdx")):
         print("  already has a slug: %s" % path)
         continue
 
-    new, n = re.subn(r"^(date: .*)$", r"\1\nslug: /blog/%s" % name,
+    # The section is routeBasePath's job. A slug that repeated it would publish
+    # at /blog/blog/<name> — see Rule 5c in the site-post-authoring skill.
+    new, n = re.subn(r"^(date: .*)$", r"\1\nslug: /%s" % name,
                      src, count=1, flags=re.M)
     if n != 1:
         print("ABORT — no date: line in %s" % path, file=sys.stderr)
         sys.exit(1)
 
     open(path, "w").write(new)
-    print("  %-58s -> /blog/%s" % (path, name))
+    print("  %-58s -> /%s" % (path, name))
     changed += 1
 
 print("  %d post(s) updated" % changed)
@@ -46,7 +52,7 @@ print("  %d post(s) updated" % changed)
 bad = []
 for path in sorted(glob.glob("blog/*.mdx")):
     head = open(path).read().split("---")[1] if "---" in open(path).read() else ""
-    if not re.search(r"^slug: /blog/", head, re.M):
+    if not re.search(r"^slug: /[^/]", head, re.M):
         bad.append(path)
 if bad:
     print("ABORT — these posts still have no slug: %s" % bad, file=sys.stderr)
