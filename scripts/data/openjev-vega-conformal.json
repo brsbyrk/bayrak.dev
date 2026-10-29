@@ -1,0 +1,4488 @@
+[
+  {
+    "alpha": "0.05",
+    "off_topic": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 0,
+      "none_set": 0,
+      "wide_set": 0,
+      "single": 17,
+      "unbound": 20,
+      "mean_conf": 0.298,
+      "mean_ms": 577.3
+    },
+    "in_scope": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 0,
+      "none_set": 0,
+      "wide_set": 0,
+      "single": 15,
+      "unbound": 17,
+      "mean_conf": 0.328,
+      "mean_ms": 550.9,
+      "correct": 15
+    },
+    "off_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.02563302086287418,
+          "read_file": 0.020675656631063938,
+          "write_file": 0.010265403533092122,
+          "search_files": 0.12685917576526384,
+          "git_diff": 0.005538447963726762,
+          "execute_command": 0.031495646551168176,
+          "web_search": 0.2760139472334046,
+          "web_fetch": 0.09540073037141365,
+          "http_request": 0.04834826990937188,
+          "deposit_knowledge": 0.0031655175229224836,
+          "query_knowledge": 0.35660418365569835
+        },
+        "confidence": 0.35660418365569835,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.4289581775665283,
+        "choice": "query_knowledge",
+        "_latency_ms": 1066.2,
+        "_n_tokens": 230,
+        "state": "what is the capital of France?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.00428596328833931,
+          "read_file": 0.004777504780531464,
+          "write_file": 0.0008234909590551121,
+          "search_files": 0.044479905325377087,
+          "git_diff": 0.0014490905846905495,
+          "execute_command": 0.003616578194045507,
+          "web_search": 0.10901492222625199,
+          "web_fetch": 0.02517276618590125,
+          "http_request": 0.028579022728672507,
+          "deposit_knowledge": 0.009008660163332738,
+          "query_knowledge": 0.7687920955638025
+        },
+        "confidence": 0.7687920955638025,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.017082452774048,
+        "choice": "query_knowledge",
+        "_latency_ms": 572.2,
+        "_n_tokens": 234,
+        "state": "who won the 2018 world cup?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011758837547507752,
+          "read_file": 0.04069595016100192,
+          "write_file": 0.0239384249566469,
+          "search_files": 0.11676544712493367,
+          "git_diff": 0.009730140627601502,
+          "execute_command": 0.043814736258738815,
+          "web_search": 0.348407666135278,
+          "web_fetch": 0.08062973779759833,
+          "http_request": 0.13388535586664044,
+          "deposit_knowledge": 0.0028783375058970564,
+          "query_knowledge": 0.1874953660181556
+        },
+        "confidence": 0.348407666135278,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.4403505325317383,
+        "choice": "web_search",
+        "_latency_ms": 576.6,
+        "_n_tokens": 231,
+        "state": "what is the weather in Istanbul tomorrow?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.07578328167081691,
+          "read_file": 0.03852948683079288,
+          "write_file": 0.05315068350348368,
+          "search_files": 0.14222909723700222,
+          "git_diff": 0.04185396157283757,
+          "execute_command": 0.03761180409877388,
+          "web_search": 0.13135268541906447,
+          "web_fetch": 0.0823029841827616,
+          "http_request": 0.13592644209690538,
+          "deposit_knowledge": 0.0418764902286412,
+          "query_knowledge": 0.21938308315892027
+        },
+        "confidence": 0.21938308315892027,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.6607143878936768,
+        "choice": "query_knowledge",
+        "_latency_ms": 543.6,
+        "_n_tokens": 230,
+        "state": "explain how a transformer attention head works"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06210393785352186,
+          "read_file": 0.03722030108001076,
+          "write_file": 0.09541628988206838,
+          "search_files": 0.11125346403322774,
+          "git_diff": 0.009823569664820132,
+          "execute_command": 0.10917566775388891,
+          "web_search": 0.21257687186690966,
+          "web_fetch": 0.07168228781878301,
+          "http_request": 0.11886459849774139,
+          "deposit_knowledge": 0.015883829316293157,
+          "query_knowledge": 0.15599918223273507
+        },
+        "confidence": 0.21257687186690966,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.0351591110229492,
+        "choice": "web_search",
+        "_latency_ms": 547.7,
+        "_n_tokens": 231,
+        "state": "give me a recipe for lentil soup"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09280892616536131,
+          "read_file": 0.03901847885342949,
+          "write_file": 0.07527278099174485,
+          "search_files": 0.09406404005325229,
+          "git_diff": 0.008710092894463473,
+          "execute_command": 0.13055063767326366,
+          "web_search": 0.1411862026016585,
+          "web_fetch": 0.05140552833607254,
+          "http_request": 0.14335337886795466,
+          "deposit_knowledge": 0.02631188668804489,
+          "query_knowledge": 0.19731804687475427
+        },
+        "confidence": 0.19731804687475427,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.5177679061889648,
+        "choice": "query_knowledge",
+        "_latency_ms": 577.7,
+        "_n_tokens": 229,
+        "state": "tell me a joke about programmers"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08680750333362229,
+          "read_file": 0.052063385682353434,
+          "write_file": 0.14424059340836126,
+          "search_files": 0.1001452375840536,
+          "git_diff": 0.01506592377599361,
+          "execute_command": 0.10529519124012182,
+          "web_search": 0.14435302563023455,
+          "web_fetch": 0.05424297893211016,
+          "http_request": 0.14244698022629748,
+          "deposit_knowledge": 0.02089630082582924,
+          "query_knowledge": 0.13444287936102256
+        },
+        "confidence": 0.14435302563023455,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.8042340278625488,
+        "choice": "web_search",
+        "_latency_ms": 542.2,
+        "_n_tokens": 230,
+        "state": "write a haiku about the sea"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.15556031410006388,
+          "read_file": 0.03460742253782727,
+          "write_file": 0.1041293104886127,
+          "search_files": 0.05036441544497453,
+          "git_diff": 0.009389213339837898,
+          "execute_command": 0.20119810220671075,
+          "web_search": 0.09236390836718016,
+          "web_fetch": 0.06807819034419306,
+          "http_request": 0.21242472700507284,
+          "deposit_knowledge": 0.0011546458557467197,
+          "query_knowledge": 0.07072975030978022
+        },
+        "confidence": 0.21242472700507284,
+        "prediction_set": [
+          "execute_command",
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "execute_command",
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.07761788368225098,
+        "choice": "http_request",
+        "_latency_ms": 576.5,
+        "_n_tokens": 228,
+        "state": "translate good morning into Japanese"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.018286450779465876,
+          "read_file": 0.03348939604162125,
+          "write_file": 0.021369006008903856,
+          "search_files": 0.06431653207952948,
+          "git_diff": 0.0016880314305228507,
+          "execute_command": 0.0734268267445896,
+          "web_search": 0.31434634492737207,
+          "web_fetch": 0.07939234164970715,
+          "http_request": 0.08630927279752612,
+          "deposit_knowledge": 0.0027448676608125156,
+          "query_knowledge": 0.3046309298799492
+        },
+        "confidence": 0.31434634492737207,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.3685994148254395,
+        "choice": "web_search",
+        "_latency_ms": 580.9,
+        "_n_tokens": 233,
+        "state": "what is 17 times 24?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009728403972130614,
+          "read_file": 0.017914887416442347,
+          "write_file": 0.007870802507763565,
+          "search_files": 0.06951958765158534,
+          "git_diff": 0.005236069241780282,
+          "execute_command": 0.005416112102158674,
+          "web_search": 0.09486028584906976,
+          "web_fetch": 0.03823337083858029,
+          "http_request": 0.03276662133739983,
+          "deposit_knowledge": 0.05556430766185518,
+          "query_knowledge": 0.6628895514212342
+        },
+        "confidence": 0.6628895514212342,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.8834333419799805,
+        "choice": "query_knowledge",
+        "_latency_ms": 575.8,
+        "_n_tokens": 232,
+        "state": "summarise the history of the Ottoman Empire"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08346549641260008,
+          "read_file": 0.04718981705733404,
+          "write_file": 0.09340071839355389,
+          "search_files": 0.11538853493586824,
+          "git_diff": 0.05282317997954416,
+          "execute_command": 0.11001932976191145,
+          "web_search": 0.08805190007357537,
+          "web_fetch": 0.06045874877204723,
+          "http_request": 0.19154058757551687,
+          "deposit_knowledge": 0.012278513552075434,
+          "query_knowledge": 0.14538317348597338
+        },
+        "confidence": 0.19154058757551687,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24068164825439453,
+        "choice": "http_request",
+        "_latency_ms": 549.1,
+        "_n_tokens": 233,
+        "state": "do you think Rust is better than C++?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08148290366963859,
+          "read_file": 0.09564614752478878,
+          "write_file": 0.12607520439006267,
+          "search_files": 0.07892160929024795,
+          "git_diff": 0.03038508953395562,
+          "execute_command": 0.06106799750871595,
+          "web_search": 0.06968759854907361,
+          "web_fetch": 0.06716593951910141,
+          "http_request": 0.20466393763708068,
+          "deposit_knowledge": 0.03964690668092046,
+          "query_knowledge": 0.1452566656964143
+        },
+        "confidence": 0.20466393763708068,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.6538746356964111,
+        "choice": "http_request",
+        "_latency_ms": 546.7,
+        "_n_tokens": 229,
+        "state": "recommend a book about distributed systems"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.010200066662812134,
+          "read_file": 0.022066116704588627,
+          "write_file": 0.005853006925831826,
+          "search_files": 0.16792605052192816,
+          "git_diff": 0.006232177720957224,
+          "execute_command": 0.015198599622796603,
+          "web_search": 0.3088404411374367,
+          "web_fetch": 0.1066334328284138,
+          "http_request": 0.037182245875274224,
+          "deposit_knowledge": 0.0022594739712143604,
+          "query_knowledge": 0.3176083880287463
+        },
+        "confidence": 0.3176083880287463,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.2575063705444336,
+        "choice": "query_knowledge",
+        "_latency_ms": 547.9,
+        "_n_tokens": 231,
+        "state": "what's the tallest mountain in Chile?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0835645907026578,
+          "read_file": 0.08355216143276298,
+          "write_file": 0.13384162709837796,
+          "search_files": 0.08406888923998992,
+          "git_diff": 0.014757703921371447,
+          "execute_command": 0.15212321374954124,
+          "web_search": 0.07829539320618284,
+          "web_fetch": 0.045724158824329196,
+          "http_request": 0.19077946620369848,
+          "deposit_knowledge": 0.01774315552597585,
+          "query_knowledge": 0.11554964009511225
+        },
+        "confidence": 0.19077946620369848,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.1014409065246582,
+        "choice": "http_request",
+        "_latency_ms": 550.7,
+        "_n_tokens": 227,
+        "state": "play some jazz music"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04112676291999336,
+          "read_file": 0.07020526188393789,
+          "write_file": 0.0912944032301454,
+          "search_files": 0.059809914807012796,
+          "git_diff": 0.011646566232837966,
+          "execute_command": 0.06600192506904146,
+          "web_search": 0.09437877443928269,
+          "web_fetch": 0.051974341679170186,
+          "http_request": 0.4222097711102118,
+          "deposit_knowledge": 0.0019489368448239526,
+          "query_knowledge": 0.0894033417835424
+        },
+        "confidence": 0.4222097711102118,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.5293996334075928,
+        "choice": "http_request",
+        "_latency_ms": 546.0,
+        "_n_tokens": 231,
+        "state": "book a table for two at eight tonight"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0848781073350746,
+          "read_file": 0.030001469516414428,
+          "write_file": 0.12844150825121853,
+          "search_files": 0.04538897885164647,
+          "git_diff": 0.021425284617693337,
+          "execute_command": 0.23997707834189394,
+          "web_search": 0.06954966298466454,
+          "web_fetch": 0.05826218008913384,
+          "http_request": 0.2618379737562591,
+          "deposit_knowledge": 0.0006245508729907743,
+          "query_knowledge": 0.059613205383010306
+        },
+        "confidence": 0.2618379737562591,
+        "prediction_set": [
+          "execute_command",
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "execute_command",
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.1692521572113037,
+        "choice": "http_request",
+        "_latency_ms": 553.6,
+        "_n_tokens": 233,
+        "state": "convert 30 degrees celsius to fahrenheit"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009359297476993584,
+          "read_file": 0.04366559137549971,
+          "write_file": 0.021387983642293776,
+          "search_files": 0.21675401633399374,
+          "git_diff": 0.02955422269242011,
+          "execute_command": 0.018052073592711406,
+          "web_search": 0.21709216173762388,
+          "web_fetch": 0.13286519834666025,
+          "http_request": 0.09321383502224068,
+          "deposit_knowledge": 0.0037168373476940365,
+          "query_knowledge": 0.21433878243186874
+        },
+        "confidence": 0.21709216173762388,
+        "prediction_set": [
+          "search_files",
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "search_files",
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.7779251337051392,
+        "choice": "web_search",
+        "_latency_ms": 548.3,
+        "_n_tokens": 229,
+        "state": "why is the sky blue?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.14224091711492823,
+          "read_file": 0.03708816338535997,
+          "write_file": 0.07055171366622968,
+          "search_files": 0.12109276133352999,
+          "git_diff": 0.009606435976693823,
+          "execute_command": 0.10771948208340791,
+          "web_search": 0.16062972638718853,
+          "web_fetch": 0.07979495185403238,
+          "http_request": 0.09610566680358905,
+          "deposit_knowledge": 0.015903088528695323,
+          "query_knowledge": 0.15926709286634502
+        },
+        "confidence": 0.16062972638718853,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.017969369888305664,
+        "choice": "web_search",
+        "_latency_ms": 541.8,
+        "_n_tokens": 229,
+        "state": "give me three startup name ideas"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04444297535834205,
+          "read_file": 0.024827742490098798,
+          "write_file": 0.014735711134539115,
+          "search_files": 0.1560664738875718,
+          "git_diff": 0.011083513559295747,
+          "execute_command": 0.01590381668996301,
+          "web_search": 0.19042990043140584,
+          "web_fetch": 0.06787062376059405,
+          "http_request": 0.06069059746498061,
+          "deposit_knowledge": 0.020365605568450563,
+          "query_knowledge": 0.3935830396547585
+        },
+        "confidence": 0.3935830396547585,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.402484893798828,
+        "choice": "query_knowledge",
+        "_latency_ms": 546.4,
+        "_n_tokens": 231,
+        "state": "who wrote Pride and Prejudice?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.023116338079180634,
+          "read_file": 0.06379266665605056,
+          "write_file": 0.0323609524716265,
+          "search_files": 0.15729759201890023,
+          "git_diff": 0.01813170383411001,
+          "execute_command": 0.06701316387591714,
+          "web_search": 0.24016184997163575,
+          "web_fetch": 0.059387558266737105,
+          "http_request": 0.14198578211826268,
+          "deposit_knowledge": 0.004219831577052925,
+          "query_knowledge": 0.1925325611305265
+        },
+        "confidence": 0.24016184997163575,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.765209674835205,
+        "choice": "web_search",
+        "_latency_ms": 548.5,
+        "_n_tokens": 232,
+        "state": "what time is it in Tokyo right now?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.049675417017732905,
+          "read_file": 0.051662736965155845,
+          "write_file": 0.0712662232534886,
+          "search_files": 0.12664507532334066,
+          "git_diff": 0.04060442474165043,
+          "execute_command": 0.060818177397748044,
+          "web_search": 0.08543902361066444,
+          "web_fetch": 0.05388970301207243,
+          "http_request": 0.20312010506183595,
+          "deposit_knowledge": 0.05636446628634652,
+          "query_knowledge": 0.20051464732996413
+        },
+        "confidence": 0.20312010506183595,
+        "prediction_set": [
+          "http_request",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "http_request",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.6537041664123535,
+        "choice": "http_request",
+        "_latency_ms": 551.4,
+        "_n_tokens": 233,
+        "state": "help me figure out why I feel unmotivated"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.19978545706298223,
+          "read_file": 0.07882543102007526,
+          "write_file": 0.12872366678688757,
+          "search_files": 0.0994960509147012,
+          "git_diff": 0.029875820703480917,
+          "execute_command": 0.09013274097629415,
+          "web_search": 0.06167232877177618,
+          "web_fetch": 0.037615013348168254,
+          "http_request": 0.08294800222840813,
+          "deposit_knowledge": 0.04219622939258494,
+          "query_knowledge": 0.14872925879464124
+        },
+        "confidence": 0.19978545706298223,
+        "prediction_set": [
+          "spawn_agent"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.3820466995239258,
+        "choice": "spawn_agent",
+        "_latency_ms": 546.8,
+        "_n_tokens": 229,
+        "state": "draw a picture of a cat"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011538126073192235,
+          "read_file": 0.02199831425978577,
+          "write_file": 0.0034734218185113928,
+          "search_files": 0.10551141911860838,
+          "git_diff": 0.011327853824558151,
+          "execute_command": 0.005329070421023999,
+          "web_search": 0.1483002569981627,
+          "web_fetch": 0.1031891752247404,
+          "http_request": 0.04905847556827748,
+          "deposit_knowledge": 0.020231898599510176,
+          "query_knowledge": 0.5200419880936293
+        },
+        "confidence": 0.5200419880936293,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.8213109970092773,
+        "choice": "query_knowledge",
+        "_latency_ms": 572.5,
+        "_n_tokens": 238,
+        "state": "what were the main causes of the 2008 financial crisis?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06897024483228713,
+          "read_file": 0.1017352484484492,
+          "write_file": 0.12109774871076456,
+          "search_files": 0.10393743395041637,
+          "git_diff": 0.025543523354855942,
+          "execute_command": 0.05533451591720883,
+          "web_search": 0.07685046746354328,
+          "web_fetch": 0.07698842273856703,
+          "http_request": 0.1451741348167941,
+          "deposit_knowledge": 0.02901658522854676,
+          "query_knowledge": 0.1953516745385668
+        },
+        "confidence": 0.1953516745385668,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.628380537033081,
+        "choice": "query_knowledge",
+        "_latency_ms": 546.4,
+        "_n_tokens": 230,
+        "state": "suggest a name for my new dog"
+      }
+    ],
+    "in_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024334304750002225,
+          "read_file": 0.1481674456187038,
+          "write_file": 0.057888390388639806,
+          "search_files": 0.14751772641642832,
+          "git_diff": 0.17410864280067043,
+          "execute_command": 0.01661549838890995,
+          "web_search": 0.05838798773677329,
+          "web_fetch": 0.04222219077768325,
+          "http_request": 0.10470974207060302,
+          "deposit_knowledge": 0.035101760102598745,
+          "query_knowledge": 0.19094631094898729
+        },
+        "confidence": 0.19094631094898729,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.6398701667785645,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.5,
+        "_n_tokens": 232,
+        "state": "show me the unstaged changes in this repo",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.020900956498771266,
+          "read_file": 0.45102640498958546,
+          "write_file": 0.21008214855721194,
+          "search_files": 0.05287102332956634,
+          "git_diff": 0.007045542207623861,
+          "execute_command": 0.04584029212688961,
+          "web_search": 0.023634978138932627,
+          "web_fetch": 0.024972367694813275,
+          "http_request": 0.12981789577140965,
+          "deposit_knowledge": 0.0004385663656376777,
+          "query_knowledge": 0.03336982431955829
+        },
+        "confidence": 0.45102640498958546,
+        "prediction_set": [
+          "read_file",
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "read_file",
+          "write_file"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.4291844367980957,
+        "choice": "read_file",
+        "_latency_ms": 540.9,
+        "_n_tokens": 230,
+        "state": "read the file src/core/config.rs",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.02579598298591835,
+          "read_file": 0.08051673655711739,
+          "write_file": 0.7203182568569615,
+          "search_files": 0.018499096765204653,
+          "git_diff": 0.0004095596332767006,
+          "execute_command": 0.08606730616050118,
+          "web_search": 0.014605358969387274,
+          "web_fetch": 0.006218528232701511,
+          "http_request": 0.035126686798317125,
+          "deposit_knowledge": 2.5427015169777946e-05,
+          "query_knowledge": 0.012417060025444562
+        },
+        "confidence": 0.7203182568569615,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.3419349193573,
+        "choice": "write_file",
+        "_latency_ms": 533.5,
+        "_n_tokens": 232,
+        "state": "write a file notes.md with the text hello",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.00735522392493083,
+          "read_file": 0.04898046304989788,
+          "write_file": 0.011999746365895259,
+          "search_files": 0.35220946755838134,
+          "git_diff": 0.00477683113969361,
+          "execute_command": 0.011007480323615457,
+          "web_search": 0.15040142830955908,
+          "web_fetch": 0.06479762427549103,
+          "http_request": 0.03569894716743032,
+          "deposit_knowledge": 0.002270772411894447,
+          "query_knowledge": 0.3105020154732106
+        },
+        "confidence": 0.35220946755838134,
+        "prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.2515339851379395,
+        "choice": "search_files",
+        "_latency_ms": 548.4,
+        "_n_tokens": 230,
+        "state": "search for TODO in the rust sources",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.049181256256237336,
+          "read_file": 0.08632134073080279,
+          "write_file": 0.094285630468307,
+          "search_files": 0.09137734144385391,
+          "git_diff": 0.04024097366503657,
+          "execute_command": 0.14368119637786508,
+          "web_search": 0.05417518108138248,
+          "web_fetch": 0.0662065938466037,
+          "http_request": 0.2075990858059069,
+          "deposit_knowledge": 0.018731424530695356,
+          "query_knowledge": 0.14819997579330882
+        },
+        "confidence": 0.2075990858059069,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.7811031341552734,
+        "choice": "http_request",
+        "_latency_ms": 580.1,
+        "_n_tokens": 226,
+        "state": "run cargo test",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.051660217861342346,
+          "read_file": 0.12637091489167546,
+          "write_file": 0.0897314607161931,
+          "search_files": 0.11720460948674588,
+          "git_diff": 0.07169127421055142,
+          "execute_command": 0.026930355991723533,
+          "web_search": 0.04423819737005621,
+          "web_fetch": 0.03687101342066162,
+          "http_request": 0.15183504048190316,
+          "deposit_knowledge": 0.13684112029508833,
+          "query_knowledge": 0.14662579527405895
+        },
+        "confidence": 0.15183504048190316,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24010086059570312,
+        "choice": "http_request",
+        "_latency_ms": 543.9,
+        "_n_tokens": 233,
+        "state": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04760416194225334,
+          "read_file": 0.101489571739344,
+          "write_file": 0.05051877855050337,
+          "search_files": 0.1404811904997088,
+          "git_diff": 0.024666256512930404,
+          "execute_command": 0.04082575600806752,
+          "web_search": 0.07195300176643844,
+          "web_fetch": 0.04080971189510236,
+          "http_request": 0.11142305250748025,
+          "deposit_knowledge": 0.09439038238447825,
+          "query_knowledge": 0.27583813619369324
+        },
+        "confidence": 0.27583813619369324,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.8290479183197021,
+        "choice": "query_knowledge",
+        "_latency_ms": 552.3,
+        "_n_tokens": 232,
+        "state": "what do you know about the security policy?",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.22554553799496932,
+          "read_file": 0.08184346998662234,
+          "write_file": 0.0928820831327005,
+          "search_files": 0.06986526596961376,
+          "git_diff": 0.13714096333446177,
+          "execute_command": 0.029232479727884054,
+          "web_search": 0.023856492463804804,
+          "web_fetch": 0.04242877531809888,
+          "http_request": 0.21587973063035884,
+          "deposit_knowledge": 0.013554542311192614,
+          "query_knowledge": 0.06777065913029297
+        },
+        "confidence": 0.22554553799496932,
+        "prediction_set": [
+          "spawn_agent",
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent",
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.2501311302185059,
+        "choice": "spawn_agent",
+        "_latency_ms": 554.2,
+        "_n_tokens": 233,
+        "state": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.01535230632176428,
+          "read_file": 0.2374022189642262,
+          "write_file": 0.05112965442930658,
+          "search_files": 0.13959966975880161,
+          "git_diff": 0.3431623967021752,
+          "execute_command": 0.011637885388660568,
+          "web_search": 0.030191107521385825,
+          "web_fetch": 0.03258589767061493,
+          "http_request": 0.061284629527355854,
+          "deposit_knowledge": 0.001123306955708277,
+          "query_knowledge": 0.07653092676000066
+        },
+        "confidence": 0.3431623967021752,
+        "prediction_set": [
+          "read_file",
+          "git_diff"
+        ],
+        "raw_prediction_set": [
+          "read_file",
+          "git_diff"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.7286722660064697,
+        "choice": "git_diff",
+        "_latency_ms": 553.9,
+        "_n_tokens": 234,
+        "state": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.10951006019290074,
+          "read_file": 0.10899070572341232,
+          "write_file": 0.12008271167262358,
+          "search_files": 0.15197825880795104,
+          "git_diff": 0.02868174477682987,
+          "execute_command": 0.10002837641798853,
+          "web_search": 0.07890645427511316,
+          "web_fetch": 0.08556689289024035,
+          "http_request": 0.1343963089878855,
+          "deposit_knowledge": 0.0019511939472554665,
+          "query_knowledge": 0.07990729230779942
+        },
+        "confidence": 0.15197825880795104,
+        "prediction_set": [
+          "search_files"
+        ],
+        "raw_prediction_set": [
+          "search_files"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.2487635612487793,
+        "choice": "search_files",
+        "_latency_ms": 546.8,
+        "_n_tokens": 232,
+        "state": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.01975359706775525,
+          "read_file": 0.08999024776599834,
+          "write_file": 0.039594520839342194,
+          "search_files": 0.43505020471172423,
+          "git_diff": 0.013089272202969016,
+          "execute_command": 0.01212576284773521,
+          "web_search": 0.0862642864112715,
+          "web_fetch": 0.026871189063996763,
+          "http_request": 0.03843711411675127,
+          "deposit_knowledge": 0.006942262686087013,
+          "query_knowledge": 0.23188154228636917
+        },
+        "confidence": 0.43505020471172423,
+        "prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.3934006690979004,
+        "choice": "search_files",
+        "_latency_ms": 552.7,
+        "_n_tokens": 234,
+        "state": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.17255347740629887,
+          "read_file": 0.084976987148366,
+          "write_file": 0.09618711861836138,
+          "search_files": 0.06451756918746414,
+          "git_diff": 0.11566602609799283,
+          "execute_command": 0.035283023924002684,
+          "web_search": 0.03558470616029313,
+          "web_fetch": 0.03225346599765314,
+          "http_request": 0.27220600828076147,
+          "deposit_knowledge": 0.013796764639703646,
+          "query_knowledge": 0.07697485253910259
+        },
+        "confidence": 0.27220600828076147,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.016013383865356445,
+        "choice": "http_request",
+        "_latency_ms": 546.7,
+        "_n_tokens": 231,
+        "state": "launch a subagent to review the migrations",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024391301483281086,
+          "read_file": 0.20867091034638685,
+          "write_file": 0.03896260992894701,
+          "search_files": 0.20568436079748523,
+          "git_diff": 0.005232168240105634,
+          "execute_command": 0.03827451530027337,
+          "web_search": 0.14884682720634806,
+          "web_fetch": 0.07029317104729817,
+          "http_request": 0.04271559669618896,
+          "deposit_knowledge": 0.008195230811648446,
+          "query_knowledge": 0.2087333081420371
+        },
+        "confidence": 0.2087333081420371,
+        "prediction_set": [
+          "read_file",
+          "search_files",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "read_file",
+          "search_files",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.4388437271118164,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.4,
+        "_n_tokens": 234,
+        "state": "open up README.md and show me what is in it",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06016772362629967,
+          "read_file": 0.11840332694484164,
+          "write_file": 0.6128038987802281,
+          "search_files": 0.03281674631798367,
+          "git_diff": 0.002150995232058064,
+          "execute_command": 0.08823487898996832,
+          "web_search": 0.023521789064331406,
+          "web_fetch": 0.0077917694220288585,
+          "http_request": 0.042102868375085506,
+          "deposit_knowledge": 0.00014808904729955293,
+          "query_knowledge": 0.011857914199875214
+        },
+        "confidence": 0.6128038987802281,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.01118540763855,
+        "choice": "write_file",
+        "_latency_ms": 551.1,
+        "_n_tokens": 234,
+        "state": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06636596125443588,
+          "read_file": 0.045795395358798015,
+          "write_file": 0.03096492192214057,
+          "search_files": 0.31503603207412195,
+          "git_diff": 0.0237615282419859,
+          "execute_command": 0.024522181111015354,
+          "web_search": 0.1232355456873315,
+          "web_fetch": 0.10275454169177022,
+          "http_request": 0.07825034076320952,
+          "deposit_knowledge": 0.004121822634727091,
+          "query_knowledge": 0.18519172926046398
+        },
+        "confidence": 0.31503603207412195,
+        "prediction_set": [
+          "search_files"
+        ],
+        "raw_prediction_set": [
+          "search_files"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.174365520477295,
+        "choice": "search_files",
+        "_latency_ms": 548.8,
+        "_n_tokens": 232,
+        "state": "find every occurrence of unsafe in the codebase",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.044416700960829204,
+          "read_file": 0.15828841307750538,
+          "write_file": 0.07345303910710055,
+          "search_files": 0.14273956470841026,
+          "git_diff": 0.08761308724901444,
+          "execute_command": 0.037348764105441044,
+          "web_search": 0.07230290783540459,
+          "web_fetch": 0.05244073124982916,
+          "http_request": 0.107857556301363,
+          "deposit_knowledge": 0.0439476276118197,
+          "query_knowledge": 0.17959160779328268
+        },
+        "confidence": 0.17959160779328268,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.799379825592041,
+        "choice": "query_knowledge",
+        "_latency_ms": 553.5,
+        "_n_tokens": 232,
+        "state": "show me what has changed since the main branch",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06399484836485445,
+          "read_file": 0.10442261800518411,
+          "write_file": 0.19758678191696186,
+          "search_files": 0.10139177775240714,
+          "git_diff": 0.016474260858093615,
+          "execute_command": 0.20102698856871082,
+          "web_search": 0.043225877762082233,
+          "web_fetch": 0.05677213792844787,
+          "http_request": 0.13488485827136415,
+          "deposit_knowledge": 0.002633758579427007,
+          "query_knowledge": 0.07758609199246683
+        },
+        "confidence": 0.20102698856871082,
+        "prediction_set": [
+          "write_file",
+          "execute_command"
+        ],
+        "raw_prediction_set": [
+          "write_file",
+          "execute_command"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -1.6860004663467407,
+        "choice": "execute_command",
+        "_latency_ms": 555.9,
+        "_n_tokens": 229,
+        "state": "build the project with cargo build",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.002835581119049459,
+          "read_file": 0.012376867495346274,
+          "write_file": 0.0009175304859511799,
+          "search_files": 0.10578690779137935,
+          "git_diff": 0.0007733591142534017,
+          "execute_command": 0.003062356965729516,
+          "web_search": 0.37393525207962036,
+          "web_fetch": 0.1323833196335128,
+          "http_request": 0.018471647972311673,
+          "deposit_knowledge": 0.001064192451080873,
+          "query_knowledge": 0.34839298489176496
+        },
+        "confidence": 0.37393525207962036,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.4732069969177246,
+        "choice": "web_search",
+        "_latency_ms": 549.7,
+        "_n_tokens": 234,
+        "state": "look up the current price of an iPhone on the web",
+        "want": "web_search"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.02243302684674797,
+          "read_file": 0.0679313742520436,
+          "write_file": 0.02989244386572962,
+          "search_files": 0.16893159925282045,
+          "git_diff": 0.009076389068791255,
+          "execute_command": 0.04562423350296944,
+          "web_search": 0.1705415638758026,
+          "web_fetch": 0.15915561582394996,
+          "http_request": 0.06476482071323413,
+          "deposit_knowledge": 0.013641918566967202,
+          "query_knowledge": 0.24800701423094373
+        },
+        "confidence": 0.24800701423094373,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.8262426853179932,
+        "choice": "query_knowledge",
+        "_latency_ms": 566.2,
+        "_n_tokens": 235,
+        "state": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09273126833946957,
+          "read_file": 0.025418051578138683,
+          "write_file": 0.02557409817840381,
+          "search_files": 0.08779028875340285,
+          "git_diff": 0.011103595334953668,
+          "execute_command": 0.044516272287271286,
+          "web_search": 0.15811541211191416,
+          "web_fetch": 0.1537660146839219,
+          "http_request": 0.30478188062094563,
+          "deposit_knowledge": 0.001855508039947972,
+          "query_knowledge": 0.0943476100716305
+        },
+        "confidence": 0.30478188062094563,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.3311028480529785,
+        "choice": "http_request",
+        "_latency_ms": 542.0,
+        "_n_tokens": 235,
+        "state": "send a GET request to https://api.github.com/zen",
+        "want": "http_request"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.10378558426143038,
+          "read_file": 0.13693343238288724,
+          "write_file": 0.3423562235350028,
+          "search_files": 0.03397178057527737,
+          "git_diff": 0.0139215138769884,
+          "execute_command": 0.20231102886070443,
+          "web_search": 0.01079100095104434,
+          "web_fetch": 0.007341190878279377,
+          "http_request": 0.10855310387608805,
+          "deposit_knowledge": 0.005785539464539296,
+          "query_knowledge": 0.03424960133775827
+        },
+        "confidence": 0.3423562235350028,
+        "prediction_set": [
+          "write_file",
+          "execute_command"
+        ],
+        "raw_prediction_set": [
+          "write_file",
+          "execute_command"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.161661386489868,
+        "choice": "write_file",
+        "_latency_ms": 544.6,
+        "_n_tokens": 233,
+        "state": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011840983887893888,
+          "read_file": 0.14892602112859124,
+          "write_file": 0.03315768397005664,
+          "search_files": 0.19229616116268408,
+          "git_diff": 0.009910225559053649,
+          "execute_command": 0.017821478010522,
+          "web_search": 0.08282795594977649,
+          "web_fetch": 0.040155145165650837,
+          "http_request": 0.06919147577278487,
+          "deposit_knowledge": 0.03618422135628858,
+          "query_knowledge": 0.35768864803669764
+        },
+        "confidence": 0.35768864803669764,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.1692981719970703,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.5,
+        "_n_tokens": 231,
+        "state": "search your saved notes for anything about sessions",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.44781625804210945,
+          "read_file": 0.08625371539303887,
+          "write_file": 0.05825337107708069,
+          "search_files": 0.04298798155552692,
+          "git_diff": 0.05115292436332145,
+          "execute_command": 0.02565020000456798,
+          "web_search": 0.016550120560403444,
+          "web_fetch": 0.028192407780838823,
+          "http_request": 0.15117364307026382,
+          "deposit_knowledge": 0.006240999094011376,
+          "query_knowledge": 0.08572837905883694
+        },
+        "confidence": 0.44781625804210945,
+        "prediction_set": [
+          "spawn_agent"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.4189565181732178,
+        "choice": "spawn_agent",
+        "_latency_ms": 552.6,
+        "_n_tokens": 231,
+        "state": "delegate the migration review to a subagent",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0390551062111507,
+          "read_file": 0.18324586084686045,
+          "write_file": 0.4973042884481443,
+          "search_files": 0.027616038158599854,
+          "git_diff": 0.012498032973037426,
+          "execute_command": 0.08827308840292296,
+          "web_search": 0.009744459973448362,
+          "web_fetch": 0.01174792934304206,
+          "http_request": 0.11545311077232547,
+          "deposit_knowledge": 0.00020918589665753197,
+          "query_knowledge": 0.014852898973810789
+        },
+        "confidence": 0.4973042884481443,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.5752806663513184,
+        "choice": "write_file",
+        "_latency_ms": 558.0,
+        "_n_tokens": 235,
+        "state": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file"
+      }
+    ]
+  },
+  {
+    "alpha": "0.1",
+    "off_topic": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 0,
+      "none_set": 0,
+      "wide_set": 0,
+      "single": 21,
+      "unbound": 20,
+      "mean_conf": 0.298,
+      "mean_ms": 550.9
+    },
+    "in_scope": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 0,
+      "none_set": 0,
+      "wide_set": 0,
+      "single": 22,
+      "unbound": 17,
+      "mean_conf": 0.328,
+      "mean_ms": 551.8,
+      "correct": 15
+    },
+    "off_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.025633023435409578,
+          "read_file": 0.020675653998769705,
+          "write_file": 0.010265404563330189,
+          "search_files": 0.12685914517309393,
+          "git_diff": 0.00553845608533308,
+          "execute_command": 0.03149564971207792,
+          "web_search": 0.2760139749342227,
+          "web_fetch": 0.0954007399458511,
+          "http_request": 0.04834829677690089,
+          "deposit_knowledge": 0.0031655171199087523,
+          "query_knowledge": 0.35660413825510223
+        },
+        "confidence": 0.35660413825510223,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.428957939147949,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.1,
+        "_n_tokens": 230,
+        "state": "what is the capital of France?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.00428596778993722,
+          "read_file": 0.0047775053573331176,
+          "write_file": 0.0008234905429450398,
+          "search_files": 0.04447985685882001,
+          "git_diff": 0.001449090605843202,
+          "execute_command": 0.0036165793903188,
+          "web_search": 0.10901488892803445,
+          "web_fetch": 0.025172772946842295,
+          "http_request": 0.028579017305900567,
+          "deposit_knowledge": 0.009008655413366,
+          "query_knowledge": 0.7687921748606593
+        },
+        "confidence": 0.7687921748606593,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.017082452774048,
+        "choice": "query_knowledge",
+        "_latency_ms": 552.6,
+        "_n_tokens": 234,
+        "state": "who won the 2018 world cup?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011758819072665868,
+          "read_file": 0.040695955131683816,
+          "write_file": 0.023938438397861386,
+          "search_files": 0.1167654339814863,
+          "git_diff": 0.00973014208138088,
+          "execute_command": 0.043814713338355224,
+          "web_search": 0.34840761965926015,
+          "web_fetch": 0.08062976389992255,
+          "http_request": 0.1338853979155939,
+          "deposit_knowledge": 0.0028783330608075828,
+          "query_knowledge": 0.1874953834609823
+        },
+        "confidence": 0.34840761965926015,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.4403510093688965,
+        "choice": "web_search",
+        "_latency_ms": 550.4,
+        "_n_tokens": 231,
+        "state": "what is the weather in Istanbul tomorrow?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.07578330041572304,
+          "read_file": 0.03852948832969072,
+          "write_file": 0.05315067624264187,
+          "search_files": 0.14222914276468937,
+          "git_diff": 0.04185396282688008,
+          "execute_command": 0.03761178448305274,
+          "web_search": 0.13135269161572524,
+          "web_fetch": 0.08230295746688461,
+          "http_request": 0.13592644800676112,
+          "deposit_knowledge": 0.04187649737543604,
+          "query_knowledge": 0.21938305047251513
+        },
+        "confidence": 0.21938305047251513,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.6607134342193604,
+        "choice": "query_knowledge",
+        "_latency_ms": 553.9,
+        "_n_tokens": 230,
+        "state": "explain how a transformer attention head works"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.062103942320901676,
+          "read_file": 0.03722028870107044,
+          "write_file": 0.09541635464240944,
+          "search_files": 0.11125353954247556,
+          "git_diff": 0.009823560436904044,
+          "execute_command": 0.10917567560732283,
+          "web_search": 0.21257684416263425,
+          "web_fetch": 0.07168225672905697,
+          "http_request": 0.11886463108967732,
+          "deposit_knowledge": 0.015883807970267824,
+          "query_knowledge": 0.15599909879727963
+        },
+        "confidence": 0.21257684416263425,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.0351591110229492,
+        "choice": "web_search",
+        "_latency_ms": 553.0,
+        "_n_tokens": 231,
+        "state": "give me a recipe for lentil soup"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09280893723738935,
+          "read_file": 0.039018483508301706,
+          "write_file": 0.07527276015163632,
+          "search_files": 0.09406406990723999,
+          "git_diff": 0.00871009220827358,
+          "execute_command": 0.1305506015288643,
+          "web_search": 0.14118624741124947,
+          "web_fetch": 0.05140551410387897,
+          "http_request": 0.14335336757443104,
+          "deposit_knowledge": 0.026311895038895458,
+          "query_knowledge": 0.19731803132983974
+        },
+        "confidence": 0.19731803132983974,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.5177679061889648,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.2,
+        "_n_tokens": 229,
+        "state": "tell me a joke about programmers"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08680750488925579,
+          "read_file": 0.052063394703395736,
+          "write_file": 0.14424057363909223,
+          "search_files": 0.10014521777841039,
+          "git_diff": 0.015065928404576387,
+          "execute_command": 0.10529520147365927,
+          "web_search": 0.14435303474011704,
+          "web_fetch": 0.0542429880905038,
+          "http_request": 0.14244696089539882,
+          "deposit_knowledge": 0.020896306507191292,
+          "query_knowledge": 0.13444288887839928
+        },
+        "confidence": 0.14435303474011704,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.8042340278625488,
+        "choice": "web_search",
+        "_latency_ms": 552.8,
+        "_n_tokens": 230,
+        "state": "write a haiku about the sea"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.1555603609881138,
+          "read_file": 0.03460742597999437,
+          "write_file": 0.10412931188090244,
+          "search_files": 0.05036443490285068,
+          "git_diff": 0.009389208655179398,
+          "execute_command": 0.2011981379724472,
+          "web_search": 0.09236388415396829,
+          "web_fetch": 0.06807818077053764,
+          "http_request": 0.2124247078850604,
+          "deposit_knowledge": 0.0011546445480621116,
+          "query_knowledge": 0.07072970226288361
+        },
+        "confidence": 0.2124247078850604,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.07761836051940918,
+        "choice": "http_request",
+        "_latency_ms": 552.6,
+        "_n_tokens": 228,
+        "state": "translate good morning into Japanese"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.018286457780021192,
+          "read_file": 0.03348940107662198,
+          "write_file": 0.021369006258223036,
+          "search_files": 0.06431653801514559,
+          "git_diff": 0.0016880342439692453,
+          "execute_command": 0.07342680642013426,
+          "web_search": 0.31434641380117734,
+          "web_fetch": 0.07939233330574248,
+          "http_request": 0.08630927850435265,
+          "deposit_knowledge": 0.0027448691747341478,
+          "query_knowledge": 0.30463086141987805
+        },
+        "confidence": 0.31434641380117734,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.368599534034729,
+        "choice": "web_search",
+        "_latency_ms": 556.2,
+        "_n_tokens": 233,
+        "state": "what is 17 times 24?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009728386326355271,
+          "read_file": 0.01791487853948476,
+          "write_file": 0.00787081417226208,
+          "search_files": 0.06951962957921068,
+          "git_diff": 0.005236073550163906,
+          "execute_command": 0.005416114178601854,
+          "web_search": 0.09486023884510514,
+          "web_fetch": 0.038233385496589715,
+          "http_request": 0.032766648298688576,
+          "deposit_knowledge": 0.05556431675551294,
+          "query_knowledge": 0.6628895142580251
+        },
+        "confidence": 0.6628895142580251,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.8834333419799805,
+        "choice": "query_knowledge",
+        "_latency_ms": 545.2,
+        "_n_tokens": 232,
+        "state": "summarise the history of the Ottoman Empire"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08346546737358476,
+          "read_file": 0.0471898188735792,
+          "write_file": 0.0934007357649146,
+          "search_files": 0.1153885322655314,
+          "git_diff": 0.05282316984008313,
+          "execute_command": 0.1100193120666206,
+          "web_search": 0.08805189289237647,
+          "web_fetch": 0.06045873893043241,
+          "http_request": 0.19154062851742407,
+          "deposit_knowledge": 0.01227852609623134,
+          "query_knowledge": 0.14538317737922227
+        },
+        "confidence": 0.19154062851742407,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24068045616149902,
+        "choice": "http_request",
+        "_latency_ms": 553.6,
+        "_n_tokens": 233,
+        "state": "do you think Rust is better than C++?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08148291001383427,
+          "read_file": 0.09564616921035449,
+          "write_file": 0.12607521175826386,
+          "search_files": 0.07892161554714838,
+          "git_diff": 0.0303851027129724,
+          "execute_command": 0.06106797446765201,
+          "web_search": 0.06968756097548595,
+          "web_fetch": 0.06716600819195624,
+          "http_request": 0.2046639451873683,
+          "deposit_knowledge": 0.03964694196224068,
+          "query_knowledge": 0.14525655997272344
+        },
+        "confidence": 0.2046639451873683,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.6538746356964111,
+        "choice": "http_request",
+        "_latency_ms": 548.8,
+        "_n_tokens": 229,
+        "state": "recommend a book about distributed systems"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.010200075921788487,
+          "read_file": 0.022066129124549375,
+          "write_file": 0.005853010074975309,
+          "search_files": 0.16792603583487653,
+          "git_diff": 0.006232178182509488,
+          "execute_command": 0.015198588322557724,
+          "web_search": 0.30884049068184766,
+          "web_fetch": 0.10663341877352212,
+          "http_request": 0.03718223005288942,
+          "deposit_knowledge": 0.002259477568321652,
+          "query_knowledge": 0.3176083654621623
+        },
+        "confidence": 0.3176083654621623,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.2575063705444336,
+        "choice": "query_knowledge",
+        "_latency_ms": 542.6,
+        "_n_tokens": 231,
+        "state": "what's the tallest mountain in Chile?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08356456314168735,
+          "read_file": 0.08355215140450063,
+          "write_file": 0.1338416290813834,
+          "search_files": 0.08406889682045456,
+          "git_diff": 0.014757712909173557,
+          "execute_command": 0.15212318532522873,
+          "web_search": 0.07829539991210162,
+          "web_fetch": 0.045724180363938154,
+          "http_request": 0.1907794933400571,
+          "deposit_knowledge": 0.017743159094597973,
+          "query_knowledge": 0.1155496286068769
+        },
+        "confidence": 0.1907794933400571,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.1014404296875,
+        "choice": "http_request",
+        "_latency_ms": 547.9,
+        "_n_tokens": 227,
+        "state": "play some jazz music"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.041126759274627785,
+          "read_file": 0.07020524362308529,
+          "write_file": 0.09129438253123218,
+          "search_files": 0.059809926672259844,
+          "git_diff": 0.011646557756224632,
+          "execute_command": 0.06600192318630568,
+          "web_search": 0.09437875343956764,
+          "web_fetch": 0.05197433861844854,
+          "http_request": 0.42220985863909277,
+          "deposit_knowledge": 0.001948934983580598,
+          "query_knowledge": 0.08940332127557488
+        },
+        "confidence": 0.42220985863909277,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.5293986797332764,
+        "choice": "http_request",
+        "_latency_ms": 550.0,
+        "_n_tokens": 231,
+        "state": "book a table for two at eight tonight"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08487811842337072,
+          "read_file": 0.03000145908026135,
+          "write_file": 0.12844144308613464,
+          "search_files": 0.045388992020599164,
+          "git_diff": 0.021425311337627127,
+          "execute_command": 0.23997691831325665,
+          "web_search": 0.06954964988448348,
+          "web_fetch": 0.05826216911503166,
+          "http_request": 0.26183817501235845,
+          "deposit_knowledge": 0.0006245505561235048,
+          "query_knowledge": 0.05961321317075316
+        },
+        "confidence": 0.26183817501235845,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.1692521572113037,
+        "choice": "http_request",
+        "_latency_ms": 551.0,
+        "_n_tokens": 233,
+        "state": "convert 30 degrees celsius to fahrenheit"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009359300495663662,
+          "read_file": 0.043665572245266335,
+          "write_file": 0.021387973302100325,
+          "search_files": 0.21675410626220087,
+          "git_diff": 0.02955421535458484,
+          "execute_command": 0.01805205692191769,
+          "web_search": 0.21709222853083532,
+          "web_fetch": 0.1328651352735495,
+          "http_request": 0.09321381868208294,
+          "deposit_knowledge": 0.0037168367329341403,
+          "query_knowledge": 0.21433875619886433
+        },
+        "confidence": 0.21709222853083532,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.7779253721237183,
+        "choice": "web_search",
+        "_latency_ms": 551.3,
+        "_n_tokens": 229,
+        "state": "why is the sky blue?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.14224097684706344,
+          "read_file": 0.037088156497063984,
+          "write_file": 0.07055168509317836,
+          "search_files": 0.12109270069844809,
+          "git_diff": 0.009606444612940536,
+          "execute_command": 0.10771948338505216,
+          "web_search": 0.16062971151437377,
+          "web_fetch": 0.07979493054009937,
+          "http_request": 0.09610566726824879,
+          "deposit_knowledge": 0.015903082650991066,
+          "query_knowledge": 0.15926716089254048
+        },
+        "confidence": 0.16062971151437377,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.017969131469726562,
+        "choice": "web_search",
+        "_latency_ms": 551.3,
+        "_n_tokens": 229,
+        "state": "give me three startup name ideas"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.044442987821502,
+          "read_file": 0.024827745082475126,
+          "write_file": 0.014735718781357937,
+          "search_files": 0.15606649885256582,
+          "git_diff": 0.011083523337973513,
+          "execute_command": 0.01590382948073329,
+          "web_search": 0.1904299514426407,
+          "web_fetch": 0.06787071852082026,
+          "http_request": 0.060690637874363226,
+          "deposit_knowledge": 0.020365602420102824,
+          "query_knowledge": 0.3935827863854653
+        },
+        "confidence": 0.3935827863854653,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.402484178543091,
+        "choice": "query_knowledge",
+        "_latency_ms": 547.5,
+        "_n_tokens": 231,
+        "state": "who wrote Pride and Prejudice?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.023116354851194905,
+          "read_file": 0.06379272735697004,
+          "write_file": 0.03236093603572797,
+          "search_files": 0.1572975981289276,
+          "git_diff": 0.01813169817175468,
+          "execute_command": 0.06701315846546135,
+          "web_search": 0.24016188605089656,
+          "web_fetch": 0.059387565607195894,
+          "http_request": 0.14198577268630952,
+          "deposit_knowledge": 0.0042198327579883,
+          "query_knowledge": 0.19253246988757314
+        },
+        "confidence": 0.24016188605089656,
+        "prediction_set": [
+          "web_search"
+        ],
+        "raw_prediction_set": [
+          "web_search"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.7652091979980469,
+        "choice": "web_search",
+        "_latency_ms": 550.5,
+        "_n_tokens": 232,
+        "state": "what time is it in Tokyo right now?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.049675431676692125,
+          "read_file": 0.05166276247462062,
+          "write_file": 0.0712662119871515,
+          "search_files": 0.1266450976336071,
+          "git_diff": 0.040604437764233274,
+          "execute_command": 0.060818181394565934,
+          "web_search": 0.08543900813442787,
+          "web_fetch": 0.05388971835699488,
+          "http_request": 0.20311996318120573,
+          "deposit_knowledge": 0.056364516451776654,
+          "query_knowledge": 0.20051467094472428
+        },
+        "confidence": 0.20311996318120573,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.6537060737609863,
+        "choice": "http_request",
+        "_latency_ms": 555.5,
+        "_n_tokens": 233,
+        "state": "help me figure out why I feel unmotivated"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.19978551393546096,
+          "read_file": 0.07882541099884566,
+          "write_file": 0.1287235852779444,
+          "search_files": 0.09949604833122172,
+          "git_diff": 0.02987579123406771,
+          "execute_command": 0.09013273705086984,
+          "web_search": 0.06167235644453868,
+          "web_fetch": 0.03761504095432947,
+          "http_request": 0.08294802834462413,
+          "deposit_knowledge": 0.04219622185656957,
+          "query_knowledge": 0.1487292655715279
+        },
+        "confidence": 0.19978551393546096,
+        "prediction_set": [
+          "spawn_agent"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.382047414779663,
+        "choice": "spawn_agent",
+        "_latency_ms": 549.8,
+        "_n_tokens": 229,
+        "state": "draw a picture of a cat"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011538132398653948,
+          "read_file": 0.021998317448737717,
+          "write_file": 0.0034734201232323346,
+          "search_files": 0.10551144134996218,
+          "git_diff": 0.011327866973007906,
+          "execute_command": 0.005329077219436003,
+          "web_search": 0.14830050658930613,
+          "web_fetch": 0.10318918158866051,
+          "http_request": 0.049058506589753366,
+          "deposit_knowledge": 0.020231895623071167,
+          "query_knowledge": 0.5200416540961788
+        },
+        "confidence": 0.5200416540961788,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.82131028175354,
+        "choice": "query_knowledge",
+        "_latency_ms": 556.7,
+        "_n_tokens": 238,
+        "state": "what were the main causes of the 2008 financial crisis?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06897023690641844,
+          "read_file": 0.10173525271263213,
+          "write_file": 0.12109776365417713,
+          "search_files": 0.1039374379674463,
+          "git_diff": 0.025543535329348773,
+          "execute_command": 0.055334523375606695,
+          "web_search": 0.07685047397235123,
+          "web_fetch": 0.0769884125999725,
+          "http_request": 0.14517418009015035,
+          "deposit_knowledge": 0.0290166045378258,
+          "query_knowledge": 0.19535157885407073
+        },
+        "confidence": 0.19535157885407073,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.6283795833587646,
+        "choice": "query_knowledge",
+        "_latency_ms": 549.8,
+        "_n_tokens": 230,
+        "state": "suggest a name for my new dog"
+      }
+    ],
+    "in_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024334292829327604,
+          "read_file": 0.14816756417905572,
+          "write_file": 0.057888408463079834,
+          "search_files": 0.14751779615021193,
+          "git_diff": 0.17410865421093843,
+          "execute_command": 0.016615507256601568,
+          "web_search": 0.058387967901478495,
+          "web_fetch": 0.042222183282242746,
+          "http_request": 0.10470969418530156,
+          "deposit_knowledge": 0.03510172982280681,
+          "query_knowledge": 0.19094620171895538
+        },
+        "confidence": 0.19094620171895538,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.6398706436157227,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.7,
+        "_n_tokens": 232,
+        "state": "show me the unstaged changes in this repo",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.020900951686656653,
+          "read_file": 0.4510262692252482,
+          "write_file": 0.21008224052523397,
+          "search_files": 0.052870983006773266,
+          "git_diff": 0.007045556955979914,
+          "execute_command": 0.045840318845599394,
+          "web_search": 0.023635003900548804,
+          "web_fetch": 0.024972378152429087,
+          "http_request": 0.1298179009218365,
+          "deposit_knowledge": 0.0004385668156065054,
+          "query_knowledge": 0.03336982996408765
+        },
+        "confidence": 0.4510262692252482,
+        "prediction_set": [
+          "read_file"
+        ],
+        "raw_prediction_set": [
+          "read_file"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.4291841983795166,
+        "choice": "read_file",
+        "_latency_ms": 547.9,
+        "_n_tokens": 230,
+        "state": "read the file src/core/config.rs",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.025795975373728693,
+          "read_file": 0.08051673843158895,
+          "write_file": 0.7203182576637673,
+          "search_files": 0.01849909879159766,
+          "git_diff": 0.00040955936146383,
+          "execute_command": 0.08606733670333551,
+          "web_search": 0.014605353920329849,
+          "web_fetch": 0.0062185296608260835,
+          "http_request": 0.035126662145094224,
+          "deposit_knowledge": 2.5427003048206638e-05,
+          "query_knowledge": 0.012417060945219618
+        },
+        "confidence": 0.7203182576637673,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.3419349193573,
+        "choice": "write_file",
+        "_latency_ms": 552.4,
+        "_n_tokens": 232,
+        "state": "write a file notes.md with the text hello",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.007355212717521794,
+          "read_file": 0.04898046010070765,
+          "write_file": 0.011999747144957398,
+          "search_files": 0.35220945639347456,
+          "git_diff": 0.004776828917483164,
+          "execute_command": 0.011007472139546169,
+          "web_search": 0.1504014962993186,
+          "web_fetch": 0.0647976055402725,
+          "http_request": 0.03569893873901256,
+          "deposit_knowledge": 0.0022707728956412364,
+          "query_knowledge": 0.3105020091120643
+        },
+        "confidence": 0.35220945639347456,
+        "prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "search_files",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.2515339851379395,
+        "choice": "search_files",
+        "_latency_ms": 554.2,
+        "_n_tokens": 230,
+        "state": "search for TODO in the rust sources",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04918126088123667,
+          "read_file": 0.08632132683942928,
+          "write_file": 0.09428560049983574,
+          "search_files": 0.09137729639424932,
+          "git_diff": 0.040241010499434925,
+          "execute_command": 0.1436812089010114,
+          "web_search": 0.054175186975037,
+          "web_fetch": 0.06620658051353784,
+          "http_request": 0.20759911555142094,
+          "deposit_knowledge": 0.018731423534630004,
+          "query_knowledge": 0.14819998941017676
+        },
+        "confidence": 0.20759911555142094,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.7811038494110107,
+        "choice": "http_request",
+        "_latency_ms": 550.5,
+        "_n_tokens": 226,
+        "state": "run cargo test",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.051660209078056595,
+          "read_file": 0.1263709232186486,
+          "write_file": 0.08973146662887849,
+          "search_files": 0.11720458955958299,
+          "git_diff": 0.07169127047804559,
+          "execute_command": 0.026930357766248553,
+          "web_search": 0.0442382002850488,
+          "web_fetch": 0.03687096366003827,
+          "http_request": 0.1518350504867868,
+          "deposit_knowledge": 0.1368411293119759,
+          "query_knowledge": 0.1466258395266894
+        },
+        "confidence": 0.1518350504867868,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24010086059570312,
+        "choice": "http_request",
+        "_latency_ms": 551.8,
+        "_n_tokens": 233,
+        "state": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04760416747964225,
+          "read_file": 0.10148955685487687,
+          "write_file": 0.05051875939403392,
+          "search_files": 0.14048117686214134,
+          "git_diff": 0.02466622268214318,
+          "execute_command": 0.04082576495055347,
+          "web_search": 0.07195303282211853,
+          "web_fetch": 0.04080969509196003,
+          "http_request": 0.11142296747574254,
+          "deposit_knowledge": 0.09439037940414526,
+          "query_knowledge": 0.27583827698264257
+        },
+        "confidence": 0.27583827698264257,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.8290491104125977,
+        "choice": "query_knowledge",
+        "_latency_ms": 553.6,
+        "_n_tokens": 232,
+        "state": "what do you know about the security policy?",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.22554555808540813,
+          "read_file": 0.08184345338499915,
+          "write_file": 0.09288208407493603,
+          "search_files": 0.06986530719102398,
+          "git_diff": 0.1371409418141117,
+          "execute_command": 0.02923247701787264,
+          "web_search": 0.023856485008177917,
+          "web_fetch": 0.04242878990966047,
+          "http_request": 0.21587970546824953,
+          "deposit_knowledge": 0.013554553799885447,
+          "query_knowledge": 0.06777064424567518
+        },
+        "confidence": 0.22554555808540813,
+        "prediction_set": [
+          "spawn_agent"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.250131368637085,
+        "choice": "spawn_agent",
+        "_latency_ms": 554.4,
+        "_n_tokens": 233,
+        "state": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.01535230740467206,
+          "read_file": 0.23740223295992854,
+          "write_file": 0.0511296526434275,
+          "search_files": 0.1395996122737254,
+          "git_diff": 0.3431624514809866,
+          "execute_command": 0.0116378853287117,
+          "web_search": 0.03019110212087346,
+          "web_fetch": 0.03258592081924431,
+          "http_request": 0.06128463042048633,
+          "deposit_knowledge": 0.001123305256821809,
+          "query_knowledge": 0.07653089929112218
+        },
+        "confidence": 0.3431624514809866,
+        "prediction_set": [
+          "git_diff"
+        ],
+        "raw_prediction_set": [
+          "git_diff"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.7286728620529175,
+        "choice": "git_diff",
+        "_latency_ms": 550.1,
+        "_n_tokens": 234,
+        "state": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.10951008317649473,
+          "read_file": 0.1089906976818065,
+          "write_file": 0.12008271423941866,
+          "search_files": 0.15197820480971433,
+          "git_diff": 0.02868170174291809,
+          "execute_command": 0.1000283973541383,
+          "web_search": 0.07890647067168313,
+          "web_fetch": 0.08556689453532011,
+          "http_request": 0.13439636278154649,
+          "deposit_knowledge": 0.0019511943069174687,
+          "query_knowledge": 0.07990727870004219
+        },
+        "confidence": 0.15197820480971433,
+        "prediction_set": [
+          "search_files"
+        ],
+        "raw_prediction_set": [
+          "search_files"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.248762845993042,
+        "choice": "search_files",
+        "_latency_ms": 550.5,
+        "_n_tokens": 232,
+        "state": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.019753612171663094,
+          "read_file": 0.0899902256778242,
+          "write_file": 0.03959452749580425,
+          "search_files": 0.4350501494502539,
+          "git_diff": 0.013089262709861738,
+          "execute_command": 0.012125763238582735,
+          "web_search": 0.08626423287437716,
+          "web_fetch": 0.02687118897898834,
+          "http_request": 0.03843711338309458,
+          "deposit_knowledge": 0.006942273552279855,
+          "query_knowledge": 0.23188165046727036
+        },
+        "confidence": 0.4350501494502539,
+        "prediction_set": [
+          "search_files"
+        ],
+        "raw_prediction_set": [
+          "search_files"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.3934006690979004,
+        "choice": "search_files",
+        "_latency_ms": 551.3,
+        "_n_tokens": 234,
+        "state": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.17255352218108244,
+          "read_file": 0.084976944663834,
+          "write_file": 0.09618712071826946,
+          "search_files": 0.06451758875208613,
+          "git_diff": 0.11566602767431869,
+          "execute_command": 0.03528300766369707,
+          "web_search": 0.03558470851118938,
+          "web_fetch": 0.03225348102486686,
+          "http_request": 0.2722060016272586,
+          "deposit_knowledge": 0.01379676249518103,
+          "query_knowledge": 0.07697483468821628
+        },
+        "confidence": 0.2722060016272586,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.016013383865356445,
+        "choice": "http_request",
+        "_latency_ms": 549.6,
+        "_n_tokens": 231,
+        "state": "launch a subagent to review the migrations",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024391318628087966,
+          "read_file": 0.2086709773460212,
+          "write_file": 0.03896262081974283,
+          "search_files": 0.20568427007540274,
+          "git_diff": 0.005232170637194027,
+          "execute_command": 0.03827453336443448,
+          "web_search": 0.14884679424546587,
+          "web_fetch": 0.0702931467572342,
+          "http_request": 0.04271560013389299,
+          "deposit_knowledge": 0.008195232674947935,
+          "query_knowledge": 0.20873333531757582
+        },
+        "confidence": 0.20873333531757582,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.4388437271118164,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.3,
+        "_n_tokens": 234,
+        "state": "open up README.md and show me what is in it",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.060167709921149816,
+          "read_file": 0.11840334432115143,
+          "write_file": 0.6128038739533335,
+          "search_files": 0.03281676342512585,
+          "git_diff": 0.002150997561801093,
+          "execute_command": 0.08823487541525535,
+          "web_search": 0.023521796921176726,
+          "web_fetch": 0.007791769106356195,
+          "http_request": 0.04210286666934655,
+          "deposit_knowledge": 0.0001480889858350151,
+          "query_knowledge": 0.01185791371946837
+        },
+        "confidence": 0.6128038739533335,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.01118540763855,
+        "choice": "write_file",
+        "_latency_ms": 550.2,
+        "_n_tokens": 234,
+        "state": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06636595901881243,
+          "read_file": 0.04579540613856341,
+          "write_file": 0.030964906215794695,
+          "search_files": 0.3150360620993832,
+          "git_diff": 0.023761522134006587,
+          "execute_command": 0.02452216969048227,
+          "web_search": 0.12323550294011143,
+          "web_fetch": 0.10275450937197822,
+          "http_request": 0.07825033583366926,
+          "deposit_knowledge": 0.0041218245339417195,
+          "query_knowledge": 0.18519180202325672
+        },
+        "confidence": 0.3150360620993832,
+        "prediction_set": [
+          "search_files"
+        ],
+        "raw_prediction_set": [
+          "search_files"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.174365520477295,
+        "choice": "search_files",
+        "_latency_ms": 549.2,
+        "_n_tokens": 232,
+        "state": "find every occurrence of unsafe in the codebase",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04441672255847189,
+          "read_file": 0.15828839356462102,
+          "write_file": 0.07345302754358624,
+          "search_files": 0.1427395781465364,
+          "git_diff": 0.08761305469167509,
+          "execute_command": 0.037348740517852384,
+          "web_search": 0.07230291245474375,
+          "web_fetch": 0.05244073967236429,
+          "http_request": 0.10785756511113385,
+          "deposit_knowledge": 0.04394763920344927,
+          "query_knowledge": 0.17959162653556573
+        },
+        "confidence": 0.17959162653556573,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.7993788719177246,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.2,
+        "_n_tokens": 232,
+        "state": "show me what has changed since the main branch",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06399490075686617,
+          "read_file": 0.10442257997993547,
+          "write_file": 0.19758673678748126,
+          "search_files": 0.10139174075489658,
+          "git_diff": 0.016474265900389168,
+          "execute_command": 0.20102706288434036,
+          "web_search": 0.043225850718597525,
+          "web_fetch": 0.056772116375318205,
+          "http_request": 0.13488490676707218,
+          "deposit_knowledge": 0.0026337573739053676,
+          "query_knowledge": 0.07758608170119766
+        },
+        "confidence": 0.20102706288434036,
+        "prediction_set": [
+          "execute_command"
+        ],
+        "raw_prediction_set": [
+          "execute_command"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -1.686000943183899,
+        "choice": "execute_command",
+        "_latency_ms": 549.2,
+        "_n_tokens": 229,
+        "state": "build the project with cargo build",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.002835580110473454,
+          "read_file": 0.01237687199424609,
+          "write_file": 0.0009175306610373989,
+          "search_files": 0.10578696604384692,
+          "git_diff": 0.0007733592660283372,
+          "execute_command": 0.0030623574328384443,
+          "web_search": 0.3739352520352232,
+          "web_fetch": 0.13238332398502534,
+          "http_request": 0.018471668600824793,
+          "deposit_knowledge": 0.0010641931925837818,
+          "query_knowledge": 0.3483928966778721
+        },
+        "confidence": 0.3739352520352232,
+        "prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "web_search",
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.4732069969177246,
+        "choice": "web_search",
+        "_latency_ms": 557.7,
+        "_n_tokens": 234,
+        "state": "look up the current price of an iPhone on the web",
+        "want": "web_search"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.022433014316281103,
+          "read_file": 0.06793137291348568,
+          "write_file": 0.029892441005991612,
+          "search_files": 0.1689316349250275,
+          "git_diff": 0.009076393852081944,
+          "execute_command": 0.04562419700829748,
+          "web_search": 0.1705415716355421,
+          "web_fetch": 0.15915562425356505,
+          "http_request": 0.0647648410965898,
+          "deposit_knowledge": 0.013641913925922879,
+          "query_knowledge": 0.24800699506721505
+        },
+        "confidence": 0.24800699506721505,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.8262425661087036,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.0,
+        "_n_tokens": 235,
+        "state": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09273134561081758,
+          "read_file": 0.025418051497699042,
+          "write_file": 0.025574113777643258,
+          "search_files": 0.08779028190488827,
+          "git_diff": 0.011103593584182432,
+          "execute_command": 0.04451630172972963,
+          "web_search": 0.15811540691470266,
+          "web_fetch": 0.15376601042003898,
+          "http_request": 0.304781740137136,
+          "deposit_knowledge": 0.001855509498877905,
+          "query_knowledge": 0.09434764492428444
+        },
+        "confidence": 0.304781740137136,
+        "prediction_set": [
+          "http_request"
+        ],
+        "raw_prediction_set": [
+          "http_request"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.3311023712158203,
+        "choice": "http_request",
+        "_latency_ms": 555.1,
+        "_n_tokens": 235,
+        "state": "send a GET request to https://api.github.com/zen",
+        "want": "http_request"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.1037855200411138,
+          "read_file": 0.13693351048113891,
+          "write_file": 0.3423562564217796,
+          "search_files": 0.03397175714358753,
+          "git_diff": 0.013921524242710571,
+          "execute_command": 0.20231099844007877,
+          "web_search": 0.010790997318719967,
+          "web_fetch": 0.00734118666382008,
+          "http_request": 0.10855308325931166,
+          "deposit_knowledge": 0.0057855298939927585,
+          "query_knowledge": 0.034249636093746275
+        },
+        "confidence": 0.3423562564217796,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.1616616249084473,
+        "choice": "write_file",
+        "_latency_ms": 554.5,
+        "_n_tokens": 233,
+        "state": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.01184097141030749,
+          "read_file": 0.14892604263285034,
+          "write_file": 0.033157650237342524,
+          "search_files": 0.19229621743553116,
+          "git_diff": 0.009910207359970002,
+          "execute_command": 0.017821474067369038,
+          "web_search": 0.08282788806779717,
+          "web_fetch": 0.04015511344587374,
+          "http_request": 0.06919142925023555,
+          "deposit_knowledge": 0.03618420542297437,
+          "query_knowledge": 0.35768880066974856
+        },
+        "confidence": 0.35768880066974856,
+        "prediction_set": [
+          "query_knowledge"
+        ],
+        "raw_prediction_set": [
+          "query_knowledge"
+        ],
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.1692986488342285,
+        "choice": "query_knowledge",
+        "_latency_ms": 551.4,
+        "_n_tokens": 231,
+        "state": "search your saved notes for anything about sessions",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.4478162985764162,
+          "read_file": 0.08625368209976583,
+          "write_file": 0.058253371355656045,
+          "search_files": 0.042987970082992766,
+          "git_diff": 0.05115288901722553,
+          "execute_command": 0.025650202697956863,
+          "web_search": 0.016550124921338463,
+          "web_fetch": 0.028192373034300614,
+          "http_request": 0.15117364874811418,
+          "deposit_knowledge": 0.006240996997873756,
+          "query_knowledge": 0.08572844246835996
+        },
+        "confidence": 0.4478162985764162,
+        "prediction_set": [
+          "spawn_agent"
+        ],
+        "raw_prediction_set": [
+          "spawn_agent"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.418956756591797,
+        "choice": "spawn_agent",
+        "_latency_ms": 549.4,
+        "_n_tokens": 231,
+        "state": "delegate the migration review to a subagent",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.03905511271884771,
+          "read_file": 0.18324579552746642,
+          "write_file": 0.4973043150304712,
+          "search_files": 0.0276160494592571,
+          "git_diff": 0.012498038528086121,
+          "execute_command": 0.08827304977923577,
+          "web_search": 0.009744437849799257,
+          "web_fetch": 0.011747942603046827,
+          "http_request": 0.11545316378317162,
+          "deposit_knowledge": 0.00020918588513825034,
+          "query_knowledge": 0.014852908835479982
+        },
+        "confidence": 0.4973043150304712,
+        "prediction_set": [
+          "write_file"
+        ],
+        "raw_prediction_set": [
+          "write_file"
+        ],
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.5752806663513184,
+        "choice": "write_file",
+        "_latency_ms": 558.5,
+        "_n_tokens": 235,
+        "state": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file"
+      }
+    ]
+  },
+  {
+    "alpha": "0.2",
+    "off_topic": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 24,
+      "none_set": 24,
+      "wide_set": 0,
+      "single": 0,
+      "unbound": 20,
+      "mean_conf": 0.298,
+      "mean_ms": 549.6
+    },
+    "in_scope": {
+      "n": 24,
+      "errors": 0,
+      "abstain": 22,
+      "empty_set": 24,
+      "none_set": 24,
+      "wide_set": 0,
+      "single": 0,
+      "unbound": 17,
+      "mean_conf": 0.328,
+      "mean_ms": 550.7,
+      "correct": 15
+    },
+    "off_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.025633020442939095,
+          "read_file": 0.020675656009991106,
+          "write_file": 0.010265421465365184,
+          "search_files": 0.12685908548867245,
+          "git_diff": 0.0055384485947647735,
+          "execute_command": 0.031495660788855045,
+          "web_search": 0.27601398439158875,
+          "web_fetch": 0.09540067161412277,
+          "http_request": 0.048348293081949316,
+          "deposit_knowledge": 0.0031655206539036767,
+          "query_knowledge": 0.35660423746784775
+        },
+        "confidence": 0.35660423746784775,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.4289584159851074,
+        "choice": "query_knowledge",
+        "_latency_ms": 542.7,
+        "_n_tokens": 230,
+        "state": "what is the capital of France?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.004285961943705944,
+          "read_file": 0.0047775055220030055,
+          "write_file": 0.0008234895491385436,
+          "search_files": 0.04447992204349838,
+          "git_diff": 0.001449090820555845,
+          "execute_command": 0.003616578761726928,
+          "web_search": 0.1090149881782225,
+          "web_fetch": 0.0251727698273765,
+          "http_request": 0.028579020129263832,
+          "deposit_knowledge": 0.009008663640557114,
+          "query_knowledge": 0.7687920095839513
+        },
+        "confidence": 0.7687920095839513,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.0170822143554688,
+        "choice": "query_knowledge",
+        "_latency_ms": 555.0,
+        "_n_tokens": 234,
+        "state": "who won the 2018 world cup?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011758810577331105,
+          "read_file": 0.04069594319847818,
+          "write_file": 0.023938431378433853,
+          "search_files": 0.1167654498625838,
+          "git_diff": 0.009730139228227883,
+          "execute_command": 0.04381478512170759,
+          "web_search": 0.34840759227097334,
+          "web_fetch": 0.08062975756162519,
+          "http_request": 0.1338853873908767,
+          "deposit_knowledge": 0.002878334687772636,
+          "query_knowledge": 0.18749536872198969
+        },
+        "confidence": 0.34840759227097334,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.4403514862060547,
+        "choice": "web_search",
+        "_latency_ms": 549.9,
+        "_n_tokens": 231,
+        "state": "what is the weather in Istanbul tomorrow?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0757833163749164,
+          "read_file": 0.03852949694028786,
+          "write_file": 0.05315067283202718,
+          "search_files": 0.1422291710103437,
+          "git_diff": 0.041853966223081594,
+          "execute_command": 0.03761178231741153,
+          "web_search": 0.1313526994113968,
+          "web_fetch": 0.08230292832994626,
+          "http_request": 0.13592637945352118,
+          "deposit_knowledge": 0.04187649487852462,
+          "query_knowledge": 0.2193830922285429
+        },
+        "confidence": 0.2193830922285429,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.6607143878936768,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.1,
+        "_n_tokens": 230,
+        "state": "explain how a transformer attention head works"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06210394344332645,
+          "read_file": 0.03722029058452469,
+          "write_file": 0.09541635376331432,
+          "search_files": 0.11125346992559142,
+          "git_diff": 0.009823563752378368,
+          "execute_command": 0.1091756515851366,
+          "web_search": 0.21257678838845237,
+          "web_fetch": 0.07168224287285921,
+          "http_request": 0.11886467641805472,
+          "deposit_knowledge": 0.01588383212208141,
+          "query_knowledge": 0.15599918714428032
+        },
+        "confidence": 0.21257678838845237,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.0351600646972656,
+        "choice": "web_search",
+        "_latency_ms": 545.9,
+        "_n_tokens": 231,
+        "state": "give me a recipe for lentil soup"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09280889402374197,
+          "read_file": 0.03901848015381164,
+          "write_file": 0.07527275462284364,
+          "search_files": 0.09406410997828142,
+          "git_diff": 0.00871009811173774,
+          "execute_command": 0.13055059330981822,
+          "web_search": 0.14118623873333605,
+          "web_fetch": 0.05140552013695518,
+          "http_request": 0.1433533588049302,
+          "deposit_knowledge": 0.026311892579250037,
+          "query_knowledge": 0.19731805954529397
+        },
+        "confidence": 0.19731805954529397,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.5177674293518066,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.5,
+        "_n_tokens": 229,
+        "state": "tell me a joke about programmers"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08680751560264068,
+          "read_file": 0.052063399437618375,
+          "write_file": 0.14424058165240689,
+          "search_files": 0.10014520096621647,
+          "git_diff": 0.015065919536628605,
+          "execute_command": 0.10529519467508638,
+          "web_search": 0.14435302831347,
+          "web_fetch": 0.054242993164271294,
+          "http_request": 0.14244695443330238,
+          "deposit_knowledge": 0.02089630301075629,
+          "query_knowledge": 0.13444290920760266
+        },
+        "confidence": 0.14435302831347,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.8042340278625488,
+        "choice": "web_search",
+        "_latency_ms": 547.4,
+        "_n_tokens": 230,
+        "state": "write a haiku about the sea"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.15556030949587563,
+          "read_file": 0.03460740748779881,
+          "write_file": 0.10412927927221569,
+          "search_files": 0.05036444116999562,
+          "git_diff": 0.009389206719822884,
+          "execute_command": 0.20119809625176044,
+          "web_search": 0.09236396802240103,
+          "web_fetch": 0.06807817913231468,
+          "http_request": 0.21242474941509892,
+          "deposit_knowledge": 0.001154643481792865,
+          "query_knowledge": 0.07072971955092339
+        },
+        "confidence": 0.21242474941509892,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.07761788368225098,
+        "choice": "http_request",
+        "_latency_ms": 547.6,
+        "_n_tokens": 228,
+        "state": "translate good morning into Japanese"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.018286452035888513,
+          "read_file": 0.033489420471420596,
+          "write_file": 0.02136900336338167,
+          "search_files": 0.0643165867531197,
+          "git_diff": 0.0016880334121569956,
+          "execute_command": 0.07342686206171417,
+          "web_search": 0.3143463992959795,
+          "web_fetch": 0.0793923792844183,
+          "http_request": 0.08630928223129004,
+          "deposit_knowledge": 0.0027448697836328024,
+          "query_knowledge": 0.30463071130699754
+        },
+        "confidence": 0.3143463992959795,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.3685991764068604,
+        "choice": "web_search",
+        "_latency_ms": 550.4,
+        "_n_tokens": 233,
+        "state": "what is 17 times 24?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009728390535788473,
+          "read_file": 0.017914882633008705,
+          "write_file": 0.007870803700373316,
+          "search_files": 0.0695195714861459,
+          "git_diff": 0.0052360642284929645,
+          "execute_command": 0.005416104541064068,
+          "web_search": 0.09486020201199723,
+          "web_fetch": 0.038233344565441994,
+          "http_request": 0.032766627490586966,
+          "deposit_knowledge": 0.0555642822161552,
+          "query_knowledge": 0.6628897265909451
+        },
+        "confidence": 0.6628897265909451,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.8834335803985596,
+        "choice": "query_knowledge",
+        "_latency_ms": 540.1,
+        "_n_tokens": 232,
+        "state": "summarise the history of the Ottoman Empire"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08346549320640888,
+          "read_file": 0.04718980151063723,
+          "write_file": 0.09340071547316374,
+          "search_files": 0.1153885328779576,
+          "git_diff": 0.05282318987444763,
+          "execute_command": 0.11001929943341197,
+          "web_search": 0.0880519194263789,
+          "web_fetch": 0.06045876061590574,
+          "http_request": 0.19154056592482996,
+          "deposit_knowledge": 0.012278511585147199,
+          "query_knowledge": 0.1453832100717112
+        },
+        "confidence": 0.19154056592482996,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24068093299865723,
+        "choice": "http_request",
+        "_latency_ms": 550.0,
+        "_n_tokens": 233,
+        "state": "do you think Rust is better than C++?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08148291321211747,
+          "read_file": 0.09564620348741422,
+          "write_file": 0.12607519948742907,
+          "search_files": 0.07892161853277316,
+          "git_diff": 0.030385083612408072,
+          "execute_command": 0.061068004660401146,
+          "web_search": 0.06968756322604898,
+          "web_fetch": 0.06716596834026292,
+          "http_request": 0.20466392967839997,
+          "deposit_knowledge": 0.03964692369355974,
+          "query_knowledge": 0.14525659206918526
+        },
+        "confidence": 0.20466392967839997,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.653874397277832,
+        "choice": "http_request",
+        "_latency_ms": 550.1,
+        "_n_tokens": 229,
+        "state": "recommend a book about distributed systems"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.010200063542005405,
+          "read_file": 0.02206612347885536,
+          "write_file": 0.005853010743562747,
+          "search_files": 0.16792603360161143,
+          "git_diff": 0.006232173255388652,
+          "execute_command": 0.015198584073888705,
+          "web_search": 0.30884053361602665,
+          "web_fetch": 0.10663342639218955,
+          "http_request": 0.03718223866826891,
+          "deposit_knowledge": 0.0022594746096120943,
+          "query_knowledge": 0.31760833801859045
+        },
+        "confidence": 0.31760833801859045,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.2575063705444336,
+        "choice": "query_knowledge",
+        "_latency_ms": 554.0,
+        "_n_tokens": 231,
+        "state": "what's the tallest mountain in Chile?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08356457787142275,
+          "read_file": 0.08355218366145344,
+          "write_file": 0.1338416526733428,
+          "search_files": 0.08406887636346,
+          "git_diff": 0.014757718606679135,
+          "execute_command": 0.15212319618176767,
+          "web_search": 0.07829538086000709,
+          "web_fetch": 0.04572412127253285,
+          "http_request": 0.19077948694242086,
+          "deposit_knowledge": 0.01774318083489991,
+          "query_knowledge": 0.11554962473201343
+        },
+        "confidence": 0.19077948694242086,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.1014404296875,
+        "choice": "http_request",
+        "_latency_ms": 548.3,
+        "_n_tokens": 227,
+        "state": "play some jazz music"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04112672033477047,
+          "read_file": 0.07020530685222266,
+          "write_file": 0.09129441798986968,
+          "search_files": 0.0598099387966955,
+          "git_diff": 0.011646568115758494,
+          "execute_command": 0.0660019673449804,
+          "web_search": 0.09437876710083849,
+          "web_fetch": 0.05197438741414753,
+          "http_request": 0.4222097382811899,
+          "deposit_knowledge": 0.0019489385597967548,
+          "query_knowledge": 0.08940324920973
+        },
+        "confidence": 0.4222097382811899,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.5293996334075928,
+        "choice": "http_request",
+        "_latency_ms": 547.7,
+        "_n_tokens": 231,
+        "state": "book a table for two at eight tonight"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.08487812098447547,
+          "read_file": 0.030001455227224853,
+          "write_file": 0.1284415165345592,
+          "search_files": 0.04538899629672136,
+          "git_diff": 0.021425307485932132,
+          "execute_command": 0.23997696359161014,
+          "web_search": 0.06954964987045967,
+          "web_fetch": 0.058262186115146546,
+          "http_request": 0.2618380608466794,
+          "deposit_knowledge": 0.000624550306344828,
+          "query_knowledge": 0.05961319274084647
+        },
+        "confidence": 0.2618380608466794,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.16925263404846191,
+        "choice": "http_request",
+        "_latency_ms": 553.6,
+        "_n_tokens": 233,
+        "state": "convert 30 degrees celsius to fahrenheit"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.009359298817563522,
+          "read_file": 0.043665565300934614,
+          "write_file": 0.021387972163033002,
+          "search_files": 0.21675412475391714,
+          "git_diff": 0.02955423426751955,
+          "execute_command": 0.018052051619243545,
+          "web_search": 0.21709224710300357,
+          "web_fetch": 0.132865236498355,
+          "http_request": 0.09321379463207326,
+          "deposit_knowledge": 0.003716838733953371,
+          "query_knowledge": 0.21433863611040346
+        },
+        "confidence": 0.21709224710300357,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.7779256105422974,
+        "choice": "web_search",
+        "_latency_ms": 550.4,
+        "_n_tokens": 229,
+        "state": "why is the sky blue?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.14224098340237992,
+          "read_file": 0.037088152820832644,
+          "write_file": 0.07055171970547665,
+          "search_files": 0.12109270417355503,
+          "git_diff": 0.009606441009477062,
+          "execute_command": 0.1077195271456195,
+          "web_search": 0.1606296583508029,
+          "web_fetch": 0.07979493961317265,
+          "http_request": 0.09610564262741159,
+          "deposit_knowledge": 0.0159030816883654,
+          "query_knowledge": 0.1592671494629067
+        },
+        "confidence": 0.1606296583508029,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.017969608306884766,
+        "choice": "web_search",
+        "_latency_ms": 546.7,
+        "_n_tokens": 229,
+        "state": "give me three startup name ideas"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.04444298578043504,
+          "read_file": 0.024827743023726517,
+          "write_file": 0.0147357170709946,
+          "search_files": 0.1560664334878134,
+          "git_diff": 0.011083520178391785,
+          "execute_command": 0.01590382771187682,
+          "web_search": 0.19042987409347467,
+          "web_fetch": 0.06787068650386366,
+          "http_request": 0.060690645447114645,
+          "deposit_knowledge": 0.020365625060996668,
+          "query_knowledge": 0.39358294164131225
+        },
+        "confidence": 0.39358294164131225,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.402484655380249,
+        "choice": "query_knowledge",
+        "_latency_ms": 550.4,
+        "_n_tokens": 231,
+        "state": "who wrote Pride and Prejudice?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.023116340912059708,
+          "read_file": 0.06379268477545141,
+          "write_file": 0.03236096932741181,
+          "search_files": 0.1572976628864268,
+          "git_diff": 0.018131709998794546,
+          "execute_command": 0.06701315506777719,
+          "web_search": 0.2401618047687281,
+          "web_fetch": 0.05938756305199407,
+          "http_request": 0.1419857880537253,
+          "deposit_knowledge": 0.004219834157427585,
+          "query_knowledge": 0.1925324870002035
+        },
+        "confidence": 0.2401618047687281,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.7652101516723633,
+        "choice": "web_search",
+        "_latency_ms": 542.7,
+        "_n_tokens": 232,
+        "state": "what time is it in Tokyo right now?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.049675423666206274,
+          "read_file": 0.05166277531561942,
+          "write_file": 0.07126623115733957,
+          "search_files": 0.1266450847422821,
+          "git_diff": 0.04060444723522003,
+          "execute_command": 0.060818135210789,
+          "web_search": 0.08543904950212938,
+          "web_fetch": 0.053889709945753296,
+          "http_request": 0.20312003133690834,
+          "deposit_knowledge": 0.05636449633592199,
+          "query_knowledge": 0.20051461555183062
+        },
+        "confidence": 0.20312003133690834,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.65370512008667,
+        "choice": "http_request",
+        "_latency_ms": 554.6,
+        "_n_tokens": 233,
+        "state": "help me figure out why I feel unmotivated"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.19978550917414825,
+          "read_file": 0.07882539907012508,
+          "write_file": 0.12872357379616475,
+          "search_files": 0.09949606893233644,
+          "git_diff": 0.02987582200205655,
+          "execute_command": 0.09013275627929498,
+          "web_search": 0.061672359580771906,
+          "web_fetch": 0.037615037030247815,
+          "http_request": 0.08294800004595475,
+          "deposit_knowledge": 0.04219620927298395,
+          "query_knowledge": 0.14872926481591556
+        },
+        "confidence": 0.19978550917414825,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.3820476531982422,
+        "choice": "spawn_agent",
+        "_latency_ms": 554.7,
+        "_n_tokens": 229,
+        "state": "draw a picture of a cat"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.01153811880002216,
+          "read_file": 0.021998294588849304,
+          "write_file": 0.003473416187486379,
+          "search_files": 0.10551136744588524,
+          "git_diff": 0.011327846670697072,
+          "execute_command": 0.0053290635511438105,
+          "web_search": 0.14830034580820897,
+          "web_fetch": 0.10318909308667061,
+          "http_request": 0.049058464110678116,
+          "deposit_knowledge": 0.02023188656809472,
+          "query_knowledge": 0.5200421031822637
+        },
+        "confidence": 0.5200421031822637,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.8213112354278564,
+        "choice": "query_knowledge",
+        "_latency_ms": 555.9,
+        "_n_tokens": 238,
+        "state": "what were the main causes of the 2008 financial crisis?"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0689702567407513,
+          "read_file": 0.10173524402805835,
+          "write_file": 0.12109771727854379,
+          "search_files": 0.10393745189634668,
+          "git_diff": 0.02554352224499128,
+          "execute_command": 0.055334549388100895,
+          "web_search": 0.07685046412439478,
+          "web_fetch": 0.07698843603145698,
+          "http_request": 0.1451741441958372,
+          "deposit_knowledge": 0.02901659023857632,
+          "query_knowledge": 0.19535162383294236
+        },
+        "confidence": 0.19535162383294236,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.628380298614502,
+        "choice": "query_knowledge",
+        "_latency_ms": 553.9,
+        "_n_tokens": 230,
+        "state": "suggest a name for my new dog"
+      }
+    ],
+    "in_rows": [
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024334320125327158,
+          "read_file": 0.14816747469283795,
+          "write_file": 0.057888401747780295,
+          "search_files": 0.14751775536307146,
+          "git_diff": 0.1741086390431652,
+          "execute_command": 0.016615494411366276,
+          "web_search": 0.058387935607637914,
+          "web_fetch": 0.04222218067021589,
+          "http_request": 0.104709739810822,
+          "deposit_knowledge": 0.035101751699673917,
+          "query_knowledge": 0.1909463068281019
+        },
+        "confidence": 0.1909463068281019,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 1.6398706436157227,
+        "choice": "query_knowledge",
+        "_latency_ms": 551.9,
+        "_n_tokens": 232,
+        "state": "show me the unstaged changes in this repo",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.02090094878358058,
+          "read_file": 0.451026394731702,
+          "write_file": 0.210082102242827,
+          "search_files": 0.052871025727838965,
+          "git_diff": 0.007045547670431015,
+          "execute_command": 0.04584030459005357,
+          "web_search": 0.023634979815589825,
+          "web_fetch": 0.024972363879106476,
+          "http_request": 0.12981797000038955,
+          "deposit_knowledge": 0.00043856586816187006,
+          "query_knowledge": 0.0333697966903193
+        },
+        "confidence": 0.451026394731702,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.4291844367980957,
+        "choice": "read_file",
+        "_latency_ms": 549.6,
+        "_n_tokens": 230,
+        "state": "read the file src/core/config.rs",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.02579594739186161,
+          "read_file": 0.08051672509168943,
+          "write_file": 0.7203183649200111,
+          "search_files": 0.018499090500140376,
+          "git_diff": 0.0004095601754934544,
+          "execute_command": 0.08606729467037041,
+          "web_search": 0.014605347220538181,
+          "web_fetch": 0.0062185306223103524,
+          "http_request": 0.035126662655447775,
+          "deposit_knowledge": 2.5426984198183784e-05,
+          "query_knowledge": 0.012417049767939352
+        },
+        "confidence": 0.7203183649200111,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.3419349193573,
+        "choice": "write_file",
+        "_latency_ms": 532.1,
+        "_n_tokens": 232,
+        "state": "write a file notes.md with the text hello",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0073552145930547335,
+          "read_file": 0.04898046432830158,
+          "write_file": 0.011999757027038347,
+          "search_files": 0.352209424975705,
+          "git_diff": 0.004776828369786893,
+          "execute_command": 0.0110074790431802,
+          "web_search": 0.15040149426909913,
+          "web_fetch": 0.06479763596056591,
+          "http_request": 0.03569894282482893,
+          "deposit_knowledge": 0.0022707737121095547,
+          "query_knowledge": 0.3105019848963298
+        },
+        "confidence": 0.352209424975705,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.2515339851379395,
+        "choice": "search_files",
+        "_latency_ms": 547.6,
+        "_n_tokens": 230,
+        "state": "search for TODO in the rust sources",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.049181248972555304,
+          "read_file": 0.08632131210885424,
+          "write_file": 0.09428558546758581,
+          "search_files": 0.09137734373748829,
+          "git_diff": 0.040240972304457674,
+          "execute_command": 0.1436812181658599,
+          "web_search": 0.05417521144451979,
+          "web_fetch": 0.06620658954404474,
+          "http_request": 0.20759920938826312,
+          "deposit_knowledge": 0.018731410318288115,
+          "query_knowledge": 0.1481998985480831
+        },
+        "confidence": 0.20759920938826312,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.781104564666748,
+        "choice": "http_request",
+        "_latency_ms": 548.5,
+        "_n_tokens": 226,
+        "state": "run cargo test",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0516602436436272,
+          "read_file": 0.12637091348569113,
+          "write_file": 0.08973146756886817,
+          "search_files": 0.11720462122263954,
+          "git_diff": 0.07169129516687231,
+          "execute_command": 0.026930361517962347,
+          "web_search": 0.044238197964996444,
+          "web_fetch": 0.036871013318976555,
+          "http_request": 0.1518349696325245,
+          "deposit_knowledge": 0.1368411036003489,
+          "query_knowledge": 0.14662581287749302
+        },
+        "confidence": 0.1518349696325245,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.24010109901428223,
+        "choice": "http_request",
+        "_latency_ms": 557.1,
+        "_n_tokens": 233,
+        "state": "remember that Penelope's providers are a closed enum",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.047604175274394755,
+          "read_file": 0.10148959077809275,
+          "write_file": 0.05051874185101838,
+          "search_files": 0.14048120116372514,
+          "git_diff": 0.024666240918970274,
+          "execute_command": 0.040825767162871035,
+          "web_search": 0.07195305954597953,
+          "web_fetch": 0.0408096664175643,
+          "http_request": 0.11142300359531625,
+          "deposit_knowledge": 0.09439038788012541,
+          "query_knowledge": 0.2758381654119422
+        },
+        "confidence": 0.2758381654119422,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.8290483951568604,
+        "choice": "query_knowledge",
+        "_latency_ms": 548.0,
+        "_n_tokens": 232,
+        "state": "what do you know about the security policy?",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.2255455376482662,
+          "read_file": 0.08184349305691312,
+          "write_file": 0.09288208729150037,
+          "search_files": 0.06986526056598591,
+          "git_diff": 0.13714094070061783,
+          "execute_command": 0.02923247279359672,
+          "web_search": 0.023856512223610703,
+          "web_fetch": 0.0424287608341665,
+          "http_request": 0.21587973294218737,
+          "deposit_knowledge": 0.01355456114938442,
+          "query_knowledge": 0.06777064079377089
+        },
+        "confidence": 0.2255455376482662,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.2501304149627686,
+        "choice": "spawn_agent",
+        "_latency_ms": 553.2,
+        "_n_tokens": 233,
+        "state": "spin up a child agent to audit the test suite",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.015352306333371184,
+          "read_file": 0.23740219062349133,
+          "write_file": 0.05112960467416369,
+          "search_files": 0.1395996631470348,
+          "git_diff": 0.34316246478536344,
+          "execute_command": 0.011637869356967943,
+          "web_search": 0.03019108690501063,
+          "web_fetch": 0.03258591147089509,
+          "http_request": 0.06128465275401519,
+          "deposit_knowledge": 0.0011233061539240373,
+          "query_knowledge": 0.07653094379576253
+        },
+        "confidence": 0.34316246478536344,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.728672981262207,
+        "choice": "git_diff",
+        "_latency_ms": 553.7,
+        "_n_tokens": 234,
+        "state": "what files changed on the main branch compared with HEAD?",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.10951004569883838,
+          "read_file": 0.10899073246592694,
+          "write_file": 0.12008275359894227,
+          "search_files": 0.15197818596622328,
+          "git_diff": 0.02868173731827232,
+          "execute_command": 0.10002836231546826,
+          "web_search": 0.07890648612697092,
+          "web_fetch": 0.08556686337357974,
+          "http_request": 0.13439634464798192,
+          "deposit_knowledge": 0.0019511940468383232,
+          "query_knowledge": 0.07990729444095754
+        },
+        "confidence": 0.15197818596622328,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.248762845993042,
+        "choice": "search_files",
+        "_latency_ms": 554.0,
+        "_n_tokens": 232,
+        "state": "grep for 'unwrap()' inside the engine directory",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.019753617362133408,
+          "read_file": 0.08999027718399745,
+          "write_file": 0.03959452921049461,
+          "search_files": 0.4350500398904283,
+          "git_diff": 0.013089286129822922,
+          "execute_command": 0.012125768973963103,
+          "web_search": 0.08626424988470359,
+          "web_fetch": 0.026871195671855315,
+          "http_request": 0.03843711509838734,
+          "deposit_knowledge": 0.006942278316918409,
+          "query_knowledge": 0.23188164227729552
+        },
+        "confidence": 0.4350500398904283,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.393400192260742,
+        "choice": "search_files",
+        "_latency_ms": 553.0,
+        "_n_tokens": 234,
+        "state": "note down that the store is SQLite with FTS5",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.17255357595547918,
+          "read_file": 0.08497693016241685,
+          "write_file": 0.09618714158588039,
+          "search_files": 0.06451759588120853,
+          "git_diff": 0.11566600566975492,
+          "execute_command": 0.03528302221780135,
+          "web_search": 0.03558471378863272,
+          "web_fetch": 0.032253464750745794,
+          "http_request": 0.2722060068061401,
+          "deposit_knowledge": 0.01379676173443831,
+          "query_knowledge": 0.07697478144750192
+        },
+        "confidence": 0.2722060068061401,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -0.016012907028198242,
+        "choice": "http_request",
+        "_latency_ms": 554.1,
+        "_n_tokens": 231,
+        "state": "launch a subagent to review the migrations",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.024391312140743932,
+          "read_file": 0.20867098160909542,
+          "write_file": 0.0389626195167976,
+          "search_files": 0.20568429364197288,
+          "git_diff": 0.005232172523444838,
+          "execute_command": 0.03827453202382646,
+          "web_search": 0.14884677860817125,
+          "web_fetch": 0.07029316151278704,
+          "http_request": 0.0427155990549225,
+          "deposit_knowledge": 0.008195229700053704,
+          "query_knowledge": 0.20873331966818426
+        },
+        "confidence": 0.20873331966818426,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.4388437271118164,
+        "choice": "query_knowledge",
+        "_latency_ms": 554.8,
+        "_n_tokens": 234,
+        "state": "open up README.md and show me what is in it",
+        "want": "read_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.060167742729262765,
+          "read_file": 0.11840338416409134,
+          "write_file": 0.6128038186391999,
+          "search_files": 0.03281675122359991,
+          "git_diff": 0.0021509957398186752,
+          "execute_command": 0.08823487288357121,
+          "web_search": 0.02352179282934439,
+          "web_fetch": 0.007791770942718884,
+          "http_request": 0.04210287433553881,
+          "deposit_knowledge": 0.00014808903938167442,
+          "query_knowledge": 0.011857907473472516
+        },
+        "confidence": 0.6128038186391999,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": false,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -3.0111851692199707,
+        "choice": "write_file",
+        "_latency_ms": 552.5,
+        "_n_tokens": 234,
+        "state": "create a file called CHANGELOG.md containing the text initial",
+        "want": "write_file"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06636594807661948,
+          "read_file": 0.045795395564865976,
+          "write_file": 0.030964903198023218,
+          "search_files": 0.3150360334917063,
+          "git_diff": 0.02376152352382842,
+          "execute_command": 0.024522176241820456,
+          "web_search": 0.12323552121732667,
+          "web_fetch": 0.10275454215414026,
+          "http_request": 0.07825032522559654,
+          "deposit_knowledge": 0.004121826001228594,
+          "query_knowledge": 0.18519180530484403
+        },
+        "confidence": 0.3150360334917063,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.174365520477295,
+        "choice": "search_files",
+        "_latency_ms": 549.3,
+        "_n_tokens": 232,
+        "state": "find every occurrence of unsafe in the codebase",
+        "want": "search_files"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.044416691309010915,
+          "read_file": 0.15828839657712954,
+          "write_file": 0.07345304274078165,
+          "search_files": 0.1427396118973715,
+          "git_diff": 0.08761305405388638,
+          "execute_command": 0.03734873882941071,
+          "web_search": 0.07230294341578378,
+          "web_fetch": 0.05244076137893492,
+          "http_request": 0.10785756532335994,
+          "deposit_knowledge": 0.043947603384675626,
+          "query_knowledge": 0.17959159108965503
+        },
+        "confidence": 0.17959159108965503,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": 0.7993793487548828,
+        "choice": "query_knowledge",
+        "_latency_ms": 551.8,
+        "_n_tokens": 232,
+        "state": "show me what has changed since the main branch",
+        "want": "git_diff"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.06399485780834645,
+          "read_file": 0.10442261170020924,
+          "write_file": 0.197586801610599,
+          "search_files": 0.10139177144067571,
+          "git_diff": 0.016474273683570885,
+          "execute_command": 0.2010270328542483,
+          "web_search": 0.043225872729640256,
+          "web_fetch": 0.056772105158668526,
+          "http_request": 0.13488485232094888,
+          "deposit_knowledge": 0.002633753397216653,
+          "query_knowledge": 0.07758606729587596
+        },
+        "confidence": 0.2010270328542483,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -1.6860007047653198,
+        "choice": "execute_command",
+        "_latency_ms": 549.6,
+        "_n_tokens": 229,
+        "state": "build the project with cargo build",
+        "want": "execute_command"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.0028355783461290213,
+          "read_file": 0.012376872614898669,
+          "write_file": 0.0009175310930124958,
+          "search_files": 0.10578697043198486,
+          "git_diff": 0.0007733592436014606,
+          "execute_command": 0.0030623602039139158,
+          "web_search": 0.3739352852846661,
+          "web_fetch": 0.13238334449070047,
+          "http_request": 0.018471664340758687,
+          "deposit_knowledge": 0.0010641936835809442,
+          "query_knowledge": 0.3483928402667533
+        },
+        "confidence": 0.3739352852846661,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.4732069969177246,
+        "choice": "web_search",
+        "_latency_ms": 555.1,
+        "_n_tokens": 234,
+        "state": "look up the current price of an iPhone on the web",
+        "want": "web_search"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.022433024072458382,
+          "read_file": 0.06793134826511164,
+          "write_file": 0.029892430871299818,
+          "search_files": 0.16893162784498844,
+          "git_diff": 0.009076384435828963,
+          "execute_command": 0.04562423743011106,
+          "web_search": 0.17054153668785407,
+          "web_fetch": 0.1591556159555372,
+          "http_request": 0.06476483839232997,
+          "deposit_knowledge": 0.013641914202751742,
+          "query_knowledge": 0.24800704184172873
+        },
+        "confidence": 0.24800704184172873,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -1.8262430429458618,
+        "choice": "query_knowledge",
+        "_latency_ms": 546.2,
+        "_n_tokens": 235,
+        "state": "download https://docs.rs/tokio and summarise it",
+        "want": "web_fetch"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.09273131883810232,
+          "read_file": 0.025418036352608978,
+          "write_file": 0.025574106394072357,
+          "search_files": 0.08779028352151712,
+          "git_diff": 0.011103593788651415,
+          "execute_command": 0.04451630938557092,
+          "web_search": 0.15811540982634528,
+          "web_fetch": 0.15376601325158892,
+          "http_request": 0.3047817457495904,
+          "deposit_knowledge": 0.001855507253536709,
+          "query_knowledge": 0.0943476756384157
+        },
+        "confidence": 0.3047817457495904,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.3311023712158203,
+        "choice": "http_request",
+        "_latency_ms": 556.6,
+        "_n_tokens": 235,
+        "state": "send a GET request to https://api.github.com/zen",
+        "want": "http_request"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.10378559567784769,
+          "read_file": 0.1369333881466538,
+          "write_file": 0.3423562508045336,
+          "search_files": 0.03397177804083718,
+          "git_diff": 0.013921516119462176,
+          "execute_command": 0.2023110045889008,
+          "web_search": 0.01079100505764032,
+          "web_fetch": 0.007341189052888412,
+          "http_request": 0.10855308101010859,
+          "deposit_knowledge": 0.005785534364021074,
+          "query_knowledge": 0.034249657137106454
+        },
+        "confidence": 0.3423562508045336,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.1616616249084473,
+        "choice": "write_file",
+        "_latency_ms": 552.0,
+        "_n_tokens": 233,
+        "state": "save a note that the CLI is called penelope",
+        "want": "deposit_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.011840978507933064,
+          "read_file": 0.14892599502414328,
+          "write_file": 0.03315766890483551,
+          "search_files": 0.19229625267066025,
+          "git_diff": 0.009910228431292443,
+          "execute_command": 0.017821483175645653,
+          "web_search": 0.08282796454579194,
+          "web_fetch": 0.040155141862384364,
+          "http_request": 0.06919147008091446,
+          "deposit_knowledge": 0.03618419818409809,
+          "query_knowledge": 0.35768861861230095
+        },
+        "confidence": 0.35768861861230095,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": true,
+        "settle_steps": 12,
+        "energy": -2.1692981719970703,
+        "choice": "query_knowledge",
+        "_latency_ms": 543.9,
+        "_n_tokens": 231,
+        "state": "search your saved notes for anything about sessions",
+        "want": "query_knowledge"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.44781628786876276,
+          "read_file": 0.08625373016489313,
+          "write_file": 0.05825339563177039,
+          "search_files": 0.042987961762146754,
+          "git_diff": 0.051152900245261236,
+          "execute_command": 0.025650206373972383,
+          "web_search": 0.016550121401851817,
+          "web_fetch": 0.02819240190783643,
+          "http_request": 0.15117359544665815,
+          "deposit_knowledge": 0.006241005422847272,
+          "query_knowledge": 0.08572839377399974
+        },
+        "confidence": 0.44781628786876276,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.4189562797546387,
+        "choice": "spawn_agent",
+        "_latency_ms": 548.1,
+        "_n_tokens": 231,
+        "state": "delegate the migration review to a subagent",
+        "want": "spawn_agent"
+      },
+      {
+        "ok": true,
+        "probs": {
+          "spawn_agent": 0.039055112777725866,
+          "read_file": 0.18324585464177157,
+          "write_file": 0.49730429969448414,
+          "search_files": 0.027616030802728394,
+          "git_diff": 0.012498038727970307,
+          "execute_command": 0.08827307907542686,
+          "web_search": 0.009744455744924631,
+          "web_fetch": 0.011747937462836538,
+          "http_request": 0.11545310991344049,
+          "deposit_knowledge": 0.00020918561424851457,
+          "query_knowledge": 0.014852895544442642
+        },
+        "confidence": 0.49730429969448414,
+        "prediction_set": [],
+        "raw_prediction_set": null,
+        "abstain": true,
+        "unbound": false,
+        "settle_steps": 12,
+        "energy": -2.5752806663513184,
+        "choice": "write_file",
+        "_latency_ms": 553.3,
+        "_n_tokens": 235,
+        "state": "write notes.md with the body todo fix the flaky test",
+        "want": "write_file"
+      }
+    ]
+  }
+]

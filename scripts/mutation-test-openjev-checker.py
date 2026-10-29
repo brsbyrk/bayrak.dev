@@ -42,6 +42,13 @@ MUTATIONS = [
     ("a cloze probe token", "**gun .48**", "**gun .58**"),
     ("a cloze probe probability", "coast .25", "coast .35"),
     ("the encoder swap count", "**134 of 134**", "**133 of 134**"),
+    # --- the 2026-10-18 update: conformal abstention ---
+    ("conformal abstain count (appears 6x)", "22 of 24", "23 of 24"),
+    ("conformal latency (appears 3x)", "551 ms", "561 ms"),
+    ("the empty-set claim", "empty for all 48", "empty for all 46"),
+    ("the confidence separation", "**0.030**", "**0.031**"),
+    ("the sub-0.4 gate count", "**38 of 38**", "**37 of 38**"),
+    ("the confidence means", "0.298 against 0.328", "0.298 against 0.338"),
 ]
 
 original = POST.read_text()

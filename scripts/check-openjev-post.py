@@ -369,6 +369,51 @@ check_absent("[off-by-one] the reference model row", "| Jev | 61.1 |",
 check_absent("[off-by-one] the head cost", "**99.7M parameters**",
              "the head costs 98.7M")
 
+# ============================================================================ G. CONFORMAL
+# vega's conformal abstention, on the same 48 requests, parsed from the committed rows.
+vega = json.loads((DATA / "openjev-vega-conformal.json").read_text())
+for r in vega:
+    o, i = r["off_topic"], r["in_scope"]
+    print(f"  [conformal a={r['alpha']}] off abstain {o['abstain']}/{o['n']} empty {o['empty_set']}"
+          f" | in abstain {i['abstain']}/{i['n']} empty {i['empty_set']} correct {i['correct']}")
+if len(vega) != 3:
+    print("FATAL: expected three alphas in the conformal evidence")
+    sys.exit(2)
+
+check("abstains on 22 of 24 on both sides", "22 of 24",
+      " ".join(f"a{r['alpha']}:{r['off_topic']['abstain']}/{r['in_scope']['abstain']}"
+               for r in vega),
+      all(r["off_topic"]["abstain"] == 22 and r["in_scope"]["abstain"] == 22 for r in vega))
+check("alpha=0.2 empties every set", "empty for all 48",
+      f"{vega[-1]['off_topic']['empty_set']}+{vega[-1]['in_scope']['empty_set']}",
+      vega[-1]["off_topic"]["empty_set"] == 24 and vega[-1]["in_scope"]["empty_set"] == 24)
+
+a0 = vega[0]
+rows0 = [x for x in a0["off_rows"] + a0["in_rows"] if x["ok"]]
+low = [x for x in rows0 if x["confidence"] < 0.4]
+mo, mi = a0["off_topic"]["mean_conf"], a0["in_scope"]["mean_conf"]
+check("every row under 0.4 abstained", "38 of 38",
+      f"{sum(1 for x in low if x['abstain'])} of {len(low)}",
+      len(low) > 0 and all(x["abstain"] for x in low))
+check("confidence separation is 0.030", "0.030", f"{abs(mo - mi):.3f}",
+      abs(abs(mo - mi) - 0.030) < 0.0005)
+check("the two confidence means", "0.298 against 0.328", f"{mo:.3f} / {mi:.3f}",
+      abs(mo - 0.298) < 0.0005 and abs(mi - 0.328) < 0.0005)
+check("latency 551 ms", "551 ms", f"{a0['in_scope']['mean_ms']:.0f}",
+      abs(a0["in_scope"]["mean_ms"] - 551) < 1.0)
+
+check_absent("[must be gone] claiming we ran it on a phone", "ran it on a phone",
+             "it ran on this Mac; the phone claim is the vendor's")
+check_absent("[must be gone] declaring the poster's latency false", "75 ms is wrong",
+             "our run used the slow fallback kernels, so it cannot refute 75 ms")
+# 22 of 24 and 551 ms each appear more than once, so presence alone cannot see a partial
+# edit — the neighbouring variants are what catch it.
+check_absent("[off-by-one] the conformal abstain count", "23 of 24",
+             "it abstained on 22 of 24 on both sides")
+check_absent("[off-by-one] the conformal latency", "561 ms", "the mean was 551 ms")
+check_absent("[off-by-one] the empty-set claim", "empty for all 46",
+             "all 48 sets were empty at alpha=0.2")
+
 # Derived from CLM's own cfg, not counted from the file. The derivation must include
 # BOTH the Linear biases and the LayerNorm params — an earlier version of this script
 # omitted hidden.0.bias and was 1,536 short per head.
